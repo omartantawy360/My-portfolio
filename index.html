@@ -4,76 +4,206 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Omar Tantawy - Front-End Developer</title>
-  <link rel="stylesheet" href="./src/output.css">
+  <link rel="stylesheet" href="./output.css">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css"/>
   <style>
     html {
       scroll-behavior: smooth;
     }
+
+    /* Whole page fade-in effect */
+    body {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 1.2s cubic-bezier(.77,0,.18,1) 0.2s, transform 1.2s cubic-bezier(.77,0,.18,1) 0.2s;
+    }
+    body.loaded {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Infinite dark-gradient animation for backgrounds (now using dark blue & gray) */
+    @keyframes rainbowBg {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .animated-bg {
+      /* Using a much darker palette with gray and dark blues */
+      background: linear-gradient(
+        -45deg, 
+        #101726,   /* very dark blue */
+        #161f2c,   /* another dark blue */
+        #232b38,   /* dark gray-blue */
+        #222b3e,   /* deep blue gray */
+        #374151,   /* slate/gray */
+        #111827,   /* almost black blue */
+        #222c3a,   /* deep navy */
+        #232b38,   /* repeat for smoother looping */
+        #101726
+      );
+      background-size: 400% 400%;
+      animation: rainbowBg 15s ease-in-out infinite;
+    }
+    /* Floating animation for hero blobs */
+    @keyframes floatY {
+      0% { transform: translateY(0);}
+      50% { transform: translateY(-30px);}
+      100% { transform: translateY(0);}
+    }
+    .float-blob {
+      animation: floatY 6s ease-in-out infinite;
+    }
+    @keyframes spin-blob {
+      0% { transform: rotate(0deg) scale(1);}
+      50% { transform: rotate(30deg) scale(1.08);}
+      100% { transform: rotate(0deg) scale(1);}
+    }
+    .spin-blob {
+      animation: spin-blob 12s linear infinite;
+    }
+    /* Animated underline for section headings - now even darker theme */
+    .underline-animate {
+      position: relative;
+      display: inline-block;
+      overflow: hidden;
+    }
+    .underline-animate::after {
+      content: "";
+      display: block;
+      position: absolute;
+      left: 0; bottom: 0; height: 3px;
+      width: 100%;
+      background: linear-gradient(
+        90deg, 
+        #374151, /* slate/gray */
+        #232b38, /* dark gray-blue */
+        #101726, /* very dark blue */
+        #222b3e, /* deep blue */
+        #232b38,
+        #161f2c
+      );
+      background-size: 200% 100%;
+      animation: underlinemove 4s linear infinite;
+      border-radius: 8px;
+    }
+    @keyframes underlinemove {
+      0% { background-position: 0 0;}
+      100% { background-position: 200% 0;}
+    }
+    /* Glowing icon animation for skills/info grid - dark navy and slate */
+    .glow-animate {
+      animation: glowPulse 2s ease-in-out infinite alternate;
+      box-shadow: 0 0 16px 2px #232b38, 0 0 6px 1px #374151;
+    }
+    @keyframes glowPulse {
+      from { box-shadow: 0 0 16px 2px #232b38, 0 0 6px 1px #374151;}
+      to { box-shadow: 0 0 36px 10px #0c1320, 0 0 12px 4px #232b38;}
+    }
+    /* Project card flicker hover-like background (subtle video-style shimmer, darker) */
+    @keyframes shimmer {
+      0% { background-position: -400px 0;}
+      100% { background-position: 400px 0;}
+    }
+    .card-shimmer {
+      position: absolute;
+      top:0; left:0; right:0; bottom:0;
+      background: linear-gradient(100deg,rgba(16,23,38,0) 60%,rgba(55,65,81,.12) 80%,rgba(16,23,38,0) 100%);
+      background-size: 600px 100%;
+      pointer-events: none;
+      z-index: 1;
+      animation: shimmer 2.8s linear infinite;
+      border-radius: inherit;
+    }
+
+    /* ---- DARKER HEADER OVERRIDE ---- */
+    .header-extra-dark {
+      background: linear-gradient(
+        120deg, 
+        #080e17 0%,    /* almost black */
+        #101726 30%,
+        #0a1325 70%,   /* deep blue-black */
+        #111827 100%
+      ) !important;
+      background-blend-mode: multiply;
+      /* Extra dark overlay for top bar */
+      box-shadow: 0 2px 16px 0 #000d22a8 inset;
+    }
   </style>
 </head>
 <body class="bg-gray-900 text-white font-sans">
+  <script>
+    // Whole page animation on initial load
+    document.addEventListener("DOMContentLoaded", function() {
+      setTimeout(function() {
+        document.body.classList.add("loaded");
+      }, 100);
+    });
+  </script>
   <!-- Header & Navigation -->
-  <header class="fixed top-0 left-0 right-0 z-50  backdrop-blur-sm">
+  <header class="fixed top-0 left-0 right-0 z-50 backdrop-blur-sm animated-bg header-extra-dark" data-aos="fade-down" data-aos-duration="1100" style="background-blend-mode: multiply;">
     <nav class="flex items-center justify-between p-6 lg:px-8 flex-wrap">
-      <a href="#" class="text-2xl font-bold text-white uppercase">Omar Tantawy</a>
+      <a href="#" class="text-2xl font-bold text-white uppercase underline-animate">Omar Tantawy</a>
       <div class="flex gap-x-6 sm:gap-x-8 mt-4 sm:mt-0">
-        <a href="#aboutme" class="text-sm font-semibold text-white hover:text-indigo-400 transition-colors duration-300">About me</a>
-        <a href="#projects" class="text-sm font-semibold text-white hover:text-indigo-400 transition-colors duration-300">Projects</a>
-        <a href="#certificates" class="text-sm font-semibold text-white hover:text-indigo-400 transition-colors duration-300">Certificates</a>
-        <a href="#contact" class="text-sm font-semibold text-white hover:text-indigo-400 transition-colors duration-300">Contact</a>
+        <a href="#aboutme" class="text-sm font-semibold text-white hover:text-indigo-400 transition-colors duration-300 underline-animate">About me</a>
+        <a href="#projects" class="text-sm font-semibold text-white hover:text-indigo-400 transition-colors duration-300 underline-animate">Projects</a>
+        <a href="#certificates" class="text-sm font-semibold text-white hover:text-indigo-400 transition-colors duration-300 underline-animate">Certificates</a>
+        <a href="#contact" class="text-sm font-semibold text-white hover:text-indigo-400 transition-colors duration-300 underline-animate">Contact</a>
       </div>
     </nav>
   </header>
 
   <!-- Hero Section -->
-  <section class="relative pt-10 px-6 lg:px-8 overflow-hidden min-h-dvh">
-    <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80">
-      <div class="relative left-[calc(50%-11rem)] aspect-1155/678 w-144.5 -translate-x-1/2 rotate-30 bg-linear-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-288.75"></div>
+  <section class="relative pt-10 px-6 lg:px-8 overflow-hidden h-screen">
+    <!-- Top Floating Gradient Blob -->
+    <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80 float-blob">
+      <div class="relative left-[calc(50%-11rem)] aspect-1155/678 w-144.5 -translate-x-1/2 spin-blob animated-bg opacity-40 sm:left-[calc(50%-30rem)] sm:w-288.75"></div>
     </div>
     
     <div class="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
-      <div class="text-center">
+      <div class="text-center" data-aos="fade-up" data-aos-delay="200" data-aos-duration="1600">
         <h1 class="text-4xl font-semibold tracking-tight text-white sm:text-6xl">
-          Hello, I'm <span class="text-indigo-400">Omar Tantawy</span><br>
-          <span class="text-indigo-400">Front-End Developer</span>
+          Hello, I'm <span class="text-indigo-400 underline-animate">Omar Tantawy</span><br>
+          <span class="text-indigo-400 underline-animate">Front-End Developer</span>
         </h1>
-        <p class="mt-8 text-lg font-medium text-gray-400 sm:text-xl">
+        <p class="mt-8 text-lg font-medium text-gray-400 sm:text-xl animate-pulse">
           Passionate Front-End developer creating modern, responsive, and interactive web experiences.
         </p>
       </div>
       
-      <div class="text-center mt-8 flex justify-center gap-x-6">
+      <div class="text-center mt-8 flex justify-center gap-x-6" data-aos="fade-up" data-aos-delay="350" data-aos-duration="1400">
         <a class="text-white text-2xl hover:text-indigo-400 transition-colors duration-300" 
            href="https://github.com/omartantawy360" target="_blank" aria-label="GitHub">
-          <i class="fab fa-github"></i>
+          <i class="fab fa-github animate-spin" style="animation-duration:4s"></i>
         </a>
         <a class="text-white text-2xl hover:text-indigo-400 transition-colors duration-300" 
            href="mailto:omartantawy360@gmail.com" aria-label="Email">
-          <i class="fa-solid fa-envelope"></i>
+          <i class="fa-solid fa-envelope bounce"></i>
         </a>
         <a class="text-white text-2xl hover:text-indigo-400 transition-colors duration-300" 
            href="https://wa.me/201061720405" target="_blank" aria-label="WhatsApp">
-          <i class="fab fa-whatsapp"></i>
+          <i class="fab fa-whatsapp fa-beat" "></i>
         </a>
         <a class="text-white text-2xl hover:text-indigo-400 transition-colors duration-300" 
            href="https://www.linkedin.com/in/omar-tantawy-a74a96376" target="_blank" aria-label="LinkedIn">
-          <i class="fab fa-linkedin-in"></i>
+          <i class="fab fa-linkedin-in" ></i>
         </a>
       </div>
     </div>
     
-    <div class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]">
-      <div class="relative left-[calc(50%+3rem)] aspect-1155/678 w-144.5 -translate-x-1/2 bg-linear-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-288.75 z-10"></div>
+    <!-- Bottom Floating Blob -->
+    <div class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)] float-blob" style="animation-delay:2s;">
+      <div class="relative left-[calc(50%+3rem)] aspect-1155/678 w-144.5 -translate-x-1/2 animated-bg opacity-35 sm:left-[calc(50%+36rem)] sm:w-288.75 z-10 spin-blob"></div>
     </div>
   </section>
 
   <!-- About Me Section -->
-  <section id="aboutme" class="py-20 bg-radial from-black/80 to-blue-950">
+  <section id="aboutme" class="py-20 bg-radial from-black/80 to-blue-950 animated-bg" data-aos="fade-up" data-aos-duration="1200">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
-      <div class="mx-auto max-w-2xl lg:text-center">
-        <h2 class="text-3xl font-semibold text-indigo-400">About Me</h2>
+      <div class="mx-auto max-w-2xl lg:text-center" data-aos="fade-up" data-aos-delay="100">
+        <h2 class="text-3xl font-semibold text-indigo-400 underline-animate">About Me</h2>
         <p class="mt-2 text-4xl font-semibold tracking-tight text-white sm:text-5xl">
           I'm a Passionate Front-End Developer
         </p>
@@ -84,32 +214,32 @@
       
       <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
         <div class="grid max-w-xl grid-cols-1 gap-8 lg:max-w-none lg:grid-cols-2 lg:gap-y-16">
-          <div class="relative pl-16">
-            <div class="absolute top-0 left-0 flex w-10 h-10 items-center justify-center rounded-lg bg-indigo-500">
+          <div class="relative pl-16" data-aos="fade-right" data-aos-delay="200">
+            <div class="absolute top-0 left-0 flex w-10 h-10 items-center justify-center rounded-lg bg-indigo-500 glow-animate">
               <p>&lt;/&gt;</p>
             </div>
             <h3 class="text-lg font-semibold text-white">Web Developer Focused on Modern Front-End</h3>
             <p class="mt-2 text-gray-400">Passionate about building responsive and user-friendly websites using HTML, CSS, JavaScript, and modern frameworks like Bootstrap, Tailwind, and React.</p>
           </div>
           
-          <div class="relative pl-16">
-            <div class="absolute top-0 left-0 flex w-10 h-10 items-center justify-center rounded-lg bg-indigo-500">
+          <div class="relative pl-16" data-aos="fade-left" data-aos-delay="300">
+            <div class="absolute top-0 left-0 flex w-10 h-10 items-center justify-center rounded-lg bg-indigo-500 glow-animate">
               <i class="fas fa-book-open"></i>
             </div>
             <h3 class="text-lg font-semibold text-white">Lifelong Learner</h3>
             <p class="mt-2 text-gray-400">Always eager to learn new technologies and improve my skills to create clean, efficient, and interactive web experiences.</p>
           </div>
           
-          <div class="relative pl-16">
-            <div class="absolute top-0 left-0 flex w-10 h-10 items-center justify-center rounded-lg bg-indigo-500">
+          <div class="relative pl-16" data-aos="fade-right" data-aos-delay="400">
+            <div class="absolute top-0 left-0 flex w-10 h-10 items-center justify-center rounded-lg bg-indigo-500 glow-animate">
               <i class="fas fa-briefcase"></i>
             </div>
             <h3 class="text-lg font-semibold text-white">Portfolio Projects</h3>
             <p class="mt-2 text-gray-400">Working on real projects that showcase my design and development skills, from static layouts to dynamic, interactive web apps.</p>
           </div>
           
-          <div class="relative pl-16">
-            <div class="absolute top-0 left-0 flex w-10 h-10 items-center justify-center rounded-lg bg-indigo-500">
+          <div class="relative pl-16" data-aos="fade-left" data-aos-delay="500">
+            <div class="absolute top-0 left-0 flex w-10 h-10 items-center justify-center rounded-lg bg-indigo-500 glow-animate">
               <i class="fas fa-lightbulb"></i>
             </div>
             <h3 class="text-lg font-semibold text-white">Goal-Oriented & Creative</h3>
@@ -121,84 +251,89 @@
   </section>
 
   <!-- Projects Section -->
-  <section id="projects" class="min-h-screen py-12 bg-gray-900">
+  <section id="projects" class="min-h-screen py-12 bg-gray-900" data-aos="fade-up" data-aos-duration="1200">
     <div class="w-[90%] mx-auto text-center">
-      <h2 class="text-3xl font-semibold text-indigo-400">My Work</h2>
-      <p class="mt-2 text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-        Portfolio <span class="text-indigo-400">Projects</span>
+      <h2 class="text-3xl font-semibold text-indigo-400 underline-animate" data-aos="fade-up" data-aos-delay="100">My Work</h2>
+      <p class="mt-2 text-4xl font-semibold tracking-tight text-white sm:text-5xl" data-aos="fade-up" data-aos-delay="150">
+        Portfolio <span class="text-indigo-400 underline-animate">Projects</span>
       </p>
-      <p class="mt-6 text-lg text-gray-300">Here are some of my recent projects that showcase my skills and experience.</p>
+      <p class="mt-6 text-lg text-gray-300" data-aos="fade-up" data-aos-delay="200">Here are some of my recent projects that showcase my skills and experience.</p>
       
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
-        
         <!-- Project 1 -->
-        <div class="group relative bg-gray-800 p-6 rounded-lg overflow-hidden transition-all duration-500 hover:scale-[1.02]">
+        <div class="group relative bg-gray-800 p-6 rounded-lg overflow-hidden transition-all duration-500 hover:scale-[1.02]" data-aos="zoom-in-up" data-aos-delay="100">
           <img src="./images/avatar.png" alt="" class="w-full h-48  object-cover rounded-md transition-transform duration-500 group-hover:scale-110">
+          <div class="card-shimmer"></div>
           <div class="absolute inset-0 bg-linear-to-b from-black/80 to-green-500 rounded-lg flex flex-col justify-center items-center text-center px-6 transition-all duration-500 opacity-0 group-hover:opacity-100">
             <h3 class="font-semibold mb-4 text-xl">Avatar website</h3>
             <p class="font-normal text-sm">A website for a responsive avatar website using HTML, CSS</p>
             <a href="https://omartantawy360.github.io/avatar/" class="mt-6 text-gray-800 text-lg bg-white w-12 h-12 rounded-full flex justify-center items-center transition-all duration-300 hover:bg-indigo-400 hover:text-white shadow-lg" target="_blank">
-              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              <i class="fa-solid fa-arrow-up-right-from-square spin-blob"></i>
             </a>
           </div>
         </div>
 
         <!-- Project 2 -->
-        <div class="group relative bg-gray-800 p-6 rounded-lg overflow-hidden transition-all duration-500 hover:scale-[1.02]">
+        <div class="group relative bg-gray-800 p-6 rounded-lg overflow-hidden transition-all duration-500 hover:scale-[1.02]" data-aos="zoom-in-up" data-aos-delay="150">
             <img src="./images/shoes.png" alt="" class="w-full h-48  object-cover rounded-md transition-transform duration-500 group-hover:scale-110">
+            <div class="card-shimmer"></div>
             <div class="absolute inset-0 bg-linear-to-b from-black/80 to-green-500 rounded-lg flex flex-col justify-center items-center text-center px-6 transition-all duration-500 opacity-0 group-hover:opacity-100">
             <h3 class="font-semibold mb-4 text-xl">Shoes website</h3>
             <p class="font-normal text-sm">A website for a responsive shoes website using HTML, CSS</p>
             <a href="https://omartantawy360.github.io/shoes/" class="mt-6 text-gray-800 text-lg bg-white w-12 h-12 rounded-full flex justify-center items-center transition-all duration-300 hover:bg-indigo-400 hover:text-white shadow-lg" target="_blank">
-              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              <i class="fa-solid fa-arrow-up-right-from-square spin-blob"></i>
             </a>
           </div>
         </div>
 
         <!-- Project 3 -->
-        <div class="group relative bg-gray-800 p-6 rounded-lg overflow-hidden transition-all duration-500 hover:scale-[1.02]">
+        <div class="group relative bg-gray-800 p-6 rounded-lg overflow-hidden transition-all duration-500 hover:scale-[1.02]" data-aos="zoom-in-up" data-aos-delay="200">
             <img src="./images/strict.png" alt="" class="w-full h-48  object-cover rounded-md transition-transform duration-500 group-hover:scale-110">
+            <div class="card-shimmer"></div>
             <div class="absolute inset-0 bg-linear-to-b from-black/80 to-green-500 rounded-lg flex flex-col justify-center items-center text-center px-6 transition-all duration-500 opacity-0 group-hover:opacity-100">
             <h3 class="font-semibold mb-4 text-xl">Strict website</h3>
             <p class="font-normal text-sm">A website for a responsive strict website using HTML, CSS without flexbox or grid</p>
-            <a href="https://omartantawy360.github.io/strict-templte/" class="mt-6 text-gray-800 text-lg bg-white w-12 h-12 rounded-full flex justify-center items-center transition-all duration-300 hover:bg-indigo-400 hover:text-white shadow-lg" target="_blank">
-              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            <a href="https://omartantawy360.github.io/strict-template/" class="mt-6 text-gray-800 text-lg bg-white w-12 h-12 rounded-full flex justify-center items-center transition-all duration-300 hover:bg-indigo-400 hover:text-white shadow-lg" target="_blank">
+              <i class="fa-solid fa-arrow-up-right-from-square spin-blob"></i>
             </a>
           </div>
         </div>
 
         <!-- Project 4 -->
-        <div class="group relative bg-gray-800 p-6 rounded-lg overflow-hidden transition-all duration-500 hover:scale-[1.02]">
+        <div class="group relative bg-gray-800 p-6 rounded-lg overflow-hidden transition-all duration-500 hover:scale-[1.02]" data-aos="zoom-in-up" data-aos-delay="250">
             <img src="./images/Screenshot 2025-12-20 202229.png" alt="" class="w-full h-48  object-cover rounded-md transition-transform duration-500 group-hover:scale-110">
+            <div class="card-shimmer"></div>
             <div class="absolute inset-0 bg-linear-to-b from-black/80 to-green-500 rounded-lg flex flex-col justify-center items-center text-center px-6 transition-all duration-500 opacity-0 group-hover:opacity-100">
             <h3 class="font-semibold mb-4 text-xl">Food Lover website</h3>
             <p class="font-normal text-sm">A website for a responsive and interactive food lover website using HTML, CSS, and JavaScript</p>
             <a href="https://omartantawy360.github.io/food-lover/" class="mt-6 text-gray-800 text-lg bg-white w-12 h-12 rounded-full flex justify-center items-center transition-all duration-300 hover:bg-indigo-400 hover:text-white shadow-lg" target="_blank">
-              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              <i class="fa-solid fa-arrow-up-right-from-square spin-blob"></i>
             </a>
           </div>
         </div>
 
         <!-- Project 5 -->
-        <div class="group relative bg-gray-800 p-6 rounded-lg overflow-hidden transition-all duration-500 hover:scale-[1.02]">
+        <div class="group relative bg-gray-800 p-6 rounded-lg overflow-hidden transition-all duration-500 hover:scale-[1.02]" data-aos="zoom-in-up" data-aos-delay="300">
             <img src="./images/bootstrap.png" alt="" class="w-full h-48  object-cover rounded-md transition-transform duration-500 group-hover:scale-110">
+            <div class="card-shimmer"></div>
             <div class="absolute inset-0 bg-linear-to-b from-black/80 to-green-500 rounded-lg flex flex-col justify-center items-center text-center px-6 transition-all duration-500 opacity-0 group-hover:opacity-100">
             <h3 class="font-semibold mb-4 text-xl">Bootstrap login page</h3>
             <p class="font-normal text-sm">A login page for a responsive website using Bootstrap</p>
             <a href="https://omartantawy360.github.io/bootstrap-signup/" class="mt-6 text-gray-800 text-lg bg-white w-12 h-12 rounded-full flex justify-center items-center transition-all duration-300 hover:bg-indigo-400 hover:text-white shadow-lg" target="_blank">
-              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              <i class="fa-solid fa-arrow-up-right-from-square spin-blob"></i>
             </a>
           </div>
         </div>
 
         <!-- Project 6 -->
-        <div class="group relative bg-gray-800 p-6 rounded-lg overflow-hidden transition-all duration-500 hover:scale-[1.02]">
+        <div class="group relative bg-gray-800 p-6 rounded-lg overflow-hidden transition-all duration-500 hover:scale-[1.02]" data-aos="zoom-in-up" data-aos-delay="350">
             <img src="./images/tailwind.png" alt="" class="w-full h-48  object-cover rounded-md transition-transform duration-500 group-hover:scale-110">
+            <div class="card-shimmer"></div>
             <div class="absolute inset-0 bg-linear-to-b from-black/80 to-green-500 rounded-lg flex flex-col justify-center items-center text-center px-6 transition-all duration-500 opacity-0 group-hover:opacity-100">
             <h3 class="font-semibold mb-4 text-xl">Tailwind landing page</h3>
             <p class="font-normal text-sm">A landing page for a responsive website using Tailwind with dark mode and light mode</p>
             <a href="https://omartantawy360.github.io/tailwind-project/" class="mt-6 text-gray-800 text-lg bg-white w-12 h-12 rounded-full flex justify-center items-center transition-all duration-300 hover:bg-indigo-400 hover:text-white shadow-lg" target="_blank">
-              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              <i class="fa-solid fa-arrow-up-right-from-square spin-blob"></i>
             </a>
           </div>
         </div>
@@ -208,10 +343,10 @@
   </section>
 
   <!-- Certificates Section -->
-  <section id="certificates" class="py-20 bg-gray-800">
+  <section id="certificates" class="py-20 bg-gray-800 animated-bg" data-aos="fade-up" data-aos-duration="1200">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
-      <div class="mx-auto max-w-2xl lg:text-center">
-        <h2 class="text-3xl font-semibold text-indigo-400">Certificates</h2>
+      <div class="mx-auto max-w-2xl lg:text-center" data-aos="fade-up" data-aos-delay="100">
+        <h2 class="text-3xl font-semibold text-indigo-400 underline-animate">Certificates</h2>
         <p class="mt-2 text-4xl font-semibold tracking-tight text-white sm:text-5xl">
           My Qualifications & Achievements
         </p>
@@ -219,8 +354,8 @@
       </div>
       
       <div class="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div class="bg-gray-700 p-6 rounded-lg">
-          <div class="w-12 h-12 bg-indigo-500 rounded-lg flex items-center justify-center mb-4">
+        <div class="bg-gray-700 p-6 rounded-lg relative" data-aos="zoom-in" data-aos-delay="150">
+          <div class="w-12 h-12 bg-indigo-500 rounded-lg flex items-center justify-center mb-4 glow-animate">
             <i class="fas fa-certificate text-white"></i>
           </div>
           <h3 class="text-xl font-semibold text-white">c++ programming</h3>
@@ -231,14 +366,14 @@
             <a href="https://www.credly.com/badges/042a08f2-6193-40fc-a5fa-0b659b60c150/linked_in_profile"
                target="_blank"
                class="absolute bottom-4 right-4 bg-indigo-600 text-white px-4 py-2 rounded-full shadow-lg text-sm font-semibold opacity-90 hover:bg-white hover:text-indigo-600 hover:scale-105 hover:shadow-2xl transition-all duration-300 flex items-center gap-2">
-              <i class="fa-solid fa-arrow-up-right-from-square text-base"></i>
+              <i class="fa-solid fa-arrow-up-right-from-square text-base spin-blob"></i>
               View Certificate
             </a>
           </div>
-          
+          <div class="card-shimmer"></div>
         </div>
-        <div class="bg-gray-700 p-6 rounded-lg">
-          <div class="w-12 h-12 bg-indigo-500 rounded-lg flex items-center justify-center mb-4">
+        <div class="bg-gray-700 p-6 rounded-lg relative" data-aos="zoom-in" data-aos-delay="200">
+          <div class="w-12 h-12 bg-indigo-500 rounded-lg flex items-center justify-center mb-4 glow-animate">
             <i class="fas fa-certificate text-white"></i>
           </div>
           <h3 class="text-xl font-semibold text-white">Python programming</h3>
@@ -249,14 +384,14 @@
             <a href="https://www.credly.com/badges/2fa4d7fd-fe82-4584-b9b4-83553db38f61/linked_in_profile"
                target="_blank"
                class="absolute bottom-4 right-4 bg-indigo-600 text-white px-4 py-2 rounded-full shadow-lg text-sm font-semibold opacity-90 hover:bg-white hover:text-indigo-600 hover:scale-105 hover:shadow-2xl transition-all duration-300 flex items-center gap-2">
-              <i class="fa-solid fa-arrow-up-right-from-square text-base"></i>
+              <i class="fa-solid fa-arrow-up-right-from-square text-base spin-blob"></i>
               View Certificate
             </a>
           </div>
-          
+          <div class="card-shimmer"></div>
         </div>
-        <div class="bg-gray-700 p-6 rounded-lg">
-          <div class="w-12 h-12 bg-indigo-500 rounded-lg flex items-center justify-center mb-4">
+        <div class="bg-gray-700 p-6 rounded-lg relative" data-aos="zoom-in" data-aos-delay="250">
+          <div class="w-12 h-12 bg-indigo-500 rounded-lg flex items-center justify-center mb-4 glow-animate">
             <i class="fas fa-certificate text-white"></i>
           </div>
           <h3 class="text-xl font-semibold text-white">CS50's </h3>
@@ -267,14 +402,14 @@
             <a href="https://cs50.harvard.edu/certificates/9bf9c1b7-79c8-4d55-a82a-a4f286adadc6"
                target="_blank"
                class="absolute bottom-4 right-4 bg-indigo-600 text-white px-4 py-2 rounded-full shadow-lg text-sm font-semibold opacity-90 hover:bg-white hover:text-indigo-600 hover:scale-105 hover:shadow-2xl transition-all duration-300 flex items-center gap-2">
-              <i class="fa-solid fa-arrow-up-right-from-square text-base"></i>
+              <i class="fa-solid fa-arrow-up-right-from-square text-base spin-blob"></i>
               View Certificate
             </a>
           </div>
-          
+          <div class="card-shimmer"></div>
         </div>
-        <div class="bg-gray-700 p-6 rounded-lg">
-          <div class="w-12 h-12 bg-indigo-500 rounded-lg flex items-center justify-center mb-4">
+        <div class="bg-gray-700 p-6 rounded-lg relative" data-aos="zoom-in" data-aos-delay="300">
+          <div class="w-12 h-12 bg-indigo-500 rounded-lg flex items-center justify-center mb-4 glow-animate">
             <i class="fas fa-certificate text-white"></i>
           </div>
           <h3 class="text-xl font-semibold text-white">FreeCodeCamp Responsive Web Design</h3>
@@ -285,66 +420,63 @@
             <a href="https://www.freecodecamp.org/certification/omartantawy/responsive-web-design"
                target="_blank"
                class="absolute bottom-4 right-4 bg-indigo-600 text-white px-4 py-2 rounded-full shadow-lg text-sm font-semibold opacity-90 hover:bg-white hover:text-indigo-600 hover:scale-105 hover:shadow-2xl transition-all duration-300 flex items-center gap-2">
-              <i class="fa-solid fa-arrow-up-right-from-square text-base"></i>
+              <i class="fa-solid fa-arrow-up-right-from-square text-base spin-blob"></i>
               View Certificate
             </a>
           </div>
-          
+          <div class="card-shimmer"></div>
         </div>
-        
-        
-
       </div>
     </div>
   </section>
 
   <!-- Contact Section -->
-  <section id="contact" class="py-20 bg-gray-900">
+  <section id="contact" class="py-20 bg-gray-900" data-aos="fade-up" data-aos-duration="1200">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
-      <div class="mx-auto max-w-2xl lg:text-center">
-        <h2 class="text-3xl font-semibold text-indigo-400">Contact Me</h2>
+      <div class="mx-auto max-w-2xl lg:text-center" data-aos="fade-up" data-aos-delay="100">
+        <h2 class="text-3xl font-semibold text-indigo-400 underline-animate">Contact Me</h2>
         <p class="mt-2 text-4xl font-semibold tracking-tight text-white sm:text-5xl">Let's Work Together</p>
         <p class="mt-6 text-lg text-gray-300">Feel free to reach out for collaborations or just to say hello!</p>
       </div>
       
-      <div class="mt-12 max-w-2xl mx-auto bg-gray-800 p-8 rounded-lg">
+      <div class="mt-12 max-w-2xl mx-auto bg-gray-800 p-8 rounded-lg animated-bg" data-aos="fade-up" data-aos-delay="200" style="opacity:.97;">
         <form class="space-y-6">
-          <div>
+          <div data-aos="fade-right" data-aos-delay="150">
             <label for="name" class="block text-sm font-medium text-gray-300">Name</label>
             <input type="text" id="name" name="name" class="mt-2 block w-full rounded-lg bg-gray-700 text-white px-4 py-3 focus:border-indigo-500 focus:ring-indigo-500">
           </div>
           
-          <div>
+          <div data-aos="fade-right" data-aos-delay="180">
             <label for="email" class="block text-sm font-medium text-gray-300">Email</label>
             <input type="email" id="email" name="email" class="mt-2 block w-full rounded-lg bg-gray-700 text-white px-4 py-3 focus:border-indigo-500 focus:ring-indigo-500">
           </div>
           
-          <div>
+          <div data-aos="fade-right" data-aos-delay="210">
             <label for="message" class="block text-sm font-medium text-gray-300">Message</label>
             <textarea id="message" name="message" rows="4" class="mt-2 block w-full rounded-lg bg-gray-700 text-white px-4 py-3 focus:border-indigo-500 focus:ring-indigo-500"></textarea>
           </div>
           
-          <button type="submit" class="w-full bg-indigo-600 text-white font-semibold py-3 px-4 rounded-lg hover:bg-indigo-700 transition-colors duration-300">
+          <button type="submit" class="w-full bg-indigo-600 text-white font-semibold py-3 px-4 rounded-lg hover:bg-indigo-700 transition-colors duration-300 animate-pulse" data-aos="fade-up" data-aos-delay="240">
             Send Message
           </button>
         </form>
         
-        <div class="mt-8 flex justify-center gap-6">
+        <div class="mt-8 flex justify-center gap-6" data-aos="fade-up" data-aos-delay="300">
           <a class="text-white text-2xl hover:text-indigo-400 transition-colors duration-300" 
              href="https://github.com/omartantawy360" target="_blank" aria-label="GitHub">
-            <i class="fab fa-github"></i>
+            <i class="fab fa-github animate-spin" style="animation-duration:3.5s"></i>
           </a>
           <a class="text-white text-2xl hover:text-indigo-400 transition-colors duration-300" 
              href="mailto:omartantawy360@gmail.com" aria-label="Email">
-            <i class="fa-solid fa-envelope"></i>
+            <i class="fa-solid fa-envelope fa-beat"></i>
           </a>
           <a class="text-white text-2xl hover:text-indigo-400 transition-colors duration-300" 
              href="https://wa.me/201061720405" target="_blank" aria-label="WhatsApp">
-            <i class="fab fa-whatsapp"></i>
+            <i class="fab fa-whatsapp" ></i>
           </a>
           <a class="text-white text-2xl hover:text-indigo-400 transition-colors duration-300" 
              href="https://www.linkedin.com/in/omar-tantawy-a74a96376" target="_blank" aria-label="LinkedIn">
-            <i class="fab fa-linkedin-in"></i>
+            <i class="fab fa-linkedin-in" ></i>
           </a>
         </div>
       </div>
@@ -352,13 +484,24 @@
   </section>
 
   <!-- Footer -->
-  <footer class="bg-gray-800 py-8">
+  <footer class="bg-gray-800 py-8 animated-bg" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="200" style="opacity:.95">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
       <div class="text-center">
         <p class="text-gray-400">© 2025 Omar Tantawy. All rights reserved.</p>
-        <p class="mt-2 text-sm text-gray-500">Front-End Developer | Creating amazing web experiences</p>
+        <p class="mt-2 text-sm text-gray-500 animate-pulse">Front-End Developer | Creating amazing web experiences</p>
       </div>
     </div>
   </footer>
+  
+  <!-- AOS fade-in/scroll animation library -->
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 1000,
+      once: true,
+      easing: 'ease-in-out-cubic',
+      offset: 80,
+    });
+  </script>
 </body>
 </html>
