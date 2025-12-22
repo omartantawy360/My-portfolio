@@ -440,20 +440,20 @@
       </div>
       
       <div class="mt-12 max-w-2xl mx-auto bg-gray-800 p-8 rounded-lg animated-bg" data-aos="fade-up" data-aos-delay="200" style="opacity:.97;">
-        <form class="space-y-6">
+        <form class="space-y-6" id="contact-form">
           <div data-aos="fade-right" data-aos-delay="150">
             <label for="name" class="block text-sm font-medium text-gray-300">Name</label>
-            <input type="text" id="name" name="name" class="mt-2 block w-full rounded-lg bg-gray-700 text-white px-4 py-3 focus:border-indigo-500 focus:ring-indigo-500">
+            <input type="text" id="name" name="name" class="mt-2 block w-full rounded-lg bg-gray-700 text-white px-4 py-3 focus:border-indigo-500 focus:ring-indigo-500" required>
           </div>
           
           <div data-aos="fade-right" data-aos-delay="180">
             <label for="email" class="block text-sm font-medium text-gray-300">Email</label>
-            <input type="email" id="email" name="email" class="mt-2 block w-full rounded-lg bg-gray-700 text-white px-4 py-3 focus:border-indigo-500 focus:ring-indigo-500">
+            <input type="email" id="email" name="email" class="mt-2 block w-full rounded-lg bg-gray-700 text-white px-4 py-3 focus:border-indigo-500 focus:ring-indigo-500" required>
           </div>
           
           <div data-aos="fade-right" data-aos-delay="210">
             <label for="message" class="block text-sm font-medium text-gray-300">Message</label>
-            <textarea id="message" name="message" rows="4" class="mt-2 block w-full rounded-lg bg-gray-700 text-white px-4 py-3 focus:border-indigo-500 focus:ring-indigo-500"></textarea>
+            <textarea id="message" name="message" rows="4" class="mt-2 block w-full rounded-lg bg-gray-700 text-white px-4 py-3 focus:border-indigo-500 focus:ring-indigo-500" required></textarea>
           </div>
           
           <button type="submit" class="w-full bg-indigo-600 text-white font-semibold py-3 px-4 rounded-lg hover:bg-indigo-700 transition-colors duration-300 animate-pulse" data-aos="fade-up" data-aos-delay="240">
@@ -502,6 +502,35 @@
       easing: 'ease-in-out-cubic',
       offset: 80,
     });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+  <script>
+    (function () {
+      emailjs.init("7tDyC3h17GtQ4mty8"); // حط الـ Public Key هنا
+    })();
+  
+    document
+      .getElementById("contact-form")
+      .addEventListener("submit", function (e) {
+        e.preventDefault();
+  
+        emailjs
+          .sendForm(
+            "service_f6y55p6",   // مثال: gmail_service
+            "template_t9jcx0t",  // مثال: template_abc123
+            this
+          )
+          .then(
+            function () {
+              alert("Message sent successfully ✅");
+            },
+            function (error) {
+              alert("Failed ❌");
+              console.log(error);
+            }
+          );
+      });
   </script>
 </body>
 </html>
