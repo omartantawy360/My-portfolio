@@ -1,702 +1,1316 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Omar Tantawy - Front-End Developer</title>
-  <link rel="stylesheet" href="./src/output.css">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css"/>
-  <style>
-    html {
-      scroll-behavior: smooth;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Omar Tantawy - Front-End Developer</title>
+    <link rel="stylesheet" href="./src/output.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
 
-    /* Whole page fade-in effect */
-    body {
-      opacity: 0;
-      transform: translateY(16px);
-      transition: opacity 1.2s cubic-bezier(.77,0,.18,1) 0.2s, transform 1.2s cubic-bezier(.77,0,.18,1) 0.2s;
-    }
-    body.loaded {
-      opacity: 1;
-      transform: none;
-    }
+      /* Whole page fade-in effect */
+      body {
+        opacity: 0;
+        transform: translateY(16px);
+        transition: opacity 1.2s cubic-bezier(0.77, 0, 0.18, 1) 0.2s,
+          transform 1.2s cubic-bezier(0.77, 0, 0.18, 1) 0.2s;
+      }
+      body.loaded {
+        opacity: 1;
+        transform: none;
+      }
 
-    /* Infinite dark-gradient animation for backgrounds (now using dark blue & gray) */
-    @keyframes rainbowBg {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-    .animated-bg {
-      /* Using a much darker palette with gray and dark blues */
-      background: linear-gradient(
-        -45deg, 
-        #101726,   /* very dark blue */
-        #161f2c,   /* another dark blue */
-        #232b38,   /* dark gray-blue */
-        #222b3e,   /* deep blue gray */
-        #374151,   /* slate/gray */
-        #111827,   /* almost black blue */
-        #222c3a,   /* deep navy */
-        #232b38,   /* repeat for smoother looping */
-        #101726
-      );
-      background-size: 400% 400%;
-      animation: rainbowBg 15s ease-in-out infinite;
-    }
-    /* Floating animation for hero blobs */
-    @keyframes floatY {
-      0% { transform: translateY(0);}
-      50% { transform: translateY(-30px);}
-      100% { transform: translateY(0);}
-    }
-    .float-blob {
-      animation: floatY 6s ease-in-out infinite;
-    }
-    @keyframes spin-blob {
-      0% { transform: rotate(0deg) scale(1);}
-      50% { transform: rotate(30deg) scale(1.08);}
-      100% { transform: rotate(0deg) scale(1);}
-    }
-    .spin-blob {
-      animation: spin-blob 12s linear infinite;
-    }
-    /* Animated underline for section headings - now even darker theme */
-    .underline-animate {
-      position: relative;
-      display: inline-block;
-      overflow: hidden;
-    }
-    .underline-animate::after {
-      content: "";
-      display: block;
-      position: absolute;
-      left: 0; bottom: 0; height: 3px;
-      width: 100%;
-      background: linear-gradient(
-        90deg, 
-        #374151, /* slate/gray */
-        #232b38, /* dark gray-blue */
-        #101726, /* very dark blue */
-        #222b3e, /* deep blue */
-        #232b38,
-        #161f2c
-      );
-      background-size: 200% 100%;
-      animation: underlinemove 4s linear infinite;
-      border-radius: 8px;
-    }
-    @keyframes underlinemove {
-      0% { background-position: 0 0;}
-      100% { background-position: 200% 0;}
-    }
-    /* Glowing icon animation for skills/info grid - dark navy and slate */
-    .glow-animate {
-      animation: glowPulse 2s ease-in-out infinite alternate;
-      box-shadow: 0 0 16px 2px #232b38, 0 0 6px 1px #374151;
-    }
-    @keyframes glowPulse {
-      from { box-shadow: 0 0 16px 2px #232b38, 0 0 6px 1px #374151;}
-      to { box-shadow: 0 0 36px 10px #0c1320, 0 0 12px 4px #232b38;}
-    }
-    /* Project card flicker hover-like background (subtle video-style shimmer, darker) */
-    @keyframes shimmer {
-      0% { background-position: -400px 0;}
-      100% { background-position: 400px 0;}
-    }
-    .card-shimmer {
-      position: absolute;
-      top:0; left:0; right:0; bottom:0;
-      background: linear-gradient(100deg,rgba(16,23,38,0) 60%,rgba(55,65,81,.12) 80%,rgba(16,23,38,0) 100%);
-      background-size: 600px 100%;
-      pointer-events: none;
-      z-index: 1;
-      animation: shimmer 2.8s linear infinite;
-      border-radius: inherit;
-    }
-
-    /* ---- DARKER HEADER OVERRIDE ---- */
-    .header-extra-dark {
-      background: linear-gradient(
-        120deg, 
-        #080e17 0%,    /* almost black */
-        #101726 30%,
-        #0a1325 70%,   /* deep blue-black */
-        #111827 100%
-      ) !important;
-      background-blend-mode: multiply;
-      /* Extra dark overlay for top bar */
-      box-shadow: 0 2px 16px 0 #000d22a8 inset;
-    }
-  </style>
-</head>
-<body class="bg-gray-900 text-white font-sans">
-  <script>
-    // Whole page animation on initial load
-    document.addEventListener("DOMContentLoaded", function() {
-      setTimeout(function() {
-        document.body.classList.add("loaded");
-      }, 100);
-    });
-  </script>
-  <!-- Header & Navigation -->
-  <header class="fixed top-0 left-0 right-0 z-50 backdrop-blur-sm animated-bg header-extra-dark" data-aos="fade-down" data-aos-duration="1100" style="background-blend-mode: multiply;">
-    <nav class="flex items-center justify-between p-6 lg:px-8 flex-wrap">
-      <a href="#" class="text-2xl font-bold text-white uppercase underline-animate">Omar Tantawy</a>
-      <div class="flex gap-x-6 sm:gap-x-8 mt-4 sm:mt-0">
-        <a href="#aboutme" class="text-sm font-semibold text-white hover:text-indigo-400 transition-colors duration-300 underline-animate">About me</a>
-        <a href="#projects" class="text-sm font-semibold text-white hover:text-indigo-400 transition-colors duration-300 underline-animate">Projects</a>
-        <a href="#certificates" class="text-sm font-semibold text-white hover:text-indigo-400 transition-colors duration-300 underline-animate">Certificates</a>
-        <a href="#contact" class="text-sm font-semibold text-white hover:text-indigo-400 transition-colors duration-300 underline-animate">Contact</a>
-      </div>
-    </nav>
-  </header>
-
-  <!-- Hero Section -->
-  <section class="relative pt-10 px-6 lg:px-8 overflow-hidden h-screen">
-    <!-- Top Floating Gradient Blob -->
-    <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80 float-blob">
-      <div class="relative left-[calc(50%-11rem)] aspect-1155/678 w-144.5 -translate-x-1/2 spin-blob animated-bg opacity-40 sm:left-[calc(50%-30rem)] sm:w-288.75"></div>
-    </div>
-    
-    <div class="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
-      <div class="text-center" data-aos="fade-up" data-aos-delay="200" data-aos-duration="1600">
-        <h1 class="text-4xl font-semibold tracking-tight text-white sm:text-6xl">
-          Hello, I'm <span class="text-indigo-400 underline-animate">Omar Tantawy</span><br>
-          <span class="text-indigo-400 underline-animate">Front-End Developer</span>
-        </h1>
-        <p class="mt-8 text-lg font-medium text-gray-400 sm:text-xl animate-pulse">
-          Passionate Front-End developer creating modern, responsive, and interactive web experiences.
-        </p>
-      </div>
-      <!-- From Uiverse.io by Itskrish01 --> 
-<svg width="0" height="0" style="position: absolute;">
-  <defs>
-    <clipPath id="squircleClip" clipPathUnits="objectBoundingBox">
-      <path d="M 0,0.5 C 0,0 0,0 0.5,0 S 1,0 1,0.5 1,1 0.5,1 0,1 0,0.5"></path>
-    </clipPath>
-  </defs>
-</svg>
-
-<div class="relative flex justify-center mt-12" data-aos="fade-up" data-aos-delay="400" data-aos-duration="1600">
-  <div
-    class="absolute inset-0 bg-black/20 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl"
-  ></div>
-
-  <div class="relative flex items-end gap-x-2 p-2">
-    <!-- GitHub -->
-    <div class="relative">
-      <div
-        style="clip-path: url(#squircleClip)"
-        class="w-14 h-14 bg-linear-to-br from-gray-700 to-gray-900 rounded-xl flex items-center justify-center shadow-lg border border-gray-600/50 cursor-pointer transform transition-all duration-300 ease-out hover:scale-110 hover:-translate-y-2 hover:shadow-2xl"
-      >
-        <a href="https://github.com/omartantawy360" target="_blank" class="flex items-center justify-center w-full h-full">
-          <svg
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            class="h-8 w-8 text-white"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
-            ></path>
-          </svg>
-        </a>
-      </div>
-    </div>
-
-    <!-- Gmail -->
-    <div class="relative">
-      <div
-        style="clip-path: url(#squircleClip)"
-        class="w-14 h-14 bg-linear-to-br from-red-600 to-red-800 rounded-xl flex items-center justify-center shadow-lg border border-red-500/50 cursor-pointer transform transition-all duration-300 ease-out hover:scale-110 hover:-translate-y-2 hover:shadow-2xl"
-      >
-        <a href="mailto:omartantawy360@gmail.com" class="flex items-center justify-center w-full h-full">
-          <svg
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            class="h-8 w-8 text-white"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"
-            ></path>
-          </svg>
-        </a>
-      </div>
-    </div>
-
-    <!-- WhatsApp -->
-    <div class="relative">
-      <div
-        style="clip-path: url(#squircleClip)"
-        class="w-14 h-14 bg-linear-to-br from-green-600 to-green-800 rounded-xl flex items-center justify-center shadow-lg border border-green-500/50 cursor-pointer transform transition-all duration-300 ease-out hover:scale-110 hover:-translate-y-2 hover:shadow-2xl"
-      >
-        <a href="https://wa.me/201061720405" target="_blank" class="flex items-center justify-center w-full h-full">
-          <svg
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            class="h-8 w-8 text-white"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.67-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.076 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421-7.403h-.004a9.87 9.87 0 00-4.781 1.158l-.002.001-.403-.122-4.163.992.928-3.385-.002-.003a9.768 9.768 0 011.486-4.169 9.877 9.877 0 0113.656 1.398 9.806 9.806 0 011.098 13.433l-.001.002.122.403-.992 4.163 3.385-.928.003.002c1.77-1.116 3.313-2.544 4.469-4.149a9.874 9.874 0 00-13.375-13.362"
-            ></path>
-          </svg>
-        </a>
-      </div>
-    </div>
-
-    <!-- LinkedIn -->
-    <div class="relative">
-      <div
-        style="clip-path: url(#squircleClip)"
-        class="w-14 h-14 bg-linear-to-br from-blue-600 to-blue-800 rounded-xl flex items-center justify-center shadow-lg border border-blue-500/50 cursor-pointer transform transition-all duration-300 ease-out hover:scale-110 hover:-translate-y-2 hover:shadow-2xl"
-      >
-        <a href="https://www.linkedin.com/in/omar-tantawy-a74a96376" target="_blank" class="flex items-center justify-center w-full h-full">
-          <svg
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            class="h-8 w-8 text-white"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"
-            ></path>
-          </svg>
-        </a>
-      </div>
-    </div>
-  </div>
-</div>
-
-    </div>
-    
-    <!-- Bottom Floating Blob -->
-    <div class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)] float-blob" style="animation-delay:2s;">
-      <div class="relative left-[calc(50%+3rem)] aspect-1155/678 w-144.5 -translate-x-1/2 animated-bg opacity-35 sm:left-[calc(50%+36rem)] sm:w-288.75 z-10 spin-blob"></div>
-    </div>
-  </section>
-
-  <!-- About Me Section -->
-  <section id="aboutme" class="py-20 bg-radial from-black/80 to-blue-950 animated-bg" data-aos="fade-up" data-aos-duration="1200">
-    <div class="mx-auto max-w-7xl px-6 lg:px-8">
-      <div class="mx-auto max-w-2xl lg:text-center" data-aos="fade-up" data-aos-delay="100">
-        <h2 class="text-3xl font-semibold text-indigo-400 underline-animate">About Me</h2>
-        <p class="mt-2 text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-          I'm a Passionate Front-End Developer
-        </p>
-        <p class="mt-6 text-lg text-gray-300">
-          Hi! I'm Omar, a Front-End developer passionate about creating modern, responsive, and interactive web experiences with a focus on clean code and user-friendly interfaces.
-        </p>
-      </div>
-      
-      <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
-        <div class="grid max-w-xl grid-cols-1 gap-8 lg:max-w-none lg:grid-cols-2 lg:gap-y-16">
-          <div class="relative pl-16" data-aos="fade-right" data-aos-delay="200">
-            <div class="absolute top-0 left-0 flex w-10 h-10 items-center justify-center rounded-lg bg-indigo-500 glow-animate">
-              <p>&lt;/&gt;</p>
-            </div>
-            <h3 class="text-lg font-semibold text-white">Web Developer Focused on Modern Front-End</h3>
-            <p class="mt-2 text-gray-400">Passionate about building responsive and user-friendly websites using HTML, CSS, JavaScript, and modern frameworks like Bootstrap, Tailwind, and React.</p>
-          </div>
-          
-          <div class="relative pl-16" data-aos="fade-left" data-aos-delay="300">
-            <div class="absolute top-0 left-0 flex w-10 h-10 items-center justify-center rounded-lg bg-indigo-500 glow-animate">
-              <i class="fas fa-book-open"></i>
-            </div>
-            <h3 class="text-lg font-semibold text-white">Lifelong Learner</h3>
-            <p class="mt-2 text-gray-400">Always eager to learn new technologies and improve my skills to create clean, efficient, and interactive web experiences.</p>
-          </div>
-          
-          <div class="relative pl-16" data-aos="fade-right" data-aos-delay="400">
-            <div class="absolute top-0 left-0 flex w-10 h-10 items-center justify-center rounded-lg bg-indigo-500 glow-animate">
-              <i class="fas fa-briefcase"></i>
-            </div>
-            <h3 class="text-lg font-semibold text-white">Portfolio Projects</h3>
-            <p class="mt-2 text-gray-400">Working on real projects that showcase my design and development skills, from static layouts to dynamic, interactive web apps.</p>
-          </div>
-          
-          <div class="relative pl-16" data-aos="fade-left" data-aos-delay="500">
-            <div class="absolute top-0 left-0 flex w-10 h-10 items-center justify-center rounded-lg bg-indigo-500 glow-animate">
-              <i class="fas fa-lightbulb"></i>
-            </div>
-            <h3 class="text-lg font-semibold text-white">Goal-Oriented & Creative</h3>
-            <p class="mt-2 text-gray-400">Focused on delivering high-quality web solutions and continuously experimenting with new ideas to make my projects unique.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Projects Section -->
-  <section id="projects" class="min-h-screen py-12 bg-gray-900" data-aos="fade-up" data-aos-duration="1200">
-    <div class="w-[90%] mx-auto text-center">
-      <h2 class="text-3xl font-semibold text-indigo-400 underline-animate" data-aos="fade-up" data-aos-delay="100">My Work</h2>
-      <p class="mt-2 text-4xl font-semibold tracking-tight text-white sm:text-5xl" data-aos="fade-up" data-aos-delay="150">
-        Portfolio <span class="text-indigo-400 underline-animate">Projects</span>
-      </p>
-      <p class="mt-6 text-lg text-gray-300" data-aos="fade-up" data-aos-delay="200">Here are some of my recent projects that showcase my skills and experience.</p>
-      
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
-        <!-- Project 1 -->
-        <div class="group relative bg-gray-800 p-6 rounded-lg overflow-hidden transition-all duration-500 hover:scale-[1.02]" data-aos="zoom-in-up" data-aos-delay="100">
-          <img src="./images/avatar.png" alt="" class="w-full h-48  object-cover rounded-md transition-transform duration-500 group-hover:scale-110">
-          <div class="card-shimmer"></div>
-          <div class="absolute inset-0 bg-linear-to-b from-black/80 to-blue-400 rounded-lg flex flex-col justify-center items-center text-center px-6 transition-all duration-500 opacity-0 group-hover:opacity-100">
-            <h3 class="font-semibold mb-4 text-xl">Avatar website</h3>
-            <p class="font-normal text-sm">A website for a responsive avatar website using HTML, CSS</p>
-            <a href="https://omartantawy360.github.io/avatar/" class="mt-6 text-gray-800 text-lg bg-white w-12 h-12 rounded-full flex justify-center items-center transition-all duration-300 hover:bg-indigo-400 hover:text-white shadow-lg" target="_blank">
-              <i class="fa-solid fa-arrow-up-right-from-square spin-blob"></i>
-            </a>
-          </div>
-        </div>
-
-        <!-- Project 2 -->
-        <div class="group relative bg-gray-800 p-6 rounded-lg overflow-hidden transition-all duration-500 hover:scale-[1.02]" data-aos="zoom-in-up" data-aos-delay="150">
-            <img src="./images/shoes.png" alt="" class="w-full h-48  object-cover rounded-md transition-transform duration-500 group-hover:scale-110">
-            <div class="card-shimmer"></div>
-            <div class="absolute inset-0 bg-linear-to-b from-black/80 to-blue-400 rounded-lg flex flex-col justify-center items-center text-center px-6 transition-all duration-500 opacity-0 group-hover:opacity-100">
-            <h3 class="font-semibold mb-4 text-xl">Shoes website</h3>
-            <p class="font-normal text-sm">A website for a responsive shoes website using HTML, CSS</p>
-            <a href="https://omartantawy360.github.io/shoes/" class="mt-6 text-gray-800 text-lg bg-white w-12 h-12 rounded-full flex justify-center items-center transition-all duration-300 hover:bg-indigo-400 hover:text-white shadow-lg" target="_blank">
-              <i class="fa-solid fa-arrow-up-right-from-square spin-blob"></i>
-            </a>
-          </div>
-        </div>
-
-        <!-- Project 3 -->
-        <div class="group relative bg-gray-800 p-6 rounded-lg overflow-hidden transition-all duration-500 hover:scale-[1.02]" data-aos="zoom-in-up" data-aos-delay="200">
-            <img src="./images/strict.png" alt="" class="w-full h-48  object-cover rounded-md transition-transform duration-500 group-hover:scale-110">
-            <div class="card-shimmer"></div>
-            <div class="absolute inset-0 bg-linear-to-b from-black/80 to-blue-400 rounded-lg flex flex-col justify-center items-center text-center px-6 transition-all duration-500 opacity-0 group-hover:opacity-100">
-            <h3 class="font-semibold mb-4 text-xl">Strict website</h3>
-            <p class="font-normal text-sm">A website for a responsive strict website using HTML, CSS without flexbox or grid</p>
-            <a href="https://omartantawy360.github.io/strict-template/" class="mt-6 text-gray-800 text-lg bg-white w-12 h-12 rounded-full flex justify-center items-center transition-all duration-300 hover:bg-indigo-400 hover:text-white shadow-lg" target="_blank">
-              <i class="fa-solid fa-arrow-up-right-from-square spin-blob"></i>
-            </a>
-          </div>
-        </div>
-
-        <!-- Project 4 -->
-        <div class="group relative bg-gray-800 p-6 rounded-lg overflow-hidden transition-all duration-500 hover:scale-[1.02]" data-aos="zoom-in-up" data-aos-delay="250">
-            <img src="./images/Screenshot 2025-12-20 202229.png" alt="" class="w-full h-48  object-cover rounded-md transition-transform duration-500 group-hover:scale-110">
-            <div class="card-shimmer"></div>
-            <div class="absolute inset-0 bg-linear-to-b from-black/80 to-blue-400 rounded-lg flex flex-col justify-center items-center text-center px-6 transition-all duration-500 opacity-0 group-hover:opacity-100">
-            <h3 class="font-semibold mb-4 text-xl">Food Lover website</h3>
-            <p class="font-normal text-sm">A website for a responsive and interactive food lover website using HTML, CSS, and JavaScript</p>
-            <a href="https://omartantawy360.github.io/food-lover/" class="mt-6 text-gray-800 text-lg bg-white w-12 h-12 rounded-full flex justify-center items-center transition-all duration-300 hover:bg-indigo-400 hover:text-white shadow-lg" target="_blank">
-              <i class="fa-solid fa-arrow-up-right-from-square spin-blob"></i>
-            </a>
-          </div>
-        </div>
-
-        <!-- Project 5 -->
-        <div class="group relative bg-gray-800 p-6 rounded-lg overflow-hidden transition-all duration-500 hover:scale-[1.02]" data-aos="zoom-in-up" data-aos-delay="300">
-            <img src="./images/bootstrap.png" alt="" class="w-full h-48  object-cover rounded-md transition-transform duration-500 group-hover:scale-110">
-            <div class="card-shimmer"></div>
-            <div class="absolute inset-0 bg-linear-to-b from-black/80 to-blue-400 rounded-lg flex flex-col justify-center items-center text-center px-6 transition-all duration-500 opacity-0 group-hover:opacity-100">
-            <h3 class="font-semibold mb-4 text-xl">Bootstrap login page</h3>
-            <p class="font-normal text-sm">A login page for a responsive website using Bootstrap</p>
-            <a href="https://omartantawy360.github.io/bootstrap-signup/" class="mt-6 text-gray-800 text-lg bg-white w-12 h-12 rounded-full flex justify-center items-center transition-all duration-300 hover:bg-indigo-400 hover:text-white shadow-lg" target="_blank">
-              <i class="fa-solid fa-arrow-up-right-from-square spin-blob"></i>
-            </a>
-          </div>
-        </div>
-
-        <!-- Project 6 -->
-        <div class="group relative bg-gray-800 p-6 rounded-lg overflow-hidden transition-all duration-500 hover:scale-[1.02]" data-aos="zoom-in-up" data-aos-delay="350">
-            <img src="./images/tailwind.png" alt="" class="w-full h-48  object-cover rounded-md transition-transform duration-500 group-hover:scale-110">
-            <div class="card-shimmer"></div>
-            <div class="absolute inset-0 bg-linear-to-b from-black/80 to-blue-400 rounded-lg flex flex-col justify-center items-center text-center px-6 transition-all duration-500 opacity-0 group-hover:opacity-100">
-            <h3 class="font-semibold mb-4 text-xl">Tailwind landing page</h3>
-            <p class="font-normal text-sm">A landing page for a responsive website using Tailwind with dark mode and light mode</p>
-            <a href="https://omartantawy360.github.io/tailwind-project/" class="mt-6 text-gray-800 text-lg bg-white w-12 h-12 rounded-full flex justify-center items-center transition-all duration-300 hover:bg-indigo-400 hover:text-white shadow-lg" target="_blank">
-              <i class="fa-solid fa-arrow-up-right-from-square spin-blob"></i>
-            </a>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- Certificates Section -->
-  <section id="certificates" class="py-20 bg-gray-800 animated-bg" data-aos="fade-up" data-aos-duration="1200">
-    <div class="mx-auto max-w-7xl px-6 lg:px-8">
-      <div class="mx-auto max-w-2xl lg:text-center" data-aos="fade-up" data-aos-delay="100">
-        <h2 class="text-3xl font-semibold text-indigo-400 underline-animate">Certificates</h2>
-        <p class="mt-2 text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-          My Qualifications & Achievements
-        </p>
-        <p class="mt-6 text-lg text-gray-300">Professional certifications and courses completed to enhance my skills and knowledge in web development.</p>
-      </div>
-      
-      <div class="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div class="bg-gray-700 p-6 rounded-lg relative" data-aos="zoom-in" data-aos-delay="150">
-          <div class="w-12 h-12 bg-indigo-500 rounded-lg flex items-center justify-center mb-4 glow-animate">
-            <i class="fas fa-certificate text-white"></i>
-          </div>
-          <h3 class="text-xl font-semibold text-white">c++ programming</h3>
-          <p class="mt-2 text-gray-400">A course covering the basics of C++ programming language.</p>
-          <div class="relative group mt-6">
-            <img src="./images/c++.png" alt="Front-End Web Development Certificate" 
-                 class="w-full h-52 object-cover rounded-lg shadow-lg border-2 border-indigo-500/40 hover:border-indigo-400 transition duration-300">
-            <a href="https://www.credly.com/badges/042a08f2-6193-40fc-a5fa-0b659b60c150/linked_in_profile"
-               target="_blank"
-               class="absolute bottom-4 right-4 bg-indigo-600 text-white px-4 py-2 rounded-full shadow-lg text-sm font-semibold opacity-90 hover:bg-white hover:text-indigo-600 hover:scale-105 hover:shadow-2xl transition-all duration-300 flex items-center gap-2">
-              <i class="fa-solid fa-arrow-up-right-from-square text-base spin-blob"></i>
-              View Certificate
-            </a>
-          </div>
-          <div class="card-shimmer"></div>
-        </div>
-        <div class="bg-gray-700 p-6 rounded-lg relative" data-aos="zoom-in" data-aos-delay="200">
-          <div class="w-12 h-12 bg-indigo-500 rounded-lg flex items-center justify-center mb-4 glow-animate">
-            <i class="fas fa-certificate text-white"></i>
-          </div>
-          <h3 class="text-xl font-semibold text-white">Python programming</h3>
-          <p class="mt-2 text-gray-400">A course covering the basics of Python programming language.</p>
-          <div class="relative group mt-6">
-            <img src="./images/py.png" alt="Front-End Web Development Certificate" 
-                 class="w-full h-52 object-cover rounded-lg shadow-lg border-2 border-indigo-500/40 hover:border-indigo-400 transition duration-300">
-            <a href="https://www.credly.com/badges/2fa4d7fd-fe82-4584-b9b4-83553db38f61/linked_in_profile"
-               target="_blank"
-               class="absolute bottom-4 right-4 bg-indigo-600 text-white px-4 py-2 rounded-full shadow-lg text-sm font-semibold opacity-90 hover:bg-white hover:text-indigo-600 hover:scale-105 hover:shadow-2xl transition-all duration-300 flex items-center gap-2">
-              <i class="fa-solid fa-arrow-up-right-from-square text-base spin-blob"></i>
-              View Certificate
-            </a>
-          </div>
-          <div class="card-shimmer"></div>
-        </div>
-        <div class="bg-gray-700 p-6 rounded-lg relative" data-aos="zoom-in" data-aos-delay="250">
-          <div class="w-12 h-12 bg-indigo-500 rounded-lg flex items-center justify-center mb-4 glow-animate">
-            <i class="fas fa-certificate text-white"></i>
-          </div>
-          <h3 class="text-xl font-semibold text-white">CS50's </h3>
-          <p class="mt-2 text-gray-400">A course covering the basics of computer science and programming.</p>
-          <div class="relative group mt-6">
-            <img src="./images/cs50.png" alt="Front-End Web Development Certificate" 
-                 class="w-full h-52 object-cover rounded-lg shadow-lg border-2 border-indigo-500/40 hover:border-indigo-400 transition duration-300">
-            <a href="https://cs50.harvard.edu/certificates/9bf9c1b7-79c8-4d55-a82a-a4f286adadc6"
-               target="_blank"
-               class="absolute bottom-4 right-4 bg-indigo-600 text-white px-4 py-2 rounded-full shadow-lg text-sm font-semibold opacity-90 hover:bg-white hover:text-indigo-600 hover:scale-105 hover:shadow-2xl transition-all duration-300 flex items-center gap-2">
-              <i class="fa-solid fa-arrow-up-right-from-square text-base spin-blob"></i>
-              View Certificate
-            </a>
-          </div>
-          <div class="card-shimmer"></div>
-        </div>
-        <div class="bg-gray-700 p-6 rounded-lg relative" data-aos="zoom-in" data-aos-delay="300">
-          <div class="w-12 h-12 bg-indigo-500 rounded-lg flex items-center justify-center mb-4 glow-animate">
-            <i class="fas fa-certificate text-white"></i>
-          </div>
-          <h3 class="text-xl font-semibold text-white">FreeCodeCamp Responsive Web Design</h3>
-          <p class="mt-2 text-gray-400">A course covering the basics of responsive web design.</p>
-          <div class="relative group mt-6">
-            <img src="./images/freecamp.png" alt="Front-End Web Development Certificate" 
-                 class="w-full h-52 object-cover rounded-lg shadow-lg border-2 border-indigo-500/40 hover:border-indigo-400 transition duration-300">
-            <a href="https://www.freecodecamp.org/certification/omartantawy/responsive-web-design"
-               target="_blank"
-               class="absolute bottom-4 right-4 bg-indigo-600 text-white px-4 py-2 rounded-full shadow-lg text-sm font-semibold opacity-90 hover:bg-white hover:text-indigo-600 hover:scale-105 hover:shadow-2xl transition-all duration-300 flex items-center gap-2">
-              <i class="fa-solid fa-arrow-up-right-from-square text-base spin-blob"></i>
-              View Certificate
-            </a>
-          </div>
-          <div class="card-shimmer"></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact Section -->
-  <section id="contact" class="py-20 bg-gray-900" data-aos="fade-up" data-aos-duration="1200">
-    <div class="mx-auto max-w-7xl px-6 lg:px-8">
-      <div class="mx-auto max-w-2xl lg:text-center" data-aos="fade-up" data-aos-delay="100">
-        <h2 class="text-3xl font-semibold text-indigo-400 underline-animate">Contact Me</h2>
-        <p class="mt-2 text-4xl font-semibold tracking-tight text-white sm:text-5xl">Let's Work Together</p>
-        <p class="mt-6 text-lg text-gray-300">Feel free to reach out for collaborations or just to say hello!</p>
-      </div>
-      
-      <div id="form-container" class="mt-12 max-w-2xl mx-auto bg-gray-800 p-8 rounded-lg animated-bg" data-aos="fade-up" data-aos-delay="200" style="opacity:.97;">
-        <form class="space-y-6"  id="contact-form">
-          <div data-aos="fade-right" data-aos-delay="150">
-            <label for="name" class="block text-sm font-medium text-gray-300">Name</label>
-            <input type="text" id="name" name="name" class="mt-2 block w-full rounded-lg bg-gray-700 text-white px-4 py-3 focus:border-indigo-500 focus:ring-indigo-500" required>
-          </div>
-          
-          <div data-aos="fade-right" data-aos-delay="180">
-            <label for="email" class="block text-sm font-medium text-gray-300">Email</label>
-            <input type="email" id="email" name="email" class="mt-2 block w-full rounded-lg bg-gray-700 text-white px-4 py-3 focus:border-indigo-500 focus:ring-indigo-500" required>
-          </div>
-          
-          <div data-aos="fade-right" data-aos-delay="210">
-            <label for="message" class="block text-sm font-medium text-gray-300">Message</label>
-            <textarea id="message" name="message" rows="4" class="mt-2 block w-full rounded-lg bg-gray-700 text-white px-4 py-3 focus:border-indigo-500 focus:ring-indigo-500" required></textarea>
-          </div>
-          
-          <button type="submit" class="w-full bg-indigo-600 text-white font-semibold py-3 px-4 rounded-lg hover:bg-indigo-700 transition-colors duration-300 animate-pulse" data-aos="fade-up" data-aos-delay="240">
-            Send Message
-          </button>
-        </form>
-
-        <div id="contact-message" class="hidden mt-6" role="status" aria-live="polite">
-          <div id="contact-message-card" class="max-w-2xl mx-auto p-4 sm:p-6 rounded-2xl border border-white/10 shadow-2xl backdrop-blur-sm animated-bg transform transition-all duration-300 opacity-0 translate-y-2">
-            <div class="flex flex-col sm:flex-row items-start gap-4">
-              <div id="contact-message-icon" class="p-3 rounded-lg bg-indigo-600 text-white shrink-0">
-          <i class="fa-solid fa-envelope-circle-check text-xl"></i>
-              </div>
-              <div class="flex-1 min-w-0">
-          <p id="contact-message-content" class="font-semibold text-white wrap-break-word">The message has been sent! ✅</p>
-          <p id="contact-message-sub" class="text-sm text-gray-300 mt-1 wrap-break-word">Thanks — I'll get back to you soon.</p>
-              </div>
-              <div class="flex gap-2 items-start w-full sm:w-auto flex-wrap sm:flex-nowrap">
-          <button id="contact-message-new" class="px-3 sm:px-4 py-2 bg-white/5 hover:bg-white/10 text-white rounded-lg text-sm flex-1 sm:flex-none">Send another</button>
-          <button id="contact-message-close" class="px-3 py-2 text-gray-300 hover:text-white text-sm flex-1 sm:flex-none">Close</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="mt-8 flex justify-center gap-6" data-aos="fade-up" data-aos-delay="300">
-          <a class="text-white text-2xl hover:text-indigo-400 transition-colors duration-300" 
-             href="https://github.com/omartantawy360" target="_blank" aria-label="GitHub">
-            <i class="fab fa-github animate-spin" style="animation-duration:3.5s"></i>
-          </a>
-          <a class="text-white text-2xl hover:text-indigo-400 transition-colors duration-300" 
-             href="mailto:omartantawy360@gmail.com" aria-label="Email">
-            <i class="fa-solid fa-envelope fa-beat"></i>
-          </a>
-          <a class="text-white text-2xl hover:text-indigo-400 transition-colors duration-300" 
-             href="https://wa.me/201061720405" target="_blank" aria-label="WhatsApp">
-            <i class="fab fa-whatsapp" ></i>
-          </a>
-          <a class="text-white text-2xl hover:text-indigo-400 transition-colors duration-300" 
-             href="https://www.linkedin.com/in/omar-tantawy-a74a96376" target="_blank" aria-label="LinkedIn">
-            <i class="fab fa-linkedin-in" ></i>
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="bg-gray-800 py-8 animated-bg" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="200" style="opacity:.95">
-    <div class="mx-auto max-w-7xl px-6 lg:px-8">
-      <div class="text-center">
-        <p class="text-gray-400">© 2025 Omar Tantawy. All rights reserved.</p>
-        <p class="mt-2 text-sm text-gray-500 animate-pulse">Front-End Developer | Creating amazing web experiences</p>
-      </div>
-    </div>
-  </footer>
-  
-  <!-- AOS fade-in/scroll animation library -->
-  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-  <script>
-    AOS.init({
-      duration: 1000,
-      once: true,
-      easing: 'ease-in-out-cubic',
-      offset: 80,
-    });
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-
-  <script>
-    (function () {
-      emailjs.init("7tDyC3h17GtQ4mty8"); // حط الـ Public Key هنا
-    })();
-  
-    function showContactMessage(type, mainText, subText) {
-      const wrapper = document.getElementById('form-container');
-      const msg = document.getElementById('contact-message');
-      const card = document.getElementById('contact-message-card');
-      const icon = document.getElementById('contact-message-icon');
-      const content = document.getElementById('contact-message-content');
-      const sub = document.getElementById('contact-message-sub');
-
-      if (content) content.textContent = mainText;
-      if (sub) sub.textContent = subText || '';
-
-      if (icon) {
-        icon.className = 'p-3 rounded-lg text-white shrink-0';
-        if (type === 'success') {
-          icon.classList.add('bg-indigo-600');
-          icon.innerHTML = '<i class="fa-solid fa-envelope-circle-check text-xl"></i>';
-        } else {
-          icon.classList.add('bg-red-600');
-          icon.innerHTML = '<i class="fa-solid fa-circle-exclamation text-xl"></i>';
+      /* Infinite dark-gradient animation for backgrounds (now using dark blue & gray) */
+      @keyframes rainbowBg {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
         }
       }
-
-      if (wrapper && type === 'success') {
-        const f = wrapper.querySelector('form');
-        if (f) f.style.display = 'none';
+      .animated-bg {
+        /* Using a much darker palette with gray and dark blues */
+        background: linear-gradient(
+          -45deg,
+          #101726,
+          /* very dark blue */ #161f2c,
+          /* another dark blue */ #232b38,
+          /* dark gray-blue */ #222b3e,
+          /* deep blue gray */ #374151,
+          /* slate/gray */ #111827,
+          /* almost black blue */ #222c3a,
+          /* deep navy */ #232b38,
+          /* repeat for smoother looping */ #101726
+        );
+        background-size: 400% 400%;
+        animation: rainbowBg 15s ease-in-out infinite;
+      }
+      /* Floating animation for hero blobs */
+      @keyframes floatY {
+        0% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-30px);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+      .float-blob {
+        animation: floatY 6s ease-in-out infinite;
+      }
+      @keyframes spin-blob {
+        0% {
+          transform: rotate(0deg) scale(1);
+        }
+        50% {
+          transform: rotate(30deg) scale(1.08);
+        }
+        100% {
+          transform: rotate(0deg) scale(1);
+        }
+      }
+      .spin-blob {
+        animation: spin-blob 12s linear infinite;
+      }
+      /* Animated underline for section headings - now even darker theme */
+      .underline-animate {
+        position: relative;
+        display: inline-block;
+        overflow: hidden;
+      }
+      .underline-animate::after {
+        content: "";
+        display: block;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        height: 3px;
+        width: 100%;
+        background: linear-gradient(
+          90deg,
+          #374151,
+          /* slate/gray */ #232b38,
+          /* dark gray-blue */ #101726,
+          /* very dark blue */ #222b3e,
+          /* deep blue */ #232b38,
+          #161f2c
+        );
+        background-size: 200% 100%;
+        animation: underlinemove 4s linear infinite;
+        border-radius: 8px;
+      }
+      @keyframes underlinemove {
+        0% {
+          background-position: 0 0;
+        }
+        100% {
+          background-position: 200% 0;
+        }
+      }
+      /* Glowing icon animation for skills/info grid - dark navy and slate */
+      .glow-animate {
+        animation: glowPulse 2s ease-in-out infinite alternate;
+        box-shadow: 0 0 16px 2px #232b38, 0 0 6px 1px #374151;
+      }
+      @keyframes glowPulse {
+        from {
+          box-shadow: 0 0 16px 2px #232b38, 0 0 6px 1px #374151;
+        }
+        to {
+          box-shadow: 0 0 36px 10px #0c1320, 0 0 12px 4px #232b38;
+        }
+      }
+      /* Project card flicker hover-like background (subtle video-style shimmer, darker) */
+      @keyframes shimmer {
+        0% {
+          background-position: -400px 0;
+        }
+        100% {
+          background-position: 400px 0;
+        }
+      }
+      .card-shimmer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          100deg,
+          rgba(16, 23, 38, 0) 60%,
+          rgba(55, 65, 81, 0.12) 80%,
+          rgba(16, 23, 38, 0) 100%
+        );
+        background-size: 600px 100%;
+        pointer-events: none;
+        z-index: 1;
+        animation: shimmer 2.8s linear infinite;
+        border-radius: inherit;
       }
 
-      if (msg && card) {
-        msg.classList.remove('hidden');
-        // small entrance animation
-        setTimeout(() => {
-          card.classList.remove('opacity-0','translate-y-2');
-          card.classList.add('opacity-100','translate-y-0');
-        }, 20);
+      /* ---- DARKER HEADER OVERRIDE ---- */
+      .header-extra-dark {
+        background: linear-gradient(
+          120deg,
+          #080e17 0%,
+          /* almost black */ #101726 30%,
+          #0a1325 70%,
+          /* deep blue-black */ #111827 100%
+        ) !important;
+        background-blend-mode: multiply;
+        /* Extra dark overlay for top bar */
+        box-shadow: 0 2px 16px 0 #000d22a8 inset;
       }
-    }
-
-    function hideContactMessage(instant) {
-      const msg = document.getElementById('contact-message');
-      const card = document.getElementById('contact-message-card');
-      if (!msg || !card) return;
-      // animate out
-      card.classList.add('opacity-0','translate-y-2');
-      card.classList.remove('opacity-100','translate-y-0');
-      setTimeout(() => {
-        if (instant) msg.classList.add('hidden'); else msg.classList.add('hidden');
-      }, 280);
-    }
-
-    document
-      .getElementById("contact-form")
-      .addEventListener("submit", function (e) {
-        e.preventDefault();
-  
-        const form = this;
-        emailjs
-          .sendForm(
-            "service_f6y55p6",   // مثال: gmail_service
-            "template_t9jcx0t",  // مثال: template_abc123
-            form
-          )
-          .then(
-            function () {
-              showContactMessage('success', 'The message has been sent! ✅', "Thanks — I'll get back to you soon.");
-            },
-            function (error) {
-              console.log(error);
-              showContactMessage('error', 'Failed to send. Please try again.', 'If the problem persists contact me directly.');
-            }
-          );
+    </style>
+  </head>
+  <body class="bg-gray-900 text-white font-sans overflow-x-hidden">
+    <script>
+      // Whole page animation on initial load
+      document.addEventListener("DOMContentLoaded", function () {
+        setTimeout(function () {
+          document.body.classList.add("loaded");
+        }, 100);
       });
+    </script>
+    <!-- Header & Navigation -->
+    <header
+      class="fixed top-0 left-0 right-0 z-50 backdrop-blur-sm animated-bg header-extra-dark"
+      data-aos="fade-down"
+      data-aos-duration="1100"
+      style="background-blend-mode: multiply"
+    >
+      <nav class="flex items-center justify-between p-6 lg:px-8 flex-wrap">
+        <a
+          href="#"
+          class="text-2xl font-bold text-white uppercase underline-animate"
+          >Omar Tantawy</a
+        >
+        <div class="flex gap-x-6 sm:gap-x-8 mt-4 sm:mt-0">
+          <a
+            href="#aboutme"
+            class="text-sm font-semibold text-white hover:text-indigo-400 transition-colors duration-300 underline-animate"
+            >About me</a
+          >
+          <a
+            href="#projects"
+            class="text-sm font-semibold text-white hover:text-indigo-400 transition-colors duration-300 underline-animate"
+            >Projects</a
+          >
+          <a
+            href="#certificates"
+            class="text-sm font-semibold text-white hover:text-indigo-400 transition-colors duration-300 underline-animate"
+            >Certificates</a
+          >
+          <a
+            href="#contact"
+            class="text-sm font-semibold text-white hover:text-indigo-400 transition-colors duration-300 underline-animate"
+            >Contact</a
+          >
+        </div>
+      </nav>
+    </header>
 
-    // Actions for message card buttons
-    document.addEventListener('click', function (e) {
-      if (e.target && e.target.id === 'contact-message-new') {
-        hideContactMessage();
-        const wrapper = document.getElementById('form-container');
-        if (wrapper) {
-          const f = wrapper.querySelector('form');
-          if (f) { f.reset(); f.style.display = ''; const first = f.querySelector('input, textarea'); if (first) first.focus(); }
+    <!-- Hero Section -->
+    <section
+      class="relative pt-10 px-6 lg:px-8 overflow-hidden h-screen flex items-center justify-center animated-bg"
+    >
+      <!-- Top Floating Gradient Blob -->
+      <div
+        class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80 float-blob"
+      >
+        <div
+          class="relative left-[calc(50%-11rem)] aspect-1155/678 w-144.5 -translate-x-1/2 spin-blob animated-bg opacity-40 sm:left-[calc(50%-30rem)] sm:w-288.75"
+        ></div>
+      </div>
+
+      <div
+        class="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56 flex flex-col items-center"
+      >
+        <div
+          class="text-center"
+          data-aos="fade-up"
+          data-aos-delay="200"
+          data-aos-duration="1600"
+        >
+          <h1
+            class="text-4xl font-semibold tracking-tight text-white sm:text-6xl"
+          >
+            Hello, I'm
+            <span class="text-indigo-400 underline-animate">Omar Tantawy</span
+            ><br />
+            <span class="text-indigo-400 underline-animate"
+              >Front-End Developer</span
+            >
+          </h1>
+          <p
+            class="mt-8 text-lg font-medium text-gray-400 sm:text-xl animate-pulse"
+          >
+            Passionate Front-End developer creating modern, responsive, and
+            interactive web experiences.
+          </p>
+        </div>
+        <!-- From Uiverse.io by Itskrish01 -->
+        <svg width="0" height="0" style="position: absolute">
+          <defs>
+            <clipPath id="squircleClip" clipPathUnits="objectBoundingBox">
+              <path
+                d="M 0,0.5 C 0,0 0,0 0.5,0 S 1,0 1,0.5 1,1 0.5,1 0,1 0,0.5"
+              ></path>
+            </clipPath>
+          </defs>
+        </svg>
+
+        <div
+          class="relative flex justify-center mt-12 w-fit"
+          data-aos="fade-up"
+          data-aos-delay="400"
+          data-aos-duration="1600"
+        >
+          <div
+            class="absolute inset-0 bg-black/20 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl"
+          ></div>
+
+          <div class="relative flex items-end gap-x-2 p-2">
+            <!-- GitHub -->
+            <div class="relative">
+              <div
+                style="clip-path: url(#squircleClip)"
+                class="w-14 h-14 bg-linear-to-br from-gray-700 to-gray-900 rounded-xl flex items-center justify-center shadow-lg border border-gray-600/50 cursor-pointer transform transition-all duration-300 ease-out hover:scale-110 hover:-translate-y-2 hover:shadow-2xl"
+              >
+                <a
+                  href="https://github.com/omartantawy360"
+                  target="_blank"
+                  class="flex items-center justify-center w-full h-full"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    class="h-8 w-8 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+                    ></path>
+                  </svg>
+                </a>
+              </div>
+            </div>
+
+            <!-- Gmail -->
+            <div class="relative">
+              <div
+                style="clip-path: url(#squircleClip)"
+                class="w-14 h-14 bg-linear-to-br from-red-600 to-red-800 rounded-xl flex items-center justify-center shadow-lg border border-red-500/50 cursor-pointer transform transition-all duration-300 ease-out hover:scale-110 hover:-translate-y-2 hover:shadow-2xl"
+              >
+                <a
+                  href="mailto:omartantawy360@gmail.com"
+                  class="flex items-center justify-center w-full h-full"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    class="h-8 w-8 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"
+                    ></path>
+                  </svg>
+                </a>
+              </div>
+            </div>
+
+            <!-- WhatsApp -->
+            <div class="relative">
+              <div
+                style="clip-path: url(#squircleClip)"
+                class="w-14 h-14 bg-linear-to-br from-green-600 to-green-800 rounded-xl flex items-center justify-center shadow-lg border border-green-500/50 cursor-pointer transform transition-all duration-300 ease-out hover:scale-110 hover:-translate-y-2 hover:shadow-2xl"
+              >
+                <a
+                  href="https://wa.me/201061720405"
+                  target="_blank"
+                  class="flex items-center justify-center w-full h-full"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    class="h-8 w-8 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.67-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.076 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421-7.403h-.004a9.87 9.87 0 00-4.781 1.158l-.002.001-.403-.122-4.163.992.928-3.385-.002-.003a9.768 9.768 0 011.486-4.169 9.877 9.877 0 0113.656 1.398 9.806 9.806 0 011.098 13.433l-.001.002.122.403-.992 4.163 3.385-.928.003.002c1.77-1.116 3.313-2.544 4.469-4.149a9.874 9.874 0 00-13.375-13.362"
+                    ></path>
+                  </svg>
+                </a>
+              </div>
+            </div>
+
+            <!-- LinkedIn -->
+            <div class="relative">
+              <div
+                style="clip-path: url(#squircleClip)"
+                class="w-14 h-14 bg-linear-to-br from-blue-600 to-blue-800 rounded-xl flex items-center justify-center shadow-lg border border-blue-500/50 cursor-pointer transform transition-all duration-300 ease-out hover:scale-110 hover:-translate-y-2 hover:shadow-2xl"
+              >
+                <a
+                  href="https://www.linkedin.com/in/omar-tantawy-a74a96376"
+                  target="_blank"
+                  class="flex items-center justify-center w-full h-full"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    class="h-8 w-8 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"
+                    ></path>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="mt-12 flex gap-x-6"
+          data-aos="fade-up"
+          data-aos-delay="600"
+          data-aos-duration="1600"
+        >
+          <!-- From Uiverse.io by Javierrocadev -->
+          <!-- From Uiverse.io by SmookyDev -->
+
+          <a href="./OMAR-TANTAWY-FlowCV-Resume-20251225.pdf" download>
+            <button
+              style="
+                -webkit-box-reflect: below 0px
+                  linear-gradient(
+                    to bottom,
+                    rgba(0, 0, 0, 0),
+                    rgba(0, 0, 0, 0.4)
+                  );
+              "
+              class="px-10 py-3 bg-linear-to-r from-indigo-500 to-indigo-600 rounded-full shadow-xl group-hover:shadow-2xl group-hover:shadow-indigo-600 shadow-indigo-600 uppercase font-serif tracking-widest relative overflow-hidden group text-transparent cursor-pointer z-10 after:absolute after:rounded-full after:bg-indigo-300 after:h-[85%] after:w-[95%] after:left-1/2 after:top-1/2 after:-translate-x-1/2 after:-translate-y-1/2 hover:saturate-[1.15] active:saturate-[1.4]"
+            >
+              Button
+              <p
+                class="absolute z-40 font-semibold bg-linear-to-r from-indigo-500 to-indigo-600 bg-clip-text text-transparent top-1/2 left-1/2 -translate-x-1/2 group-hover:-translate-y-full h-full w-full transition-all duration-300 -translate-y-[30%] tracking-widest"
+              >
+                My CV
+              </p>
+              <p
+                class="absolute z-40 top-1/2 left-1/2 bg-linear-to-r from-indigo-700 to-indigo-800 bg-clip-text text-transparent -translate-x-1/2 translate-y-full h-full w-full transition-all duration-300 group-hover:-translate-y-[40%] tracking-widest font-extrabold"
+              >
+                tab here
+              </p>
+              <svg
+                class="absolute w-full h-full scale-x-125 rotate-180 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 group-hover:animate-none animate-pulse group-hover:-translate-y-[45%] transition-all duration-300"
+                viewBox="0 0 2400 800"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                version="1.1"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <defs></defs>
+                <g
+                  transform="matrix(1,0,0,1,0,-91.0877685546875)"
+                  fill="url(#sssurf-grad)"
+                >
+                  <path
+                    opacity="0.05"
+                    transform="matrix(1,0,0,1,0,35)"
+                    d="M 0 305.9828838196134 Q 227.6031525693441 450 600 302.17553022897005 Q 1010.7738828515054 450 1200 343.3024459932802 Q 1379.4406250195766 450 1800 320.38902780838214 Q 2153.573162029817 450 2400 314.38564046970816 L 2400 800 L 0 800 L 0 340.3112176762882 Z"
+                  ></path>
+                  <path
+                    opacity="0.21"
+                    transform="matrix(1,0,0,1,0,70)"
+                    d="M 0 305.9828838196134 Q 227.6031525693441 450 600 302.17553022897005 Q 1010.7738828515054 450 1200 343.3024459932802 Q 1379.4406250195766 450 1800 320.38902780838214 Q 2153.573162029817 450 2400 314.38564046970816 L 2400 800 L 0 800 L 0 340.3112176762882 Z"
+                  ></path>
+                  <path
+                    opacity="0.37"
+                    transform="matrix(1,0,0,1,0,105)"
+                    d="M 0 305.9828838196134 Q 227.6031525693441 450 600 302.17553022897005 Q 1010.7738828515054 450 1200 343.3024459932802 Q 1379.4406250195766 450 1800 320.38902780838214 Q 2153.573162029817 450 2400 314.38564046970816 L 2400 800 L 0 800 L 0 340.3112176762882 Z"
+                  ></path>
+                  <path
+                    opacity="0.53"
+                    transform="matrix(1,0,0,1,0,140)"
+                    d="M 0 305.9828838196134 Q 227.6031525693441 450 600 302.17553022897005 Q 1010.7738828515054 450 1200 343.3024459932802 Q 1379.4406250195766 450 1800 320.38902780838214 Q 2153.573162029817 450 2400 314.38564046970816 L 2400 800 L 0 800 L 0 340.3112176762882 Z"
+                  ></path>
+                  <path
+                    opacity="0.68"
+                    transform="matrix(1,0,0,1,0,175)"
+                    d="M 0 305.9828838196134 Q 227.6031525693441 450 600 302.17553022897005 Q 1010.7738828515054 450 1200 343.3024459932802 Q 1379.4406250195766 450 1800 320.38902780838214 Q 2153.573162029817 450 2400 314.38564046970816 L 2400 800 L 0 800 L 0 340.3112176762882 Z"
+                  ></path>
+                  <path
+                    opacity="0.84"
+                    transform="matrix(1,0,0,1,0,210)"
+                    d="M 0 305.9828838196134 Q 227.6031525693441 450 600 302.17553022897005 Q 1010.7738828515054 450 1200 343.3024459932802 Q 1379.4406250195766 450 1800 320.38902780838214 Q 2153.573162029817 450 2400 314.38564046970816 L 2400 800 L 0 800 L 0 340.3112176762882 Z"
+                  ></path>
+                  <path
+                    opacity="1"
+                    transform="matrix(1,0,0,1,0,245)"
+                    d="M 0 305.9828838196134 Q 227.6031525693441 450 600 302.17553022897005 Q 1010.7738828515054 450 1200 343.3024459932802 Q 1379.4406250195766 450 1800 320.38902780838214 Q 2153.573162029817 450 2400 314.38564046970816 L 2400 800 L 0 800 L 0 340.3112176762882 Z"
+                  ></path>
+                </g>
+              </svg>
+              <svg
+                class="absolute w-full h-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-[30%] group-hover:-translate-y-[33%] group-hover:scale-95 transition-all duration-500 z-40 fill-indigo-500"
+                viewBox="0 0 1440 320"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0,288L9.2,250.7C18.5,213,37,139,55,133.3C73.8,128,92,192,111,224C129.2,256,148,256,166,256C184.6,256,203,256,222,250.7C240,245,258,235,277,213.3C295.4,192,314,160,332,170.7C350.8,181,369,235,388,229.3C406.2,224,425,160,443,122.7C461.5,85,480,75,498,74.7C516.9,75,535,85,554,101.3C572.3,117,591,139,609,170.7C627.7,203,646,245,665,256C683.1,267,702,245,720,245.3C738.5,245,757,267,775,266.7C793.8,267,812,245,831,234.7C849.2,224,868,224,886,218.7C904.6,213,923,203,942,170.7C960,139,978,85,997,53.3C1015.4,21,1034,11,1052,48C1070.8,85,1089,171,1108,197.3C1126.2,224,1145,192,1163,197.3C1181.5,203,1200,245,1218,224C1236.9,203,1255,117,1274,106.7C1292.3,96,1311,160,1329,170.7C1347.7,181,1366,139,1385,128C1403.1,117,1422,139,1431,149.3L1440,160L1440,320L1430.8,320C1421.5,320,1403,320,1385,320C1366.2,320,1348,320,1329,320C1310.8,320,1292,320,1274,320C1255.4,320,1237,320,1218,320C1200,320,1182,320,1163,320C1144.6,320,1126,320,1108,320C1089.2,320,1071,320,1052,320C1033.8,320,1015,320,997,320C978.5,320,960,320,942,320C923.1,320,905,320,886,320C867.7,320,849,320,831,320C812.3,320,794,320,775,320C756.9,320,738,320,720,320C701.5,320,683,320,665,320C646.2,320,628,320,609,320C590.8,320,572,320,554,320C535.4,320,517,320,498,320C480,320,462,320,443,320C424.6,320,406,320,388,320C369.2,320,351,320,332,320C313.8,320,295,320,277,320C258.5,320,240,320,222,320C203.1,320,185,320,166,320C147.7,320,129,320,111,320C92.3,320,74,320,55,320C36.9,320,18,320,9,320L0,320Z"
+                  fill-opacity="1"
+                ></path>
+              </svg>
+            </button>
+          </a>
+
+          <button
+            class="group group-hover:before:duration-500 group-hover:after:duration-500 after:duration-500 hover:border-indigo-300 hover:before:[box-shadow:20px_20px_20px_30px_#4f46e5] duration-500 before:duration-500 hover:duration-500 underline underline-offset-2 hover:after:-right-8 hover:before:right-12 hover:before:-bottom-8 hover:before:blur hover:underline hover:underline-offset-4 origin-left hover:decoration-2 hover:text-indigo-300 relative bg-neutral-800 h-16 w-64 border text-left p-3 text-gray-50 text-base font-bold rounded-lg overflow-hidden before:absolute before:w-12 before:h-12 before:content[''] before:right-1 before:top-1 before:z-10 before:bg-indigo-500 before:rounded-full before:blur-lg after:absolute after:z-10 after:w-20 after:h-20 after:content[''] after:bg-indigo-300 after:right-8 after:top-3 after:rounded-full after:blur-lg"
+          >
+            <a href="#aboutme">See more</a>
+          </button>
+          <!-- From Uiverse.io by nathAd17 -->
+        </div>
+      </div>
+
+      <!-- Bottom Floating Blob -->
+      <div
+        class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)] float-blob"
+        style="animation-delay: 2s"
+      >
+        <div
+          class="relative left-[calc(50%+3rem)] aspect-1155/678 w-144.5 -translate-x-1/2 animated-bg opacity-35 sm:left-[calc(50%+36rem)] sm:w-288.75 z-10 spin-blob"
+        ></div>
+      </div>
+    </section>
+
+    <!-- About Me Section -->
+    <section
+      id="aboutme"
+      class="py-20 bg-radial from-black/80 to-blue-950 animated-bg"
+      data-aos="fade-up"
+      data-aos-duration="1200"
+    >
+      <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <div
+          class="mx-auto max-w-2xl lg:text-center"
+          data-aos="fade-up"
+          data-aos-delay="100"
+        >
+          <h2 class="text-3xl font-semibold text-indigo-400 underline-animate">
+            About Me
+          </h2>
+          <p
+            class="mt-2 text-4xl font-semibold tracking-tight text-white sm:text-5xl"
+          >
+            I'm a Passionate Front-End Developer
+          </p>
+          <p class="mt-6 text-lg text-gray-300">
+            Hi! I'm Omar, a Front-End developer passionate about creating
+            modern, responsive, and interactive web experiences with a focus on
+            clean code and user-friendly interfaces.
+          </p>
+        </div>
+
+        <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
+          <div
+            class="grid max-w-xl grid-cols-1 gap-8 lg:max-w-none lg:grid-cols-2 lg:gap-y-16"
+          >
+            <div
+              class="relative pl-16"
+              data-aos="fade-right"
+              data-aos-delay="200"
+            >
+              <div
+                class="absolute top-0 left-0 flex w-10 h-10 items-center justify-center rounded-lg bg-indigo-500 glow-animate"
+              >
+                <p>&lt;/&gt;</p>
+              </div>
+              <h3 class="text-lg font-semibold text-white">
+                Web Developer Focused on Modern Front-End
+              </h3>
+              <p class="mt-2 text-gray-400">
+                Passionate about building responsive and user-friendly websites
+                using HTML, CSS, JavaScript, and modern frameworks like
+                Bootstrap, Tailwind, and React.
+              </p>
+            </div>
+
+            <div
+              class="relative pl-16"
+              data-aos="fade-left"
+              data-aos-delay="300"
+            >
+              <div
+                class="absolute top-0 left-0 flex w-10 h-10 items-center justify-center rounded-lg bg-indigo-500 glow-animate"
+              >
+                <i class="fas fa-book-open"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-white">Lifelong Learner</h3>
+              <p class="mt-2 text-gray-400">
+                Always eager to learn new technologies and improve my skills to
+                create clean, efficient, and interactive web experiences.
+              </p>
+            </div>
+
+            <div
+              class="relative pl-16"
+              data-aos="fade-right"
+              data-aos-delay="400"
+            >
+              <div
+                class="absolute top-0 left-0 flex w-10 h-10 items-center justify-center rounded-lg bg-indigo-500 glow-animate"
+              >
+                <i class="fas fa-briefcase"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-white">
+                Portfolio Projects
+              </h3>
+              <p class="mt-2 text-gray-400">
+                Working on real projects that showcase my design and development
+                skills, from static layouts to dynamic, interactive web apps.
+              </p>
+            </div>
+
+            <div
+              class="relative pl-16"
+              data-aos="fade-left"
+              data-aos-delay="500"
+            >
+              <div
+                class="absolute top-0 left-0 flex w-10 h-10 items-center justify-center rounded-lg bg-indigo-500 glow-animate"
+              >
+                <i class="fas fa-lightbulb"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-white">
+                Goal-Oriented & Creative
+              </h3>
+              <p class="mt-2 text-gray-400">
+                Focused on delivering high-quality web solutions and
+                continuously experimenting with new ideas to make my projects
+                unique.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section
+      id="projects"
+      class="min-h-screen py-12 bg-gray-900"
+      data-aos="fade-up"
+      data-aos-duration="1200"
+    >
+      <div class="w-[90%] mx-auto text-center">
+        <h2
+          class="text-3xl font-semibold text-indigo-400 underline-animate"
+          data-aos="fade-up"
+          data-aos-delay="100"
+        >
+          My Work
+        </h2>
+        <p
+          class="mt-2 text-4xl font-semibold tracking-tight text-white sm:text-5xl"
+          data-aos="fade-up"
+          data-aos-delay="150"
+        >
+          Portfolio
+          <span class="text-indigo-400 underline-animate">Projects</span>
+        </p>
+        <p
+          class="mt-6 text-lg text-gray-300"
+          data-aos="fade-up"
+          data-aos-delay="200"
+        >
+          Here are some of my recent projects that showcase my skills and
+          experience.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+          <!-- Project 1 -->
+          <div
+            class="group relative bg-gray-800 p-6 rounded-lg overflow-hidden transition-all duration-500 hover:scale-[1.02]"
+            data-aos="zoom-in-up"
+            data-aos-delay="100"
+          >
+            <img
+              src="./images/avatar.png"
+              alt=""
+              class="w-full h-48 object-cover rounded-md transition-transform duration-500 group-hover:scale-110"
+            />
+            <div class="card-shimmer"></div>
+            <div
+              class="absolute inset-0 bg-linear-to-b from-black/80 to-blue-400 rounded-lg flex flex-col justify-center items-center text-center px-6 transition-all duration-500 opacity-0 group-hover:opacity-100"
+            >
+              <h3 class="font-semibold mb-4 text-xl">Avatar website</h3>
+              <p class="font-normal text-sm">
+                A website for a responsive avatar website using HTML, CSS
+              </p>
+              <a
+                href="https://omartantawy360.github.io/avatar/"
+                class="mt-6 text-gray-800 text-lg bg-white w-12 h-12 rounded-full flex justify-center items-center transition-all duration-300 hover:bg-indigo-400 hover:text-white shadow-lg"
+                target="_blank"
+              >
+                <i class="fa-solid fa-arrow-up-right-from-square spin-blob"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Project 2 -->
+          <div
+            class="group relative bg-gray-800 p-6 rounded-lg overflow-hidden transition-all duration-500 hover:scale-[1.02]"
+            data-aos="zoom-in-up"
+            data-aos-delay="150"
+          >
+            <img
+              src="./images/shoes.png"
+              alt=""
+              class="w-full h-48 object-cover rounded-md transition-transform duration-500 group-hover:scale-110"
+            />
+            <div class="card-shimmer"></div>
+            <div
+              class="absolute inset-0 bg-linear-to-b from-black/80 to-blue-400 rounded-lg flex flex-col justify-center items-center text-center px-6 transition-all duration-500 opacity-0 group-hover:opacity-100"
+            >
+              <h3 class="font-semibold mb-4 text-xl">Shoes website</h3>
+              <p class="font-normal text-sm">
+                A website for a responsive shoes website using HTML, CSS
+              </p>
+              <a
+                href="https://omartantawy360.github.io/shoes/"
+                class="mt-6 text-gray-800 text-lg bg-white w-12 h-12 rounded-full flex justify-center items-center transition-all duration-300 hover:bg-indigo-400 hover:text-white shadow-lg"
+                target="_blank"
+              >
+                <i class="fa-solid fa-arrow-up-right-from-square spin-blob"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Project 3 -->
+          <div
+            class="group relative bg-gray-800 p-6 rounded-lg overflow-hidden transition-all duration-500 hover:scale-[1.02]"
+            data-aos="zoom-in-up"
+            data-aos-delay="200"
+          >
+            <img
+              src="./images/strict.png"
+              alt=""
+              class="w-full h-48 object-cover rounded-md transition-transform duration-500 group-hover:scale-110"
+            />
+            <div class="card-shimmer"></div>
+            <div
+              class="absolute inset-0 bg-linear-to-b from-black/80 to-blue-400 rounded-lg flex flex-col justify-center items-center text-center px-6 transition-all duration-500 opacity-0 group-hover:opacity-100"
+            >
+              <h3 class="font-semibold mb-4 text-xl">Strict website</h3>
+              <p class="font-normal text-sm">
+                A website for a responsive strict website using HTML, CSS
+                without flexbox or grid
+              </p>
+              <a
+                href="https://omartantawy360.github.io/strict-template/"
+                class="mt-6 text-gray-800 text-lg bg-white w-12 h-12 rounded-full flex justify-center items-center transition-all duration-300 hover:bg-indigo-400 hover:text-white shadow-lg"
+                target="_blank"
+              >
+                <i class="fa-solid fa-arrow-up-right-from-square spin-blob"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Project 4 -->
+          <div
+            class="group relative bg-gray-800 p-6 rounded-lg overflow-hidden transition-all duration-500 hover:scale-[1.02]"
+            data-aos="zoom-in-up"
+            data-aos-delay="250"
+          >
+            <img
+              src="./images/Screenshot 2025-12-20 202229.png"
+              alt=""
+              class="w-full h-48 object-cover rounded-md transition-transform duration-500 group-hover:scale-110"
+            />
+            <div class="card-shimmer"></div>
+            <div
+              class="absolute inset-0 bg-linear-to-b from-black/80 to-blue-400 rounded-lg flex flex-col justify-center items-center text-center px-6 transition-all duration-500 opacity-0 group-hover:opacity-100"
+            >
+              <h3 class="font-semibold mb-4 text-xl">Food Lover website</h3>
+              <p class="font-normal text-sm">
+                A website for a responsive and interactive food lover website
+                using HTML, CSS, and JavaScript
+              </p>
+              <a
+                href="https://omartantawy360.github.io/food-lover/"
+                class="mt-6 text-gray-800 text-lg bg-white w-12 h-12 rounded-full flex justify-center items-center transition-all duration-300 hover:bg-indigo-400 hover:text-white shadow-lg"
+                target="_blank"
+              >
+                <i class="fa-solid fa-arrow-up-right-from-square spin-blob"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Project 5 -->
+          <div
+            class="group relative bg-gray-800 p-6 rounded-lg overflow-hidden transition-all duration-500 hover:scale-[1.02]"
+            data-aos="zoom-in-up"
+            data-aos-delay="300"
+          >
+            <img
+              src="./images/bootstrap.png"
+              alt=""
+              class="w-full h-48 object-cover rounded-md transition-transform duration-500 group-hover:scale-110"
+            />
+            <div class="card-shimmer"></div>
+            <div
+              class="absolute inset-0 bg-linear-to-b from-black/80 to-blue-400 rounded-lg flex flex-col justify-center items-center text-center px-6 transition-all duration-500 opacity-0 group-hover:opacity-100"
+            >
+              <h3 class="font-semibold mb-4 text-xl">Bootstrap login page</h3>
+              <p class="font-normal text-sm">
+                A login page for a responsive website using Bootstrap
+              </p>
+              <a
+                href="https://omartantawy360.github.io/bootstrap-signup/"
+                class="mt-6 text-gray-800 text-lg bg-white w-12 h-12 rounded-full flex justify-center items-center transition-all duration-300 hover:bg-indigo-400 hover:text-white shadow-lg"
+                target="_blank"
+              >
+                <i class="fa-solid fa-arrow-up-right-from-square spin-blob"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Project 6 -->
+          <div
+            class="group relative bg-gray-800 p-6 rounded-lg overflow-hidden transition-all duration-500 hover:scale-[1.02]"
+            data-aos="zoom-in-up"
+            data-aos-delay="350"
+          >
+            <img
+              src="./images/tailwind.png"
+              alt=""
+              class="w-full h-48 object-cover rounded-md transition-transform duration-500 group-hover:scale-110"
+            />
+            <div class="card-shimmer"></div>
+            <div
+              class="absolute inset-0 bg-linear-to-b from-black/80 to-blue-400 rounded-lg flex flex-col justify-center items-center text-center px-6 transition-all duration-500 opacity-0 group-hover:opacity-100"
+            >
+              <h3 class="font-semibold mb-4 text-xl">Tailwind landing page</h3>
+              <p class="font-normal text-sm">
+                A landing page for a responsive website using Tailwind with dark
+                mode and light mode
+              </p>
+              <a
+                href="https://omartantawy360.github.io/tailwind-project/"
+                class="mt-6 text-gray-800 text-lg bg-white w-12 h-12 rounded-full flex justify-center items-center transition-all duration-300 hover:bg-indigo-400 hover:text-white shadow-lg"
+                target="_blank"
+              >
+                <i class="fa-solid fa-arrow-up-right-from-square spin-blob"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Certificates Section -->
+    <section
+      id="certificates"
+      class="py-20 bg-gray-800 animated-bg"
+      data-aos="fade-up"
+      data-aos-duration="1200"
+    >
+      <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <div
+          class="mx-auto max-w-2xl lg:text-center"
+          data-aos="fade-up"
+          data-aos-delay="100"
+        >
+          <h2 class="text-3xl font-semibold text-indigo-400 underline-animate">
+            Certificates
+          </h2>
+          <p
+            class="mt-2 text-4xl font-semibold tracking-tight text-white sm:text-5xl"
+          >
+            My Qualifications & Achievements
+          </p>
+          <p class="mt-6 text-lg text-gray-300">
+            Professional certifications and courses completed to enhance my
+            skills and knowledge in web development.
+          </p>
+        </div>
+
+        <div class="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div
+            class="bg-gray-700 p-6 rounded-lg relative"
+            data-aos="zoom-in"
+            data-aos-delay="150"
+          >
+            <div
+              class="w-12 h-12 bg-indigo-500 rounded-lg flex items-center justify-center mb-4 glow-animate"
+            >
+              <i class="fas fa-certificate text-white"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-white">c++ programming</h3>
+            <p class="mt-2 text-gray-400">
+              A course covering the basics of C++ programming language.
+            </p>
+            <div class="relative group mt-6">
+              <img
+                src="./images/c++.png"
+                alt="Front-End Web Development Certificate"
+                class="w-full h-52 object-cover rounded-lg shadow-lg border-2 border-indigo-500/40 hover:border-indigo-400 transition duration-300"
+              />
+              <a
+                href="https://www.credly.com/badges/042a08f2-6193-40fc-a5fa-0b659b60c150/linked_in_profile"
+                target="_blank"
+                class="absolute bottom-4 right-4 bg-indigo-600 text-white px-4 py-2 rounded-full shadow-lg text-sm font-semibold opacity-90 hover:bg-white hover:text-indigo-600 hover:scale-105 hover:shadow-2xl transition-all duration-300 flex items-center gap-2"
+              >
+                <i
+                  class="fa-solid fa-arrow-up-right-from-square text-base spin-blob"
+                ></i>
+                View Certificate
+              </a>
+            </div>
+            <div class="card-shimmer"></div>
+          </div>
+          <div
+            class="bg-gray-700 p-6 rounded-lg relative"
+            data-aos="zoom-in"
+            data-aos-delay="200"
+          >
+            <div
+              class="w-12 h-12 bg-indigo-500 rounded-lg flex items-center justify-center mb-4 glow-animate"
+            >
+              <i class="fas fa-certificate text-white"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-white">Python programming</h3>
+            <p class="mt-2 text-gray-400">
+              A course covering the basics of Python programming language.
+            </p>
+            <div class="relative group mt-6">
+              <img
+                src="./images/py.png"
+                alt="Front-End Web Development Certificate"
+                class="w-full h-52 object-cover rounded-lg shadow-lg border-2 border-indigo-500/40 hover:border-indigo-400 transition duration-300"
+              />
+              <a
+                href="https://www.credly.com/badges/2fa4d7fd-fe82-4584-b9b4-83553db38f61/linked_in_profile"
+                target="_blank"
+                class="absolute bottom-4 right-4 bg-indigo-600 text-white px-4 py-2 rounded-full shadow-lg text-sm font-semibold opacity-90 hover:bg-white hover:text-indigo-600 hover:scale-105 hover:shadow-2xl transition-all duration-300 flex items-center gap-2"
+              >
+                <i
+                  class="fa-solid fa-arrow-up-right-from-square text-base spin-blob"
+                ></i>
+                View Certificate
+              </a>
+            </div>
+            <div class="card-shimmer"></div>
+          </div>
+          <div
+            class="bg-gray-700 p-6 rounded-lg relative"
+            data-aos="zoom-in"
+            data-aos-delay="250"
+          >
+            <div
+              class="w-12 h-12 bg-indigo-500 rounded-lg flex items-center justify-center mb-4 glow-animate"
+            >
+              <i class="fas fa-certificate text-white"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-white">CS50's</h3>
+            <p class="mt-2 text-gray-400">
+              A course covering the basics of computer science and programming.
+            </p>
+            <div class="relative group mt-6">
+              <img
+                src="./images/cs50.png"
+                alt="Front-End Web Development Certificate"
+                class="w-full h-52 object-cover rounded-lg shadow-lg border-2 border-indigo-500/40 hover:border-indigo-400 transition duration-300"
+              />
+              <a
+                href="https://cs50.harvard.edu/certificates/9bf9c1b7-79c8-4d55-a82a-a4f286adadc6"
+                target="_blank"
+                class="absolute bottom-4 right-4 bg-indigo-600 text-white px-4 py-2 rounded-full shadow-lg text-sm font-semibold opacity-90 hover:bg-white hover:text-indigo-600 hover:scale-105 hover:shadow-2xl transition-all duration-300 flex items-center gap-2"
+              >
+                <i
+                  class="fa-solid fa-arrow-up-right-from-square text-base spin-blob"
+                ></i>
+                View Certificate
+              </a>
+            </div>
+            <div class="card-shimmer"></div>
+          </div>
+          <div
+            class="bg-gray-700 p-6 rounded-lg relative"
+            data-aos="zoom-in"
+            data-aos-delay="300"
+          >
+            <div
+              class="w-12 h-12 bg-indigo-500 rounded-lg flex items-center justify-center mb-4 glow-animate"
+            >
+              <i class="fas fa-certificate text-white"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-white">
+              FreeCodeCamp Responsive Web Design
+            </h3>
+            <p class="mt-2 text-gray-400">
+              A course covering the basics of responsive web design.
+            </p>
+            <div class="relative group mt-6">
+              <img
+                src="./images/freecamp.png"
+                alt="Front-End Web Development Certificate"
+                class="w-full h-52 object-cover rounded-lg shadow-lg border-2 border-indigo-500/40 hover:border-indigo-400 transition duration-300"
+              />
+              <a
+                href="https://www.freecodecamp.org/certification/omartantawy/responsive-web-design"
+                target="_blank"
+                class="absolute bottom-4 right-4 bg-indigo-600 text-white px-4 py-2 rounded-full shadow-lg text-sm font-semibold opacity-90 hover:bg-white hover:text-indigo-600 hover:scale-105 hover:shadow-2xl transition-all duration-300 flex items-center gap-2"
+              >
+                <i
+                  class="fa-solid fa-arrow-up-right-from-square text-base spin-blob"
+                ></i>
+                View Certificate
+              </a>
+            </div>
+            <div class="card-shimmer"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section
+      id="contact"
+      class="py-20 bg-gray-900"
+      data-aos="fade-up"
+      data-aos-duration="1200"
+    >
+      <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <div
+          class="mx-auto max-w-2xl lg:text-center"
+          data-aos="fade-up"
+          data-aos-delay="100"
+        >
+          <h2 class="text-3xl font-semibold text-indigo-400 underline-animate">
+            Contact Me
+          </h2>
+          <p
+            class="mt-2 text-4xl font-semibold tracking-tight text-white sm:text-5xl"
+          >
+            Let's Work Together
+          </p>
+          <p class="mt-6 text-lg text-gray-300">
+            Feel free to reach out for collaborations or just to say hello!
+          </p>
+        </div>
+
+        <div
+          id="form-container"
+          class="mt-12 max-w-2xl mx-auto bg-gray-800 p-8 rounded-lg animated-bg"
+          data-aos="fade-up"
+          data-aos-delay="200"
+          style="opacity: 0.97"
+        >
+          <form class="space-y-6" id="contact-form">
+            <div data-aos="fade-right" data-aos-delay="150">
+              <label for="name" class="block text-sm font-medium text-gray-300"
+                >Name</label
+              >
+              <input
+                type="text"
+                id="name"
+                name="name"
+                class="mt-2 block w-full rounded-lg bg-gray-700 text-white px-4 py-3 focus:border-indigo-500 focus:ring-indigo-500"
+                required
+              />
+            </div>
+
+            <div data-aos="fade-right" data-aos-delay="180">
+              <label for="email" class="block text-sm font-medium text-gray-300"
+                >Email</label
+              >
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="mt-2 block w-full rounded-lg bg-gray-700 text-white px-4 py-3 focus:border-indigo-500 focus:ring-indigo-500"
+                required
+              />
+            </div>
+
+            <div data-aos="fade-right" data-aos-delay="210">
+              <label
+                for="message"
+                class="block text-sm font-medium text-gray-300"
+                >Message</label
+              >
+              <textarea
+                id="message"
+                name="message"
+                rows="4"
+                class="mt-2 block w-full rounded-lg bg-gray-700 text-white px-4 py-3 focus:border-indigo-500 focus:ring-indigo-500"
+                required
+              ></textarea>
+            </div>
+
+            <button
+              type="submit"
+              class="w-full bg-indigo-600 text-white font-semibold py-3 px-4 rounded-lg hover:bg-indigo-700 transition-colors duration-300 animate-pulse"
+              data-aos="fade-up"
+              data-aos-delay="240"
+            >
+              Send Message
+            </button>
+          </form>
+
+          <div
+            id="contact-message"
+            class="hidden mt-6"
+            role="status"
+            aria-live="polite"
+          >
+            <div
+              id="contact-message-card"
+              class="max-w-2xl mx-auto p-4 sm:p-6 rounded-2xl border border-white/10 shadow-2xl backdrop-blur-sm animated-bg transform transition-all duration-300 opacity-0 translate-y-2"
+            >
+              <div class="flex flex-col sm:flex-row items-start gap-4">
+                <div
+                  id="contact-message-icon"
+                  class="p-3 rounded-lg bg-indigo-600 text-white shrink-0"
+                >
+                  <i class="fa-solid fa-envelope-circle-check text-xl"></i>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <p
+                    id="contact-message-content"
+                    class="font-semibold text-white wrap-break-word"
+                  >
+                    The message has been sent! ✅
+                  </p>
+                  <p
+                    id="contact-message-sub"
+                    class="text-sm text-gray-300 mt-1 wrap-break-word"
+                  >
+                    Thanks — I'll get back to you soon.
+                  </p>
+                </div>
+                <div
+                  class="flex gap-2 items-start w-full sm:w-auto flex-wrap sm:flex-nowrap"
+                >
+                  <button
+                    id="contact-message-new"
+                    class="px-3 sm:px-4 py-2 bg-white/5 hover:bg-white/10 text-white rounded-lg text-sm flex-1 sm:flex-none"
+                  >
+                    Send another
+                  </button>
+                  <button
+                    id="contact-message-close"
+                    class="px-3 py-2 text-gray-300 hover:text-white text-sm flex-1 sm:flex-none"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="mt-8 flex justify-center gap-6"
+            data-aos="fade-up"
+            data-aos-delay="300"
+          >
+            <a
+              class="text-white text-2xl hover:text-indigo-400 transition-colors duration-300"
+              href="https://github.com/omartantawy360"
+              target="_blank"
+              aria-label="GitHub"
+            >
+              <i
+                class="fab fa-github animate-spin"
+                style="animation-duration: 3.5s"
+              ></i>
+            </a>
+            <a
+              class="text-white text-2xl hover:text-indigo-400 transition-colors duration-300"
+              href="mailto:omartantawy360@gmail.com"
+              aria-label="Email"
+            >
+              <i class="fa-solid fa-envelope fa-beat"></i>
+            </a>
+            <a
+              class="text-white text-2xl hover:text-indigo-400 transition-colors duration-300"
+              href="https://wa.me/201061720405"
+              target="_blank"
+              aria-label="WhatsApp"
+            >
+              <i class="fab fa-whatsapp"></i>
+            </a>
+            <a
+              class="text-white text-2xl hover:text-indigo-400 transition-colors duration-300"
+              href="https://www.linkedin.com/in/omar-tantawy-a74a96376"
+              target="_blank"
+              aria-label="LinkedIn"
+            >
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer
+      class="bg-gray-800 py-8 animated-bg"
+      data-aos="fade-up"
+      data-aos-duration="1200"
+      data-aos-delay="200"
+      style="opacity: 0.95"
+    >
+      <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <div class="text-center">
+          <p class="text-gray-400">© 2025 Omar Tantawy. All rights reserved.</p>
+          <p class="mt-2 text-sm text-gray-500 animate-pulse">
+            Front-End Developer | Creating amazing web experiences
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- AOS fade-in/scroll animation library -->
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <script>
+      AOS.init({
+        duration: 1000,
+        once: true,
+        easing: "ease-in-out-cubic",
+        offset: 80,
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+    <script>
+      (function () {
+        emailjs.init("7tDyC3h17GtQ4mty8"); // حط الـ Public Key هنا
+      })();
+
+      function showContactMessage(type, mainText, subText) {
+        const wrapper = document.getElementById("form-container");
+        const msg = document.getElementById("contact-message");
+        const card = document.getElementById("contact-message-card");
+        const icon = document.getElementById("contact-message-icon");
+        const content = document.getElementById("contact-message-content");
+        const sub = document.getElementById("contact-message-sub");
+
+        if (content) content.textContent = mainText;
+        if (sub) sub.textContent = subText || "";
+
+        if (icon) {
+          icon.className = "p-3 rounded-lg text-white shrink-0";
+          if (type === "success") {
+            icon.classList.add("bg-indigo-600");
+            icon.innerHTML =
+              '<i class="fa-solid fa-envelope-circle-check text-xl"></i>';
+          } else {
+            icon.classList.add("bg-red-600");
+            icon.innerHTML =
+              '<i class="fa-solid fa-circle-exclamation text-xl"></i>';
+          }
+        }
+
+        if (wrapper && type === "success") {
+          const f = wrapper.querySelector("form");
+          if (f) f.style.display = "none";
+        }
+
+        if (msg && card) {
+          msg.classList.remove("hidden");
+          // small entrance animation
+          setTimeout(() => {
+            card.classList.remove("opacity-0", "translate-y-2");
+            card.classList.add("opacity-100", "translate-y-0");
+          }, 20);
         }
       }
 
-      if (e.target && e.target.id === 'contact-message-close') {
-        hideContactMessage();
+      function hideContactMessage(instant) {
+        const msg = document.getElementById("contact-message");
+        const card = document.getElementById("contact-message-card");
+        if (!msg || !card) return;
+        // animate out
+        card.classList.add("opacity-0", "translate-y-2");
+        card.classList.remove("opacity-100", "translate-y-0");
+        setTimeout(() => {
+          if (instant) msg.classList.add("hidden");
+          else msg.classList.add("hidden");
+        }, 280);
       }
-    });
-  </script>
-</body>
+
+      document
+        .getElementById("contact-form")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const form = this;
+          emailjs
+            .sendForm(
+              "service_f6y55p6", // مثال: gmail_service
+              "template_t9jcx0t", // مثال: template_abc123
+              form
+            )
+            .then(
+              function () {
+                showContactMessage(
+                  "success",
+                  "The message has been sent! ✅",
+                  "Thanks — I'll get back to you soon."
+                );
+              },
+              function (error) {
+                console.log(error);
+                showContactMessage(
+                  "error",
+                  "Failed to send. Please try again.",
+                  "If the problem persists contact me directly."
+                );
+              }
+            );
+        });
+
+      // Actions for message card buttons
+      document.addEventListener("click", function (e) {
+        if (e.target && e.target.id === "contact-message-new") {
+          hideContactMessage();
+          const wrapper = document.getElementById("form-container");
+          if (wrapper) {
+            const f = wrapper.querySelector("form");
+            if (f) {
+              f.reset();
+              f.style.display = "";
+              const first = f.querySelector("input, textarea");
+              if (first) first.focus();
+            }
+          }
+        }
+
+        if (e.target && e.target.id === "contact-message-close") {
+          hideContactMessage();
+        }
+      });
+    </script>
+  </body>
 </html>
