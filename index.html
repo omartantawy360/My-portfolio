@@ -60,7 +60,7 @@
         transform: none;
       }
 
-      /* Sophisticated dark gradient animation */
+      /* Sophisticated dark gradient animation with purple emphasis */
       @keyframes premiumGradient {
         0% {
           background-position: 0% 50%;
@@ -79,16 +79,16 @@
         }
       }
       .animated-bg {
-        /* Premium dark gradient with purple and blue accents */
+        /* Premium dark gradient with purple emphasis */
         background: linear-gradient(
           135deg,
-          #0f0f23 0%,
-          #1a1a2e 20%,
-          #16213e 40%,
-          #0f3460 60%,
-          #533483 80%,
-          #c06c84 100%,
-          #0f0f23
+          #0a0a0f 0%,
+          #1a0a2e 20%,
+          #2d1b69 40%,
+          #0f0f23 60%,
+          #4a148c 80%,
+          #311b92 100%,
+          #0a0a0f
         );
         background-size: 600% 600%;
         animation: premiumGradient 20s ease-in-out infinite;
@@ -138,7 +138,7 @@
         display: inline-block;
         overflow: hidden;
       }
-      /* Premium animated underline with gradient */
+      /* Premium animated underline with purple gradient */
       .underline-animate::after {
         content: "";
         display: block;
@@ -149,11 +149,11 @@
         width: 100%;
         background: linear-gradient(
           90deg,
-          #533483,
-          #c06c84,
-          #0f3460,
-          #16213e,
-          #533483
+          #9c27b0,
+          #673ab7,
+          #3f51b5,
+          #2d1b69,
+          #9c27b0
         );
         background-size: 300% 100%;
         animation: underlinemove 3s linear infinite;
@@ -167,17 +167,17 @@
           background-position: 200% 0;
         }
       }
-      /* Enhanced glowing animation with premium colors */
+      /* Enhanced glowing animation with purple colors */
       .glow-animate {
         animation: glowPulse 2.5s ease-in-out infinite alternate;
-        box-shadow: 0 0 25px 3px #533483, 0 0 10px 2px #c06c84;
+        box-shadow: 0 0 25px 3px #9c27b0, 0 0 10px 2px #673ab7;
       }
       @keyframes glowPulse {
         from {
-          box-shadow: 0 0 25px 3px #533483, 0 0 10px 2px #c06c84;
+          box-shadow: 0 0 25px 3px #9c27b0, 0 0 10px 2px #673ab7;
         }
         to {
-          box-shadow: 0 0 45px 15px #0f3460, 0 0 25px 8px #16213e;
+          box-shadow: 0 0 45px 15px #3f51b5, 0 0 25px 8px #2d1b69;
         }
       }
       /* Project card flicker hover-like background (subtle video-style shimmer, darker) */
@@ -189,7 +189,7 @@
           background-position: 400px 0;
         }
       }
-      /* Enhanced shimmer effect */
+      /* Enhanced shimmer effect with purple */
       .card-shimmer {
         position: absolute;
         top: 0;
@@ -198,11 +198,11 @@
         bottom: 0;
         background: linear-gradient(
           110deg,
-          rgba(15, 15, 35, 0) 40%,
-          rgba(83, 52, 131, 0.15) 50%,
-          rgba(192, 108, 132, 0.2) 60%,
-          rgba(15, 52, 96, 0.15) 70%,
-          rgba(15, 15, 35, 0) 80%
+          rgba(10, 10, 15, 0) 40%,
+          rgba(156, 39, 176, 0.15) 50%,
+          rgba(103, 58, 183, 0.2) 60%,
+          rgba(63, 81, 181, 0.15) 70%,
+          rgba(10, 10, 15, 0) 80%
         );
         background-size: 800px 100%;
         pointer-events: none;
@@ -215,24 +215,24 @@
       .header-extra-dark {
         background: linear-gradient(
           135deg,
-          rgba(15, 15, 35, 0.95) 0%,
-          rgba(26, 26, 46, 0.9) 25%,
-          rgba(22, 33, 62, 0.85) 50%,
-          rgba(15, 52, 96, 0.9) 75%,
-          rgba(83, 52, 131, 0.95) 100%
+          rgba(10, 10, 15, 0.98) 0%,
+          rgba(26, 10, 46, 0.95) 25%,
+          rgba(45, 27, 105, 0.9) 50%,
+          rgba(15, 15, 35, 0.95) 75%,
+          rgba(74, 20, 140, 0.98) 100%
         ) !important;
         backdrop-filter: blur(20px) saturate(180%);
-        border-bottom: 1px solid rgba(192, 108, 132, 0.2);
-        box-shadow: 0 8px 32px 0 rgba(15, 15, 35, 0.37), 0 2px 16px 0 rgba(83, 52, 131, 0.2) inset;
+        border-bottom: 1px solid rgba(156, 39, 176, 0.3);
+        box-shadow: 0 8px 32px 0 rgba(10, 10, 15, 0.5), 0 2px 16px 0 rgba(156, 39, 176, 0.3) inset;
       }
 
       /* Additional sophisticated animations */
       @keyframes textGlow {
         0%, 100% {
-          text-shadow: 0 0 10px rgba(192, 108, 132, 0.5);
+          text-shadow: 0 0 10px rgba(156, 39, 176, 0.5);
         }
         50% {
-          text-shadow: 0 0 20px rgba(192, 108, 132, 0.8), 0 0 30px rgba(83, 52, 131, 0.6);
+          text-shadow: 0 0 20px rgba(156, 39, 176, 0.8), 0 0 30px rgba(103, 58, 183, 0.6);
         }
       }
       .text-glow {
@@ -308,7 +308,7 @@
         transition: all 0.3s ease;
       }
       .hover-glow:hover {
-        box-shadow: 0 0 30px rgba(192, 108, 132, 0.5), 0 0 60px rgba(83, 52, 131, 0.3);
+        box-shadow: 0 0 30px rgba(156, 39, 176, 0.5), 0 0 60px rgba(103, 58, 183, 0.3);
         transform: translateY(-2px);
       }
 
@@ -327,7 +327,7 @@
         animation: typing 3.5s steps(40, end), blink 0.75s step-end infinite;
       }
 
-      /* Particle background effect */
+      /* Purple particle background effect */
       @keyframes particle {
         0% {
           transform: translateY(0) translateX(0) scale(0);
@@ -355,8 +355,32 @@
         position: absolute;
         width: 4px;
         height: 4px;
-        background: linear-gradient(45deg, #c06c84, #533483);
+        background: linear-gradient(45deg, #9c27b0, #673ab7, #3f51b5);
         border-radius: 50%;
+        box-shadow: 0 0 10px rgba(156, 39, 176, 0.8);
+      }
+      
+      /* Purple floating orbs animation */
+      @keyframes purpleOrb {
+        0%, 100% {
+          transform: translate(0, 0) scale(1);
+          opacity: 0.3;
+        }
+        33% {
+          transform: translate(30px, -30px) scale(1.1);
+          opacity: 0.5;
+        }
+        66% {
+          transform: translate(-20px, 20px) scale(0.9);
+          opacity: 0.4;
+        }
+      }
+      .purple-orb {
+        position: absolute;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(156, 39, 176, 0.8), rgba(103, 58, 183, 0.4));
+        filter: blur(40px);
+        animation: purpleOrb 8s ease-in-out infinite;
       }
       
     </style>
@@ -678,6 +702,7 @@
       </div>
     </section>
 
+    
     <!-- About Me Section -->
     <section
       id="aboutme"
@@ -1360,7 +1385,7 @@
       <div class="mx-auto max-w-7xl px-6 lg:px-8">
         <div class="text-center">
           <p class="text-gray-400">© 2025 Omar Tantawy. All rights reserved.</p>
-          <p class="mt-2 text-sm text-gray-500 animate-pulse">
+          <p class="mt-2 text-sm text-gray-400 animate-pulse">
             Front-End Developer | Creating amazing web experiences
           </p>
         </div>
