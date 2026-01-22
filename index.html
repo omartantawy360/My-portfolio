@@ -3,17 +3,32 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Omar Tantawy - Front-End Developer</title>
+    <meta name="description" content="Omar Tantawy - Professional Front-End Developer specializing in modern web technologies, responsive design, and interactive user experiences." />
+    <meta name="keywords" content="Front-End Developer, Web Developer, HTML, CSS, JavaScript, React, Tailwind CSS, Responsive Design, UI/UX, Omar Tantawy" />
+    <meta name="author" content="Omar Tantawy" />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:title" content="Omar Tantawy - Front-End Developer" />
+    <meta property="og:description" content="Professional Front-End Developer creating modern, responsive, and interactive web experiences." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://omartantawy360.github.io/My-portfolio/" />
+    <meta property="og:image" content="./images/avatar.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Omar Tantawy - Front-End Developer" />
+    <meta name="twitter:description" content="Professional Front-End Developer creating modern, responsive, and interactive web experiences." />
+    <meta name="twitter:image" content="./images/avatar.png" />
+    <link rel="canonical" href="https://omartantawy360.github.io/My-portfolio/" />
+    <title>Omar Tantawy - Front-End Developer | Portfolio</title>
     <link rel="stylesheet" href="./src/output.css" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👨‍💻</text></svg>" />
     <style>
       html {
         scroll-behavior: smooth;
@@ -29,7 +44,7 @@
       li {
         margin: 0;
         padding: 0;
-        font-family: "Roboto", sans-serif;
+        font-family: 'Inter', sans-serif;
       }
       
 
@@ -45,70 +60,85 @@
         transform: none;
       }
 
-      /* Infinite dark-gradient animation for backgrounds (now using dark blue & gray) */
-      @keyframes rainbowBg {
+      /* Sophisticated dark gradient animation */
+      @keyframes premiumGradient {
         0% {
           background-position: 0% 50%;
         }
+        25% {
+          background-position: 100% 25%;
+        }
         50% {
           background-position: 100% 50%;
+        }
+        75% {
+          background-position: 0% 75%;
         }
         100% {
           background-position: 0% 50%;
         }
       }
       .animated-bg {
-        /* Using a much darker palette with gray and dark blues */
+        /* Premium dark gradient with purple and blue accents */
         background: linear-gradient(
-          -45deg,
-          #101726,
-          /* very dark blue */ #161f2c,
-          /* another dark blue */ #232b38,
-          /* dark gray-blue */ #222b3e,
-          /* deep blue gray */ #374151,
-          /* slate/gray */ #111827,
-          /* almost black blue */ #222c3a,
-          /* deep navy */ #232b38,
-          /* repeat for smoother looping */ #101726
+          135deg,
+          #0f0f23 0%,
+          #1a1a2e 20%,
+          #16213e 40%,
+          #0f3460 60%,
+          #533483 80%,
+          #c06c84 100%,
+          #0f0f23
         );
-        background-size: 400% 400%;
-        animation: rainbowBg 15s ease-in-out infinite;
+        background-size: 600% 600%;
+        animation: premiumGradient 20s ease-in-out infinite;
       }
-      /* Floating animation for hero blobs */
+      /* Enhanced floating animation with more movement */
       @keyframes floatY {
-        0% {
-          transform: translateY(0);
+        0%, 100% {
+          transform: translateY(0px) rotate(0deg);
+        }
+        25% {
+          transform: translateY(-20px) rotate(2deg);
         }
         50% {
-          transform: translateY(-30px);
+          transform: translateY(-40px) rotate(-2deg);
         }
-        100% {
-          transform: translateY(0);
+        75% {
+          transform: translateY(-15px) rotate(1deg);
         }
       }
       .float-blob {
-        animation: floatY 6s ease-in-out infinite;
+        animation: floatY 8s ease-in-out infinite;
       }
+      /* Enhanced spinning animation with scaling */
       @keyframes spin-blob {
         0% {
           transform: rotate(0deg) scale(1);
         }
+        25% {
+          transform: rotate(90deg) scale(1.1);
+        }
         50% {
-          transform: rotate(30deg) scale(1.08);
+          transform: rotate(180deg) scale(1.15);
+        }
+        75% {
+          transform: rotate(270deg) scale(1.05);
         }
         100% {
-          transform: rotate(0deg) scale(1);
+          transform: rotate(360deg) scale(1);
         }
       }
       .spin-blob {
-        animation: spin-blob 12s linear infinite;
+        animation: spin-blob 15s linear infinite;
       }
-      /* Animated underline for section headings - now even darker theme */
+      /* Animated underline for section headings - dark theme */
       .underline-animate {
         position: relative;
         display: inline-block;
         overflow: hidden;
       }
+      /* Premium animated underline with gradient */
       .underline-animate::after {
         content: "";
         display: block;
@@ -119,15 +149,14 @@
         width: 100%;
         background: linear-gradient(
           90deg,
-          #374151,
-          /* slate/gray */ #232b38,
-          /* dark gray-blue */ #101726,
-          /* very dark blue */ #222b3e,
-          /* deep blue */ #232b38,
-          #161f2c
+          #533483,
+          #c06c84,
+          #0f3460,
+          #16213e,
+          #533483
         );
-        background-size: 200% 100%;
-        animation: underlinemove 4s linear infinite;
+        background-size: 300% 100%;
+        animation: underlinemove 3s linear infinite;
         border-radius: 8px;
       }
       @keyframes underlinemove {
@@ -138,17 +167,17 @@
           background-position: 200% 0;
         }
       }
-      /* Glowing icon animation for skills/info grid - dark navy and slate */
+      /* Enhanced glowing animation with premium colors */
       .glow-animate {
-        animation: glowPulse 2s ease-in-out infinite alternate;
-        box-shadow: 0 0 16px 2px #232b38, 0 0 6px 1px #374151;
+        animation: glowPulse 2.5s ease-in-out infinite alternate;
+        box-shadow: 0 0 25px 3px #533483, 0 0 10px 2px #c06c84;
       }
       @keyframes glowPulse {
         from {
-          box-shadow: 0 0 16px 2px #232b38, 0 0 6px 1px #374151;
+          box-shadow: 0 0 25px 3px #533483, 0 0 10px 2px #c06c84;
         }
         to {
-          box-shadow: 0 0 36px 10px #0c1320, 0 0 12px 4px #232b38;
+          box-shadow: 0 0 45px 15px #0f3460, 0 0 25px 8px #16213e;
         }
       }
       /* Project card flicker hover-like background (subtle video-style shimmer, darker) */
@@ -160,6 +189,7 @@
           background-position: 400px 0;
         }
       }
+      /* Enhanced shimmer effect */
       .card-shimmer {
         position: absolute;
         top: 0;
@@ -167,30 +197,166 @@
         right: 0;
         bottom: 0;
         background: linear-gradient(
-          100deg,
-          rgba(16, 23, 38, 0) 60%,
-          rgba(55, 65, 81, 0.12) 80%,
-          rgba(16, 23, 38, 0) 100%
+          110deg,
+          rgba(15, 15, 35, 0) 40%,
+          rgba(83, 52, 131, 0.15) 50%,
+          rgba(192, 108, 132, 0.2) 60%,
+          rgba(15, 52, 96, 0.15) 70%,
+          rgba(15, 15, 35, 0) 80%
         );
-        background-size: 600px 100%;
+        background-size: 800px 100%;
         pointer-events: none;
         z-index: 1;
-        animation: shimmer 2.8s linear infinite;
+        animation: shimmer 3.5s linear infinite;
         border-radius: inherit;
       }
 
-      /* ---- DARKER HEADER OVERRIDE ---- */
+      /* Premium dark header with glassmorphism */
       .header-extra-dark {
         background: linear-gradient(
-          120deg,
-          #080e17 0%,
-          /* almost black */ #101726 30%,
-          #0a1325 70%,
-          /* deep blue-black */ #111827 100%
+          135deg,
+          rgba(15, 15, 35, 0.95) 0%,
+          rgba(26, 26, 46, 0.9) 25%,
+          rgba(22, 33, 62, 0.85) 50%,
+          rgba(15, 52, 96, 0.9) 75%,
+          rgba(83, 52, 131, 0.95) 100%
         ) !important;
-        background-blend-mode: multiply;
-        /* Extra dark overlay for top bar */
-        box-shadow: 0 2px 16px 0 #000d22a8 inset;
+        backdrop-filter: blur(20px) saturate(180%);
+        border-bottom: 1px solid rgba(192, 108, 132, 0.2);
+        box-shadow: 0 8px 32px 0 rgba(15, 15, 35, 0.37), 0 2px 16px 0 rgba(83, 52, 131, 0.2) inset;
+      }
+
+      /* Additional sophisticated animations */
+      @keyframes textGlow {
+        0%, 100% {
+          text-shadow: 0 0 10px rgba(192, 108, 132, 0.5);
+        }
+        50% {
+          text-shadow: 0 0 20px rgba(192, 108, 132, 0.8), 0 0 30px rgba(83, 52, 131, 0.6);
+        }
+      }
+      .text-glow {
+        animation: textGlow 3s ease-in-out infinite;
+      }
+
+      @keyframes slideInFromLeft {
+        0% {
+          transform: translateX(-100px);
+          opacity: 0;
+        }
+        100% {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+      .slide-in-left {
+        animation: slideInFromLeft 1s ease-out;
+      }
+
+      @keyframes slideInFromRight {
+        0% {
+          transform: translateX(100px);
+          opacity: 0;
+        }
+        100% {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+      .slide-in-right {
+        animation: slideInFromRight 1s ease-out;
+      }
+
+      @keyframes scaleIn {
+        0% {
+          transform: scale(0);
+          opacity: 0;
+        }
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+      .scale-in {
+        animation: scaleIn 0.6s ease-out;
+      }
+
+      @keyframes rotateIn {
+        0% {
+          transform: rotate(-180deg) scale(0);
+          opacity: 0;
+        }
+        100% {
+          transform: rotate(0deg) scale(1);
+          opacity: 1;
+        }
+      }
+      .rotate-in {
+        animation: rotateIn 0.8s ease-out;
+      }
+
+      /* Interactive hover effects */
+      .hover-lift {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .hover-lift:hover {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 20px 40px rgba(83, 52, 131, 0.3);
+      }
+
+      .hover-glow {
+        transition: all 0.3s ease;
+      }
+      .hover-glow:hover {
+        box-shadow: 0 0 30px rgba(192, 108, 132, 0.5), 0 0 60px rgba(83, 52, 131, 0.3);
+        transform: translateY(-2px);
+      }
+
+      /* Typing animation */
+      @keyframes typing {
+        from { width: 0; }
+        to { width: 100%; }
+      }
+      @keyframes blink {
+        50% { border-color: transparent; }
+      }
+      .typing-effect {
+        overflow: hidden;
+        border-right: 3px solid #c06c84;
+        white-space: nowrap;
+        animation: typing 3.5s steps(40, end), blink 0.75s step-end infinite;
+      }
+
+      /* Particle background effect */
+      @keyframes particle {
+        0% {
+          transform: translateY(0) translateX(0) scale(0);
+          opacity: 0;
+        }
+        10% {
+          opacity: 1;
+        }
+        90% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-100vh) translateX(100px) scale(1);
+          opacity: 0;
+        }
+      }
+      .particle {
+        position: fixed;
+        pointer-events: none;
+        opacity: 0;
+        animation: particle 10s linear infinite;
+      }
+      .particle::before {
+        content: '';
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: linear-gradient(45deg, #c06c84, #533483);
+        border-radius: 50%;
       }
       
     </style>
@@ -214,28 +380,28 @@
       <nav class="flex items-center justify-between p-6 lg:px-8 flex-wrap">
         <a
           href="#"
-          class="text-2xl font-bold text-white uppercase underline-animate"
+          class="text-2xl font-bold text-white uppercase underline-animate hover-glow"
           >Omar Tantawy</a
         >
         <div class="flex gap-x-6 sm:gap-x-8 mt-4 sm:mt-0">
           <a
             href="#aboutme"
-            class="text-sm font-semibold text-white hover:text-indigo-400 transition-colors duration-300 underline-animate"
+            class="text-sm font-semibold text-white hover:text-c06c84 transition-colors duration-300 underline-animate hover-lift"
             >About me</a
           >
           <a
             href="#projects"
-            class="text-sm font-semibold text-white hover:text-indigo-400 transition-colors duration-300 underline-animate"
+            class="text-sm font-semibold text-white hover:text-c06c84 transition-colors duration-300 underline-animate hover-lift"
             >Projects</a
           >
           <a
             href="#certificates"
-            class="text-sm font-semibold text-white hover:text-indigo-400 transition-colors duration-300 underline-animate"
+            class="text-sm font-semibold text-white hover:text-c06c84 transition-colors duration-300 underline-animate hover-lift"
             >Certificates</a
           >
           <a
             href="#contact"
-            class="text-sm font-semibold text-white hover:text-indigo-400 transition-colors duration-300 underline-animate"
+            class="text-sm font-semibold text-white hover:text-c06c84 transition-colors duration-300 underline-animate hover-lift"
             >Contact</a
           >
         </div>
@@ -267,15 +433,15 @@
           <h1
             class="text-4xl font-semibold tracking-tight text-white sm:text-6xl"
           >
-            Hello, I'm
-            <span class="text-indigo-400 underline-animate">Omar Tantawy</span
-            ><br />
-            <span class="text-indigo-400 underline-animate"
+            <span class="slide-in-left">Hello, I'm</span><br />
+            <span class="text-c06c84 underline-animate text-glow typing-effect">Omar Tantawy</span><br />
+            <span class="text-c06c84 underline-animate scale-in" style="display: inline-block; animation-delay: 3.5s;"
               >Front-End Developer</span
             >
           </h1>
           <p
-            class="mt-8 text-lg font-medium text-gray-400 sm:text-xl animate-pulse"
+            class="mt-8 text-lg font-medium text-gray-400 sm:text-xl animate-pulse slide-in-right"
+            style="animation-delay: 1s;"
           >
             Passionate Front-End developer creating modern, responsive, and
             interactive web experiences.
@@ -525,7 +691,7 @@
           data-aos="fade-up"
           data-aos-delay="100"
         >
-          <h2 class="text-3xl font-semibold text-indigo-400 underline-animate">
+          <h2 class="text-3xl font-semibold text-c06c84 underline-animate text-glow">
             About Me
           </h2>
           <p
@@ -550,7 +716,7 @@
               data-aos-delay="200"
             >
               <div
-                class="absolute top-0 left-0 flex w-10 h-10 items-center justify-center rounded-lg bg-indigo-500 glow-animate"
+                class="absolute top-0 left-0 flex w-10 h-10 items-center justify-center rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 glow-animate hover-glow"
               >
                 <p>&lt;/&gt;</p>
               </div>
@@ -570,7 +736,7 @@
               data-aos-delay="300"
             >
               <div
-                class="absolute top-0 left-0 flex w-10 h-10 items-center justify-center rounded-lg bg-indigo-500 glow-animate"
+                class="absolute top-0 left-0 flex w-10 h-10 items-center justify-center rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 glow-animate hover-glow"
               >
                 <i class="fas fa-book-open"></i>
               </div>
@@ -587,7 +753,7 @@
               data-aos-delay="400"
             >
               <div
-                class="absolute top-0 left-0 flex w-10 h-10 items-center justify-center rounded-lg bg-indigo-500 glow-animate"
+                class="absolute top-0 left-0 flex w-10 h-10 items-center justify-center rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 glow-animate hover-glow"
               >
                 <i class="fas fa-briefcase"></i>
               </div>
@@ -606,7 +772,7 @@
               data-aos-delay="500"
             >
               <div
-                class="absolute top-0 left-0 flex w-10 h-10 items-center justify-center rounded-lg bg-indigo-500 glow-animate"
+                class="absolute top-0 left-0 flex w-10 h-10 items-center justify-center rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 glow-animate hover-glow"
               >
                 <i class="fas fa-lightbulb"></i>
               </div>
@@ -632,20 +798,20 @@
       data-aos-duration="1200"
     >
       <div class="w-[90%] mx-auto text-center">
-        <h2
-          class="text-3xl font-semibold text-indigo-400 underline-animate"
-          data-aos="fade-up"
-          data-aos-delay="100"
-        >
-          My Work
-        </h2>
+          <h2
+            class="text-3xl font-semibold text-c06c84 underline-animate text-glow"
+            data-aos="fade-up"
+            data-aos-delay="100"
+          >
+            My Work
+          </h2>
         <p
           class="mt-2 text-4xl font-semibold tracking-tight text-white sm:text-5xl"
           data-aos="fade-up"
           data-aos-delay="150"
         >
           Portfolio
-          <span class="text-indigo-400 underline-animate">Projects</span>
+          <span class="text-c06c84 underline-animate text-glow">Projects</span>
         </p>
         <p
           class="mt-6 text-lg text-gray-300"
@@ -850,7 +1016,7 @@
           data-aos="fade-up"
           data-aos-delay="100"
         >
-          <h2 class="text-3xl font-semibold text-indigo-400 underline-animate">
+          <h2 class="text-3xl font-semibold text-c06c84 underline-animate text-glow">
             Certificates
           </h2>
           <p
@@ -871,7 +1037,7 @@
             data-aos-delay="150"
           >
             <div
-              class="w-12 h-12 bg-indigo-500 rounded-lg flex items-center justify-center mb-4 glow-animate"
+              class="w-12 h-12 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg flex items-center justify-center mb-4 glow-animate hover-glow"
             >
               <i class="fas fa-certificate text-white"></i>
             </div>
@@ -904,7 +1070,7 @@
             data-aos-delay="200"
           >
             <div
-              class="w-12 h-12 bg-indigo-500 rounded-lg flex items-center justify-center mb-4 glow-animate"
+              class="w-12 h-12 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg flex items-center justify-center mb-4 glow-animate hover-glow"
             >
               <i class="fas fa-certificate text-white"></i>
             </div>
@@ -937,7 +1103,7 @@
             data-aos-delay="250"
           >
             <div
-              class="w-12 h-12 bg-indigo-500 rounded-lg flex items-center justify-center mb-4 glow-animate"
+              class="w-12 h-12 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg flex items-center justify-center mb-4 glow-animate hover-glow"
             >
               <i class="fas fa-certificate text-white"></i>
             </div>
@@ -970,7 +1136,7 @@
             data-aos-delay="300"
           >
             <div
-              class="w-12 h-12 bg-indigo-500 rounded-lg flex items-center justify-center mb-4 glow-animate"
+              class="w-12 h-12 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg flex items-center justify-center mb-4 glow-animate hover-glow"
             >
               <i class="fas fa-certificate text-white"></i>
             </div>
@@ -1016,7 +1182,7 @@
           data-aos="fade-up"
           data-aos-delay="100"
         >
-          <h2 class="text-3xl font-semibold text-indigo-400 underline-animate">
+          <h2 class="text-3xl font-semibold text-c06c84 underline-animate text-glow">
             Contact Me
           </h2>
           <p
@@ -1045,7 +1211,7 @@
                 type="text"
                 id="name"
                 name="name"
-                class="mt-2 block w-full rounded-lg bg-gray-700 text-white px-4 py-3 focus:border-indigo-500 focus:ring-indigo-500"
+                class="mt-2 block w-full rounded-lg bg-gray-700 text-white px-4 py-3 focus:border-c06c84 focus:ring-c06c84"
                 required
               />
             </div>
@@ -1058,7 +1224,7 @@
                 type="email"
                 id="email"
                 name="email"
-                class="mt-2 block w-full rounded-lg bg-gray-700 text-white px-4 py-3 focus:border-indigo-500 focus:ring-indigo-500"
+                class="mt-2 block w-full rounded-lg bg-gray-700 text-white px-4 py-3 focus:border-c06c84 focus:ring-c06c84"
                 required
               />
             </div>
@@ -1073,14 +1239,14 @@
                 id="message"
                 name="message"
                 rows="4"
-                class="mt-2 block w-full rounded-lg bg-gray-700 text-white px-4 py-3 focus:border-indigo-500 focus:ring-indigo-500"
+                class="mt-2 block w-full rounded-lg bg-gray-700 text-white px-4 py-3 focus:border-c06c84 focus:ring-c06c84"
                 required
               ></textarea>
             </div>
 
             <button
               type="submit"
-              class="w-full bg-indigo-600 text-white font-semibold py-3 px-4 rounded-lg hover:bg-indigo-700 transition-colors duration-300 animate-pulse"
+              class="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold py-3 px-4 rounded-lg hover:from-purple-700 hover:to-pink-700 transition-all duration-300 animate-pulse hover-glow"
               data-aos="fade-up"
               data-aos-delay="240"
             >
