@@ -6,35 +6,35 @@ const Certificates: React.FC = () => {
       id: 1,
       title: "c++ programming",
       description: "A course covering the basics of C++ programming language.",
-      image: "./images/c++.png",
+      image: `${process.env.PUBLIC_URL}/images/c++.png`,
       link: "https://www.credly.com/badges/042a08f2-6193-40fc-a5fa-0b659b60c150/linked_in_profile"
     },
     {
       id: 2,
       title: "Python programming",
       description: "A course covering the basics of Python programming language.",
-      image: "./images/py.png",
+      image: `${process.env.PUBLIC_URL}/images/py.png`,
       link: "https://www.credly.com/badges/2fa4d7fd-fe82-4584-b9b4-83553db38f61/linked_in_profile"
     },
     {
       id: 3,
       title: "CS50's",
       description: "A course covering the basics of computer science and programming.",
-      image: "./images/cs50.png",
+      image: `${process.env.PUBLIC_URL}/images/cs50.png`,
       link: "https://cs50.harvard.edu/certificates/9bf9c1b7-79c8-4d55-a82a-a4f286adadc6"
     },
     {
       id: 4,
       title: "FreeCodeCamp Responsive Web Design",
       description: "A course covering the basics of responsive web design.",
-      image: "./images/freecamp.png",
+      image: `${process.env.PUBLIC_URL}/images/freecamp.png`,
       link: "https://www.freecodecamp.org/certification/omartantawy/responsive-web-design"
     },
     {
       id: 5,
       title: "javascript essentials1",
       description: "A course covering the basics of JavaScript programming language.",
-      image: "./images/javascript.png",
+      image: `${process.env.PUBLIC_URL}/images/javascript.png`,
       link: "https://www.credly.com/badges/ebafc471-56d2-4a76-8e9d-a8caae9c0a69/"
     }
   ];

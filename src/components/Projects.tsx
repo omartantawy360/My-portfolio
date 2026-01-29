@@ -6,42 +6,42 @@ const Projects: React.FC = () => {
       id: 1,
       title: "Avatar website",
       description: "A website for a responsive avatar website using HTML, CSS",
-      image: "./images/avatar.png",
+      image: `${process.env.PUBLIC_URL}/images/avatar.png`,
       link: "https://omartantawy360.github.io/avatar/"
     },
     {
       id: 2,
       title: "Shoes website",
       description: "A website for a responsive shoes website using HTML, CSS",
-      image: "./images/shoes.png",
+      image: `${process.env.PUBLIC_URL}/images/shoes.png`,
       link: "https://omartantawy360.github.io/shoes/"
     },
     {
       id: 3,
       title: "Strict website",
       description: "A website for a responsive strict website using HTML, CSS",
-      image: "./images/strict.png",
+      image: `${process.env.PUBLIC_URL}/images/strict.png`,
       link: "https://omartantawy360.github.io/strict/"
     },
     {
       id: 4,
       title: "Food Lover website",
       description: "A website for a responsive food lover website using HTML, CSS, and JavaScript",
-      image: "./images/foodlover.png",
+      image: `${process.env.PUBLIC_URL}/images/foodlover.png`,
       link: "https://omartantawy360.github.io/food-lover/"
     },
     {
       id: 5,
       title: "Bootstrap login page",
       description: "A website for a responsive login page using Bootstrap",
-      image: "./images/bootstrap.png",
+      image: `${process.env.PUBLIC_URL}/images/bootstrap.png`,
       link: "https://omartantawy360.github.io/bootstrap-login/"
     },
     {
       id: 6,
       title: "Tailwind landing page",
       description: "A landing page for a responsive website using Tailwind with dark mode and light mode",
-      image: "./images/tailwind.png",
+      image: `${process.env.PUBLIC_URL}/images/tailwind.png`,
       link: "https://omartantawy360.github.io/tailwind-project/"
     }
   ];
