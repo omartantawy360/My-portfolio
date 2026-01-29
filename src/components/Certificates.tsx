@@ -29,8 +29,14 @@ const Certificates: React.FC = () => {
       description: "A course covering the basics of responsive web design.",
       image: "./images/freecamp.png",
       link: "https://www.freecodecamp.org/certification/omartantawy/responsive-web-design"
+    },
+    {
+      id: 5,
+      title: "javascript essentials1",
+      description: "A course covering the basics of JavaScript programming language.",
+      image: "./images/javascript.png",
+      link: "https://www.credly.com/badges/ebafc471-56d2-4a76-8e9d-a8caae9c0a69/"
     }
-    
   ];
 
   return (
