@@ -12,8 +12,6 @@
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.18.126",
-    "@types/react": "^19.2.9",
-    "@types/react-dom": "^19.2.3",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-scripts": "5.0.1",
@@ -48,6 +46,9 @@
     ]
   },
   "devDependencies": {
+    "@types/babel__core": "^7.20.5",
+    "@types/react": "^19.2.10",
+    "@types/react-dom": "^19.2.3",
     "autoprefixer": "^10.4.23",
     "gh-pages": "^6.3.0",
     "postcss": "^8.5.6"
