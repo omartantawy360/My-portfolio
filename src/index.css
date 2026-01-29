@@ -1,0 +1,218 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Reset some default styles */
+body,
+h1,
+h2,
+h3,
+p,
+ul,
+li {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Fixed animated gradient background */
+body {
+  position: relative;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    #0a0a0f 0%,
+    #1a0a2e 20%,
+    #2d1b69 40%,
+    #0f0f23 60%,
+    #4a148c 80%,
+    #311b92 100%,
+    #0a0a0f
+  );
+  background-size: 600% 600%;
+  animation: gradientShift 15s ease-in-out infinite;
+  z-index: -2;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  25% {
+    background-position: 100% 25%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  75% {
+    background-position: 0% 75%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Purple particles background */
+.particles-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: radial-gradient(circle, rgba(156, 39, 176, 0.8), rgba(103, 58, 183, 0.4));
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(156, 39, 176, 0.6);
+  animation: floatUp 10s linear infinite;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(100vh) translateX(0) scale(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(90vh) translateX(10px) scale(1);
+  }
+  90% {
+    opacity: 1;
+    transform: translateY(10vh) translateX(-10px) scale(1);
+  }
+  100% {
+    transform: translateY(-10vh) translateX(0) scale(0);
+    opacity: 0;
+  }
+}
+
+/* Simple static background for components */
+.animated-bg {
+  background: transparent;
+}
+
+/* Animated underline */
+.underline-animate {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.underline-animate::after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: -100%;
+  bottom: 0;
+  height: 3px;
+  width: 100%;
+  background: linear-gradient(
+    90deg,
+    #9c27b0,
+    #673ab7,
+    #3f51b5,
+    #2d1b69,
+    #9c27b0
+  );
+  background-size: 200% 100%;
+  animation: underlineMove 3s linear infinite;
+  border-radius: 8px;
+}
+
+@keyframes underlineMove {
+  0% {
+    left: -100%;
+    background-position: 0% 0%;
+  }
+  50% {
+    left: 0%;
+    background-position: 100% 0%;
+  }
+  100% {
+    left: 100%;
+    background-position: 200% 0%;
+  }
+}
+
+/* Simple static header */
+.header-extra-dark {
+  background: linear-gradient(
+    135deg,
+    rgba(10, 10, 15, 0.98) 0%,
+    rgba(26, 10, 46, 0.95) 25%,
+    rgba(45, 27, 105, 0.9) 50%,
+    rgba(15, 15, 35, 0.95) 75%,
+    rgba(74, 20, 140, 0.98) 100%
+  ) !important;
+  backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgba(156, 39, 176, 0.3);
+  box-shadow: 0 8px 32px 0 rgba(10, 10, 15, 0.5), 0 2px 16px 0 rgba(156, 39, 176, 0.3) inset;
+}
+
+/* Simple hover effects */
+.hover-lift {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.hover-lift:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(83, 52, 131, 0.3);
+}
+
+.hover-glow {
+  transition: all 0.3s ease;
+}
+.hover-glow:hover {
+  box-shadow: 0 0 30px rgba(156, 39, 176, 0.5), 0 0 60px rgba(103, 58, 183, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Simple static text glow */
+.text-glow {
+  text-shadow: 0 0 10px rgba(156, 39, 176, 0.5);
+}
+
+/* Lightweight pulse animation for important elements */
+@keyframes gentle-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+.gentle-pulse {
+  animation: gentle-pulse 3s ease-in-out infinite;
+}
+
+/* Simple slide-in animation for sections */
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slide-up {
+  animation: slide-up 0.6s ease-out;
+}
