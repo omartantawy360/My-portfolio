@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import emailjs from '@emailjs/browser';
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -6,236 +7,154 @@ const Contact: React.FC = () => {
     email: '',
     message: ''
   });
-  const [showMessage, setShowMessage] = useState(false);
-  const [messageContent, setMessageContent] = useState({
-    type: 'success',
-    mainText: '',
-    subText: ''
-  });
+  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+  const [errorMsg, setErrorMsg] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setStatus('sending');
     
-    try {
-      const emailjs = (await import('@emailjs/browser')).default;
-      
-      await emailjs.send(
-        'service_9h8x9d8',
-        'template_8h7x9d8',
-        {
-          from_name: formData.name,
-          from_email: formData.email,
-          message: formData.message,
-        },
-        '7tDyC3h17GtQ4mty8'
-      );
+    const serviceID = 'service_f6y55p6';
+    const templateID = 'template_t9jcx0t';
+    const publicKey = '7tDyC3h17GtQ4mty8';
 
-      setMessageContent({
-        type: 'success',
-        mainText: 'The message has been sent! ✅',
-        subText: 'Thanks — I\'ll get back to you soon.'
+    emailjs.send(serviceID, templateID, formData, publicKey)
+      .then(() => {
+        setStatus('success');
+        setFormData({ name: '', email: '', message: '' });
+        setTimeout(() => setStatus('idle'), 5000);
+      })
+      .catch((err) => {
+        setStatus('error');
+        setErrorMsg(err.text || 'Something went wrong. Please try again.');
       });
-      setShowMessage(true);
-      
-      // Reset form
-      setFormData({ name: '', email: '', message: '' });
-    } catch (error) {
-      setMessageContent({
-        type: 'error',
-        mainText: 'Message failed to send! ❌',
-        subText: 'Please try again later.'
-      });
-      setShowMessage(true);
-    }
   };
 
-  const handleNewMessage = () => {
-    setShowMessage(false);
-  };
-
-  const handleCloseMessage = () => {
-    setShowMessage(false);
-  };
+  const socialLinks = [
+    { name: 'GitHub', icon: 'fab fa-github', href: 'https://github.com/omartantawy360' },
+    { name: 'LinkedIn', icon: 'fab fa-linkedin-in', href: 'https://www.linkedin.com/in/omar-tantawy-a74a96376' },
+    { name: 'WhatsApp', icon: 'fab fa-whatsapp', href: 'https://wa.me/201061720405' },
+    { name: 'Email', icon: 'fa-solid fa-envelope', href: 'mailto:omartantawy360@gmail.com' }
+  ];
 
   return (
-    <section
-      id="contact"
-      className="py-20"
-    >
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div
-          className="mx-auto max-w-2xl lg:text-center"
-        >
-          <h2 className="text-3xl font-semibold text-c06c84 underline-animate text-glow slide-up">
-            Contact Me
-          </h2>
-          <p
-            className="mt-2 text-4xl font-semibold tracking-tight text-white sm:text-5xl"
-          >
-            Let's Work Together
-          </p>
-          <p className="mt-6 text-lg text-gray-300">
-            Feel free to reach out for collaborations or just to say hello!
-          </p>
-        </div>
-
-        <div
-          id="form-container"
-          className="mt-12 max-w-2xl mx-auto bg-black/50 p-8 rounded-lg backdrop-blur-sm"
-          style={{ opacity: 0.97 }}
-        >
-          {!showMessage ? (
-            <form className="space-y-6" onSubmit={handleSubmit}>
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-300">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  className="mt-2 block w-full rounded-lg bg-gray-700 text-white px-4 py-3 focus:border-c06c84 focus:ring-c06c84"
-                  required
-                />
-              </div>
-
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-300">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="mt-2 block w-full rounded-lg bg-gray-700 text-white px-4 py-3 focus:border-c06c84 focus:ring-c06c84"
-                  required
-                />
-              </div>
-
-              <div>
-                <label
-                  htmlFor="message"
-                  className="block text-sm font-medium text-gray-300"
+    <section id="contact" className="py-24 relative overflow-hidden">
+      <div className="container mx-auto px-6">
+        <div className="flex flex-col lg:flex-row gap-16 items-start">
+          {/* Info Side */}
+          <div className="lg:w-1/3 animate-fade-in-up">
+            <h2 className="text-sm font-bold tracking-widest text-primary uppercase mb-4">Contact</h2>
+            <h3 className="text-4xl font-bold text-white mb-8">Get In Touch</h3>
+            <p className="text-slate-400 text-lg mb-12">
+              Have a project in mind or just want to chat? Feel free to reach out. 
+              I'm always open to new opportunities and collaborations.
+            </p>
+            
+            <div className="space-y-6">
+              {socialLinks.map((link) => (
+                <a 
+                  key={link.name}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center space-x-4 p-4 rounded-2xl glass hover:bg-slate-900/60 transition-all group"
                 >
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  rows={4}
-                  className="mt-2 block w-full rounded-lg bg-gray-700 text-white px-4 py-3 focus:border-c06c84 focus:ring-c06c84"
-                  required
-                ></textarea>
-              </div>
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all">
+                    <i className={`${link.icon} text-lg`}></i>
+                  </div>
+                  <span className="text-slate-200 font-medium group-hover:text-white">{link.name}</span>
+                </a>
+              ))}
+            </div>
+          </div>
 
-              <button
-                type="submit"
-                className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold py-3 px-4 rounded-lg hover:from-purple-700 hover:to-pink-700 transition-all duration-300 hover-glow"
-              >
-                Send Message
-              </button>
-            </form>
-          ) : (
-            <div
-              id="contact-message"
-              className="mt-6"
-              role="status"
-              aria-live="polite"
-            >
-              <div
-                className="max-w-2xl mx-auto p-4 sm:p-6 rounded-2xl border border-white/10 shadow-2xl backdrop-blur-sm animated-bg transform transition-all duration-300 opacity-100 translate-y-0"
-              >
-                <div className="flex flex-col sm:flex-row items-start gap-4">
-                  <div
-                    className="p-3 rounded-lg bg-indigo-600 text-white shrink-0"
-                  >
-                    <i className="fa-solid fa-envelope-circle-check text-xl"></i>
+          {/* Form Side */}
+          <div className="lg:w-2/3 w-full animate-fade-in-up [animation-delay:200ms]">
+            <div className="glass-card p-8 md:p-12">
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="group">
+                    <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 group-focus-within:text-primary transition-colors">Name</label>
+                    <input
+                      type="text"
+                      name="name"
+                      required
+                      value={formData.name}
+                      onChange={handleChange}
+                      placeholder="John Doe"
+                      className="w-full bg-slate-950/50 border border-white/5 rounded-xl px-4 py-3 text-white placeholder:text-slate-700 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/20 transition-all"
+                    />
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <p
-                      className="font-semibold text-white wrap-break-word"
-                    >
-                      {messageContent.mainText}
-                    </p>
-                    <p
-                      className="text-sm text-gray-300 mt-1 wrap-break-word"
-                    >
-                      {messageContent.subText}
-                    </p>
-                  </div>
-                  <div
-                    className="flex gap-2 items-start w-full sm:w-auto flex-wrap sm:flex-nowrap"
-                  >
-                    <button
-                      onClick={handleNewMessage}
-                      className="px-3 sm:px-4 py-2 bg-white/5 hover:bg-white/10 text-white rounded-lg text-sm flex-1 sm:flex-none"
-                    >
-                      Send another
-                    </button>
-                    <button
-                      onClick={handleCloseMessage}
-                      className="px-3 py-2 text-gray-300 hover:text-white text-sm flex-1 sm:flex-none"
-                    >
-                      Close
-                    </button>
+                  <div className="group">
+                    <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 group-focus-within:text-primary transition-colors">Email</label>
+                    <input
+                      type="email"
+                      name="email"
+                      required
+                      value={formData.email}
+                      onChange={handleChange}
+                      placeholder="john@example.com"
+                      className="w-full bg-slate-950/50 border border-white/5 rounded-xl px-4 py-3 text-white placeholder:text-slate-700 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/20 transition-all"
+                    />
                   </div>
                 </div>
-              </div>
-            </div>
-          )}
+                
+                <div className="group">
+                  <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 group-focus-within:text-primary transition-colors">Message</label>
+                  <textarea
+                    name="message"
+                    required
+                    rows={6}
+                    value={formData.message}
+                    onChange={handleChange}
+                    placeholder="Tell me about your project..."
+                    className="w-full bg-slate-950/50 border border-white/5 rounded-xl px-4 py-3 text-white placeholder:text-slate-700 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/20 transition-all resize-none"
+                  ></textarea>
+                </div>
 
-          <div
-            className="mt-8 flex justify-center gap-6"
-          >
-            <a
-              className="text-white text-2xl hover:text-indigo-400 transition-colors duration-300"
-              href="https://github.com/omartantawy360"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="GitHub"
-            >
-              <i
-                className="fab fa-github"
-              ></i>
-            </a>
-            <a
-              className="text-white text-2xl hover:text-indigo-400 transition-colors duration-300"
-              href="mailto:omartantawy360@gmail.com"
-              aria-label="Email"
-            >
-              <i className="fa-solid fa-envelope"></i>
-            </a>
-            <a
-              className="text-white text-2xl hover:text-indigo-400 transition-colors duration-300"
-              href="https://wa.me/201061720405"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="WhatsApp"
-            >
-              <i className="fab fa-whatsapp"></i>
-            </a>
-            <a
-              className="text-white text-2xl hover:text-indigo-400 transition-colors duration-300"
-              href="https://www.linkedin.com/in/omar-tantawy-a74a96376"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="LinkedIn"
-            >
-              <i className="fab fa-linkedin-in"></i>
-            </a>
+                <div className="pt-4">
+                  <button
+                    type="submit"
+                    disabled={status === 'sending'}
+                    className={`w-full py-4 rounded-xl font-bold flex items-center justify-center space-x-2 transition-all transform active:scale-[0.98] ${
+                      status === 'sending' 
+                        ? 'bg-slate-800 text-slate-500 cursor-not-allowed' 
+                        : 'bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/20'
+                    }`}
+                  >
+                    {status === 'sending' ? (
+                      <svg className="animate-spin h-5 w-5 text-slate-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                    ) : (
+                      <>
+                        <span>Send Message</span>
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                      </>
+                    )}
+                  </button>
+                </div>
+
+                {status === 'success' && (
+                  <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm text-center animate-fade-in">
+                    Message sent successfully! I'll get back to you soon.
+                  </div>
+                )}
+
+                {status === 'error' && (
+                  <div className="p-4 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-400 text-sm text-center animate-fade-in">
+                    {errorMsg}
+                  </div>
+                )}
+              </form>
+            </div>
           </div>
         </div>
       </div>
@@ -244,3 +163,4 @@ const Contact: React.FC = () => {
 };
 
 export default Contact;
+
