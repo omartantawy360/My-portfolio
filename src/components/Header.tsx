@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const Header: React.FC = () => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   return (
     <>
       <svg
@@ -27,6 +29,7 @@ const Header: React.FC = () => {
               Omar Tantawy
             </a>
 
+            {/* Desktop Navigation */}
             <nav className="hidden md:flex space-x-8">
               <a
                 href="#aboutme"
@@ -53,7 +56,59 @@ const Header: React.FC = () => {
                 Contact
               </a>
             </nav>
+
+            {/* Mobile Menu Button */}
+            <div className="md:hidden">
+              <button
+                type="button"
+                className="text-white hover:text-c06c84 transition-colors p-2"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                aria-label="Toggle menu"
+              >
+                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  {mobileMenuOpen ? (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  ) : (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
+                  )}
+                </svg>
+              </button>
+            </div>
           </div>
+        </div>
+
+        {/* Mobile menu */}
+        <div className={`md:hidden ${mobileMenuOpen ? 'block' : 'hidden'} bg-black/90 backdrop-blur-md h-screen animate-fade-in`}>
+          <nav className="flex flex-col items-center justify-center space-y-8 h-full pb-20">
+            <a
+              href="#aboutme"
+              className="text-2xl font-semibold text-white hover:text-c06c84 transition-colors duration-300"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              About me
+            </a>
+            <a
+              href="#projects"
+              className="text-2xl font-semibold text-white hover:text-c06c84 transition-colors duration-300"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Projects
+            </a>
+            <a
+              href="#certificates"
+              className="text-2xl font-semibold text-white hover:text-c06c84 transition-colors duration-300"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Certificates
+            </a>
+            <a
+              href="#contact"
+              className="text-2xl font-semibold text-white hover:text-c06c84 transition-colors duration-300"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Contact
+            </a>
+          </nav>
         </div>
       </header>
     </>
@@ -61,3 +116,4 @@ const Header: React.FC = () => {
 };
 
 export default Header;
+

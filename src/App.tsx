@@ -7,6 +7,7 @@ import Certificates from './components/Certificates';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import Particles from './components/Particles';
+import BackToTop from './components/BackToTop';
 import './index.css';
 
 const App: React.FC = () => {
@@ -37,9 +38,11 @@ const App: React.FC = () => {
         <Certificates />
         <Contact />
         <Footer />
+        <BackToTop />
       </div>
     </>
   );
 };
 
 export default App;
+
