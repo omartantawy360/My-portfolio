@@ -2,7 +2,7 @@
 
 Modern, responsive, and high-performance portfolio website built with React, Tailwind CSS, and Framer Motion (concept).
 
-![Portfolio Screenshot](https://raw.githubusercontent.com/omartantawy360/My-portfolio/main/public/screenshot.png) *(Note: Add a real screenshot here once hosted)*
+![Portfolio Screenshot](https://raw.githubusercontent.com/omartantawy360/My-portfolio/main/public/screenshot.png)
 
 ## 🔗 Live Demo
 [View Live Site](https://omartantawy360.github.io/My-portfolio/) *(Update after deployment)*
