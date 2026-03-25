@@ -1,36 +1,40 @@
-# 🚀 Omar Tantawy - Professional Portfolio
+# 🚀 Omar Tantawy - Premium Professional Portfolio
 
-Modern, responsive, and high-performance portfolio website built with React, Tailwind CSS, and Framer Motion (concept).
+Modern, high-performance, and visually stunning portfolio website built with **React**, **TypeScript**, and **Tailwind CSS**, featuring a premium **Glassmorphism** design.
 
 ![Portfolio Screenshot](https://raw.githubusercontent.com/omartantawy360/My-portfolio/main/public/screenshot.png)
 
 ## 🔗 Live Demo
-[View Live Site](https://omartantawy360.github.io/My-portfolio/) *(Update after deployment)*
+[View Live Site](https://omartantawy360.github.io/My-portfolio/)
+
+## 🎥 Project Deliverables
+- **📁 Documentation (PDF)**: [View Project Documentation](./documentation.pdf) *(Upload your file as documentation.pdf)*
+- **🎬 Video Walkthrough**: [Watch Project Video](https://youtube.com/...) *(Link your YouTube video here)*
+- **📊 Presentation**: [View Presentation](./presentation.pdf) *(Upload your file as presentation.pdf)*
 
 ## ✨ Key Features
-- **Responsive Navigation**: Fully functional mobile menu toggle for smaller screens.
-- **Dynamic Background**: Animated CSS gradients and floating interactive particles.
-- **Interactive Elements**:
-  - **Mobile Menu**: Smooth modal navigation for mobile users.
-  - **Back-to-Top**: Quick navigation back to the top of the page.
-  - **Scroll Reveal**: Smooth fade-in animations as you load and scroll.
-  - **Form Validation**: Fully functional contact form with EmailJS integration.
-- **Project Showcase**: Gallery highlighting key project details and technologies.
-- **Certificates**: Interactive display of earned credentials.
+- **Premium Design**: Modern **Glassmorphism** aesthetic with a deep slate dark theme and elegant mesh gradients.
+- **Floating Glass Navbar**: Responsive, translucent navigation bar that reacts to scroll depth.
+- **Dynamic Hero Section**: High-impact introduction with central animations and professional calls-to-action.
+- **Interactive Components**:
+  - **Glass Cards**: Frosted-glass effect applied to project and certificate sections.
+  - **Smooth Animations**: Fade-in-up effects and hover transitions across all interactive elements.
+  - **Back-to-Top**: Integrated quick navigation utility.
+- **Functional Contact Form**: Robust form handling using **EmailJS** with real-time success/error feedback.
 
 ## 🛠️ Technologies Used
-- **Frontend**: React.js, TypeScript
-- **Styling**: Tailwind CSS (Mobile-first design)
-- **Deployment**: GitHub Pages / Netlify / Vercel
-- **Email Service**: EmailJS for contact form handling
+- **Frontend**: React.js 18, TypeScript
+- **Styling**: Tailwind CSS (Utility-first with custom glassmorphism system)
+- **Email Service**: EmailJS
+- **Deployment**: GitHub Pages (gh-pages)
 
 ## 📂 Project Structure
 ```text
 src/
-├── components/          # Reusable UI components (Hero, About, Projects, etc.)
-├── assets/              # Images, icons, and static files
-├── App.tsx              # Main application logic
-├── index.css            # Global styles & custom animations
+├── components/          # Redesigned UI components (Hero, About, Projects, etc.)
+├── index.css            # Custom design system & glassmorphism utilities
+├── tailwind.config.js   # Custom theme extentions & color palette
+├── App.tsx              # Application layout & core logic
 └── index.tsx            # Entry point
 ```
 
@@ -59,10 +63,8 @@ src/
    ```
 
 ## 📦 Deployment
-To deploy to GitHub Pages:
-1. Install the `gh-pages` package: `npm install gh-pages --save-dev`
-2. Add `homepage` and scripts to `package.json`
-3. Run `npm run deploy`
+To deploy your updates:
+1. Run `npm run deploy` (automatically builds and pushes to `gh-pages`)
 
 ---
 Built with ❤️ by [Omar Tantawy](https://github.com/omartantawy360)
