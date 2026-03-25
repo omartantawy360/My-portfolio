@@ -8,9 +8,9 @@ Modern, high-performance, and visually stunning portfolio website built with **R
 [View Live Site](https://omartantawy360.github.io/My-portfolio/)
 
 ## 🎥 Project Deliverables
-- **📁 Documentation (PDF)**: [View Project Documentation](./documentation.pdf) *(Upload your file as documentation.pdf)*
-- **🎬 Video Walkthrough**: [Watch Project Video](https://youtube.com/...) *(Link your YouTube video here)*
-- **📊 Presentation**: [View Presentation](./presentation.pdf) *(Upload your file as presentation.pdf)*
+- **📁 Documentation (PDF)**: [View Project Documentation](./documentation.pdf) 
+- **🎬 Video Walkthrough**: [Watch Project Video](https://youtube.com/...) 
+- **📊 Presentation**: [View Presentation](./presentation.pdf) 
 
 ## ✨ Key Features
 - **Premium Design**: Modern **Glassmorphism** aesthetic with a deep slate dark theme and elegant mesh gradients.
