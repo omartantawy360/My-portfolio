@@ -10,8 +10,7 @@ Modern, high-performance, and visually stunning portfolio website built with **R
 ## 🎥 Project Deliverables
 - **📁 Documentation (PDF)**: [View Project Documentation](./documentation.pdf) 
 - **🎬 Video Walkthrough**: [Watch Project Video](https://youtube.com/...) 
-- **📊 Presentation**: [View Presentation](./presentation.pdf) 
-
+- **📊 Presentation**: [View Presentation Link](https://www.canva.com/design/DAHE8hxMvuc/drc2D-bLov9FIzT-63Y_ZA/view?utm_content=DAHE8hxMvuc&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h62bdfc92ee)
 ## ✨ Key Features
 - **Premium Design**: Modern **Glassmorphism** aesthetic with a deep slate dark theme and elegant mesh gradients.
 - **Floating Glass Navbar**: Responsive, translucent navigation bar that reacts to scroll depth.
