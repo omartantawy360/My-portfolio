@@ -4,27 +4,27 @@ const Projects: React.FC = () => {
   const projects = [
     {
       id: 1,
-      title: "Avatar Website",
-      description: "A gorgeous, responsive avatar customization platform built with semantic HTML and modern Vanilla CSS animations.",
-      image: `${process.env.PUBLIC_URL}/images/avatar.png`,
-      link: "https://omartantawy360.github.io/avatar/",
-      tags: ["HTML", "CSS", "UI Design"]
+      title: "Wave Team",
+      description: "A gorgeous, responsive platform built with React.js and Tailwind CSS.",
+      image: `${process.env.PUBLIC_URL}/images/wave-team.png`,
+      link: "https://wave-team.vercel.app/",
+      tags: ["React", "UI Design"]
     },
     {
       id: 2,
-      title: "Shoes E-commerce Store",
-      description: "A premium, dynamic e-commerce landing interface for high-end footwear. Focuses on premium typography and luxury visual layouts.",
-      image: `${process.env.PUBLIC_URL}/images/shoes.png`,
-      link: "https://omartantawy360.github.io/shoes/",
-      tags: ["HTML", "CSS", "E-commerce"]
+      title: "E-commerce Store",
+      description: "A premium, dynamic e-commerce landing interface for high-end footwear. made with next.js and tailwind css.",
+      image: `${process.env.PUBLIC_URL}/images/shop-prototype.png`,
+      link: "https://shop-prototype-nine.vercel.app/",
+      tags: ["next.js", "tailwind", "E-commerce"]
     },
     {
       id: 3,
-      title: "Strict Corporate Page",
-      description: "A minimal, pixel-perfect corporate landing layout focusing on robust grid systems, alignment, and high readability.",
-      image: `${process.env.PUBLIC_URL}/images/strict.png`,
-      link: "https://omartantawy360.github.io/strict/",
-      tags: ["Clean Code", "CSS", "Corporate"]
+      title: "Academic Center",
+      description: "A minimal, pixel-perfect academic landing page.",
+      image: `${process.env.PUBLIC_URL}/images/Acadimic-center2.png`,
+      link: "https://omartantawy360.github.io/Acadimic-center2/",
+      tags: ["React", "tailwind"]
     },
     {
       id: 4,
@@ -36,11 +36,11 @@ const Projects: React.FC = () => {
     },
     {
       id: 5,
-      title: "Bootstrap Security Portal",
-      description: "A highly secure and perfectly responsive corporate login portal built with Bootstrap 5 utility layers and dynamic validations.",
-      image: `${process.env.PUBLIC_URL}/images/bootstrap.png`,
-      link: "https://omartantawy360.github.io/bootstrap-login/",
-      tags: ["Bootstrap", "UI Components"]
+      title: "EduComp",
+      description: "premium, full-featured web ecosystem designed to orchestrate academic competitions with professional-grade precision..",
+      image: `${process.env.PUBLIC_URL}/images/edu-por-3.png`,
+      link: "https://omartantawy360.github.io/edu-por-3/",
+      tags: ["react", "tailwind"]
     },
     {
       id: 6,
