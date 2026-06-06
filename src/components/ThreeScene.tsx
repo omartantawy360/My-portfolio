@@ -205,8 +205,8 @@ const CameraController: React.FC<{ mode: 'INTRO' | 'ORBIT' | 'SEATED', onIntroDo
     if (!controlsRef.current) return;
 
     if (mode === 'ORBIT') {
-      // Fly back to room overview
-      controlsRef.current.setLookAt(0, 4, 10, 0, 0, 0, true);
+      // Fly back to room overview (resting at the 180-degree mark)
+      controlsRef.current.setLookAt(0, 4, -10, 0, 0, 0, true);
     } else if (mode === 'SEATED') {
       // Fly into the chair, using perfect coordinates from the user's manual calibration
       controlsRef.current.setLookAt(-2.88, -3.89, 0.86, -2.86, -3.89, 1.86, true);
