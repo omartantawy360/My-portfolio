@@ -24,6 +24,18 @@
     --input: 240 3.7% 15.9%;
     --ring: 263.4 70% 50.4%;
     --radius: 0.75rem;
+
+    /* Fuchsia accent palette — used by ModeSelector & Dashboard */
+    --fuchsia-50: 289 100% 97%;
+    --fuchsia-100: 287 100% 93%;
+    --fuchsia-200: 288 96% 86%;
+    --fuchsia-300: 291 93% 77%;
+    --fuchsia-400: 292 91% 73%;
+    --fuchsia-500: 292 84% 61%;
+    --fuchsia-600: 293 69% 49%;
+    --fuchsia-700: 295 72% 40%;
+    --fuchsia-800: 295 70% 33%;
+    --fuchsia-900: 297 64% 28%;
   }
 }
 
@@ -57,6 +69,31 @@
   .nav-link:hover::after {
     @apply scale-x-100 origin-left;
   }
+
+  /* Mode Selector card component */
+  .mode-card {
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  .mode-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 1rem;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.05), transparent 50%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+
+  .mode-card:hover::before {
+    opacity: 1;
+  }
 }
 
 @layer utilities {
@@ -71,9 +108,20 @@
       radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.08) 0px, transparent 50%),
       radial-gradient(at 0% 100%, rgba(168, 85, 247, 0.12) 0px, transparent 50%);
   }
+
+  /* Fuchsia mesh variant for hub pages */
+  .bg-mesh-fuchsia {
+    background-image:
+      radial-gradient(at 0% 0%, rgba(217, 70, 239, 0.12) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, rgba(192, 38, 211, 0.08) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, rgba(168, 85, 247, 0.08) 0px, transparent 50%),
+      radial-gradient(at 0% 100%, rgba(232, 121, 249, 0.10) 0px, transparent 50%);
+  }
 }
 
-/* Custom Interactive Features & Keyframes */
+/* ═══════════════════════════════════════════════
+   Custom Interactive Features & Keyframes
+   ═══════════════════════════════════════════════ */
 
 .glow-blob {
   position: absolute;
@@ -114,7 +162,7 @@
   mix-blend-mode: screen;
 }
 
-/* Scroll Animations */
+/* ─── Scroll / Entrance Animations ─── */
 @keyframes fade-in-up {
   from {
     opacity: 0;
@@ -128,9 +176,113 @@
 
 .animate-fade-in-up {
   animation: fade-in-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
 }
 
-/* Custom Scrollbar */
+/* ─── Floating geometric shapes ─── */
+@keyframes float-shape {
+  0%, 100% {
+    transform: translateY(0) rotate(45deg);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translateY(-20px) rotate(90deg);
+    opacity: 0.8;
+  }
+}
+
+.animate-float-shape {
+  animation: float-shape 6s ease-in-out infinite;
+}
+
+/* ─── Audio Player: Waveform bar animation ─── */
+@keyframes waveform {
+  0%, 100% {
+    height: 4px;
+  }
+  25% {
+    height: 16px;
+  }
+  50% {
+    height: 8px;
+  }
+  75% {
+    height: 20px;
+  }
+}
+
+.animate-waveform {
+  animation: waveform 1.2s ease-in-out infinite;
+}
+
+/* ─── Glow pulse (used on hover states) ─── */
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(217, 70, 239, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(217, 70, 239, 0.25);
+  }
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+
+/* ─── Slow spin for 3D wireframe ─── */
+@keyframes spin-slow {
+  from {
+    transform: rotateX(15deg) rotateY(0deg);
+  }
+  to {
+    transform: rotateX(15deg) rotateY(360deg);
+  }
+}
+
+/* ─── Audio Volume Slider Custom Styling ─── */
+.audio-volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #d946ef;
+  cursor: pointer;
+  border: 2px solid rgba(217, 70, 239, 0.5);
+  transition: all 0.2s ease;
+}
+
+.audio-volume-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 10px rgba(217, 70, 239, 0.4);
+}
+
+.audio-volume-slider::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #d946ef;
+  cursor: pointer;
+  border: 2px solid rgba(217, 70, 239, 0.5);
+}
+
+/* ─── Page transition ─── */
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-enter {
+  animation: page-enter 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ─── Custom Scrollbar ─── */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -147,4 +299,3 @@
 .tab-underline-active {
   @apply absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-primary to-indigo-400 transition-all duration-300;
 }
-

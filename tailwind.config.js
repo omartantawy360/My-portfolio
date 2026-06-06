@@ -47,11 +47,33 @@ module.exports = {
       },
       animation: {
         "fade-in-up": "fade-in-up 0.5s ease-out",
+        "float-shape": "float-shape 6s ease-in-out infinite",
+        "waveform": "waveform 1.2s ease-in-out infinite",
+        "glow-pulse": "glow-pulse 3s ease-in-out infinite",
+        "spin-slow": "spin-slow 12s linear infinite",
       },
       keyframes: {
         "fade-in-up": {
           "0%": { opacity: "0", transform: "translateY(10px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        "float-shape": {
+          "0%, 100%": { transform: "translateY(0) rotate(45deg)", opacity: "0.4" },
+          "50%": { transform: "translateY(-20px) rotate(90deg)", opacity: "0.8" },
+        },
+        "waveform": {
+          "0%, 100%": { height: "4px" },
+          "25%": { height: "16px" },
+          "50%": { height: "8px" },
+          "75%": { height: "20px" },
+        },
+        "glow-pulse": {
+          "0%, 100%": { boxShadow: "0 0 20px rgba(217, 70, 239, 0.1)" },
+          "50%": { boxShadow: "0 0 40px rgba(217, 70, 239, 0.25)" },
+        },
+        "spin-slow": {
+          "from": { transform: "rotateX(15deg) rotateY(0deg)" },
+          "to": { transform: "rotateX(15deg) rotateY(360deg)" },
         },
       },
     },
