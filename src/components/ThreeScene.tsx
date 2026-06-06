@@ -194,7 +194,7 @@ const CameraController: React.FC<{ mode: 'INTRO' | 'ORBIT' | 'SEATED', onIntroDo
       // Manually set camera position during intro
       controlsRef.current.setLookAt(x, height, z, 0, 0, 0, false);
 
-      if (angle.current >= Math.PI * 2) {
+      if (angle.current >= Math.PI) {
          onIntroDone();
       }
     }
