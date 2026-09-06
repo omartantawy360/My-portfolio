@@ -1,45 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { certificates } from '../data/portfolioData';
+import type { Certificate } from '../data/portfolioData';
 
 const Certificates: React.FC = () => {
-  const certificates = [
-    {
-      id: 1,
-      title: "C++ Programming",
-      issuer: "Cisco Networking Academy",
-      image: `${process.env.PUBLIC_URL}/images/c++.png`,
-      link: "https://www.credly.com/badges/042a08f2-6193-40fc-a5fa-0b659b60c150/linked_in_profile"
-    },
-    {
-      id: 2,
-      title: "Python Programming",
-      issuer: "Cisco Networking Academy",
-      image: `${process.env.PUBLIC_URL}/images/py.png`,
-      link: "https://www.credly.com/badges/2fa4d7fd-fe82-4584-b9b4-83553db38f61/linked_in_profile"
-    },
-    {
-      id: 3,
-      title: "CS50 Computer Science",
-      issuer: "Harvard University",
-      image: `${process.env.PUBLIC_URL}/images/cs50.png`,
-      link: "https://cs50.harvard.edu/certificates/9bf9c1b7-79c8-4d55-a82a-a4f286adadc6"
-    },
-    {
-      id: 4,
-      title: "Responsive Web Design",
-      issuer: "freeCodeCamp",
-      image: `${process.env.PUBLIC_URL}/images/freecamp.png`,
-      link: "https://www.freecodecamp.org/certification/omartantawy/responsive-web-design"
-    },
-    {
-      id: 5,
-      title: "JavaScript Essentials 1",
-      issuer: "Cisco Networking Academy",
-      image: `${process.env.PUBLIC_URL}/images/javascript.png`,
-      link: "https://www.credly.com/badges/ebafc471-56d2-4a76-8e9d-a8caae9c0a69/"
-    }
-  ];
-
-  type Certificate = typeof certificates[0];
   const [selectedCert, setSelectedCert] = useState<Certificate | null>(null);
 
   // Close modal on Escape key press

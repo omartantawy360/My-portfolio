@@ -67,6 +67,30 @@ export interface Project {
 export const projects: Project[] = [
   {
     id: 1,
+    title: 'El-3lamea Leather',
+    description: 'A luxury handcrafted genuine leather e-commerce platform featuring bilingual support (AR/EN), dynamic product catalogs, and an editorial dark/light aesthetic.',
+    image: `${process.env.PUBLIC_URL}/images/el3almia-leather.png`,
+    link: 'https://el3almialeather.com/en',
+    tags: ['Next.js', 'React', 'Tailwind', 'E-commerce'],
+  },
+  {
+    id: 2,
+    title: 'Blaze Store',
+    description: 'A high-performance cyberpunk digital gaming platform specializing in PlayStation games and digital keys with instant delivery and futuristic UI.',
+    image: `${process.env.PUBLIC_URL}/images/blaze-store.png`,
+    link: 'https://www.blaze-store.com/',
+    tags: ['Next.js', 'React', 'Tailwind', 'Gaming'],
+  },
+  {
+    id: 3,
+    title: 'Private Burger',
+    description: 'A modern online food ordering web app and interactive digital menu for a gourmet burger restaurant with live ordering, customization, and cart flow.',
+    image: `${process.env.PUBLIC_URL}/images/private-burger.png`,
+    link: 'https://private-burger.vercel.app/',
+    tags: ['Next.js', 'React', 'Tailwind', 'Food & Ordering'],
+  },
+  {
+    id: 4,
     title: 'Wave Team',
     description: 'A gorgeous, responsive platform built with React.js and Tailwind CSS.',
     image: `${process.env.PUBLIC_URL}/images/wave-team.png`,
@@ -74,7 +98,7 @@ export const projects: Project[] = [
     tags: ['React', 'UI Design'],
   },
   {
-    id: 2,
+    id: 5,
     title: 'E-commerce Store',
     description: 'A premium, dynamic e-commerce landing interface for high-end footwear. made with next.js and tailwind css.',
     image: `${process.env.PUBLIC_URL}/images/shop-prototype.png`,
@@ -82,7 +106,7 @@ export const projects: Project[] = [
     tags: ['next.js', 'tailwind', 'E-commerce'],
   },
   {
-    id: 3,
+    id: 6,
     title: 'Academic Center',
     description: 'A minimal, pixel-perfect academic landing page.',
     image: `${process.env.PUBLIC_URL}/images/Acadimic-center2.png`,
@@ -90,7 +114,7 @@ export const projects: Project[] = [
     tags: ['React', 'tailwind'],
   },
   {
-    id: 4,
+    id: 7,
     title: 'Food Lover Portal',
     description: 'An interactive culinary review and recipe platform featuring rich, dynamic JavaScript DOM interactions and hover transitions.',
     image: `${process.env.PUBLIC_URL}/images/foodlover.png`,
@@ -98,7 +122,7 @@ export const projects: Project[] = [
     tags: ['JavaScript', 'HTML', 'CSS'],
   },
   {
-    id: 5,
+    id: 8,
     title: 'EduComp',
     description: 'premium, full-featured web ecosystem designed to orchestrate academic competitions with professional-grade precision.',
     image: `${process.env.PUBLIC_URL}/images/edu-por-3.png`,
@@ -106,7 +130,7 @@ export const projects: Project[] = [
     tags: ['react', 'tailwind'],
   },
   {
-    id: 6,
+    id: 9,
     title: 'Tailwind Landing Platform',
     description: 'A state-of-the-art modern Landing Page featuring complex dark mode states, absolute glassmorphism cards, and Tailwind layers.',
     image: `${process.env.PUBLIC_URL}/images/tailwind.png`,
@@ -159,6 +183,13 @@ export const certificates: Certificate[] = [
     issuer: 'Cisco Networking Academy',
     image: `${process.env.PUBLIC_URL}/images/javascript.png`,
     link: 'https://www.credly.com/badges/ebafc471-56d2-4a76-8e9d-a8caae9c0a69/',
+  },
+  {
+    id: 6,
+    title: 'Marketing Fundamentals',
+    issuer: 'Yanfaa',
+    image: `${process.env.PUBLIC_URL}/images/yanfaa-marketing.png`,
+    link: 'https://cdn.yanfaa.com/certificates/33ec7c1e-3992-4e62-abad-8528abba6779.pdf',
   },
 ];
 

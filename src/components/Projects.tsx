@@ -1,58 +1,8 @@
 import React, { useState } from 'react';
+import { projects } from '../data/portfolioData';
 
 const Projects: React.FC = () => {
-  const projects = [
-    {
-      id: 1,
-      title: "Wave Team",
-      description: "A gorgeous, responsive platform built with React.js and Tailwind CSS.",
-      image: `${process.env.PUBLIC_URL}/images/wave-team.png`,
-      link: "https://wave-team.vercel.app/",
-      tags: ["React", "UI Design"]
-    },
-    {
-      id: 2,
-      title: "E-commerce Store",
-      description: "A premium, dynamic e-commerce landing interface for high-end footwear. made with next.js and tailwind css.",
-      image: `${process.env.PUBLIC_URL}/images/shop-prototype.png`,
-      link: "https://shop-prototype-nine.vercel.app/",
-      tags: ["next.js", "tailwind", "E-commerce"]
-    },
-    {
-      id: 3,
-      title: "Academic Center",
-      description: "A minimal, pixel-perfect academic landing page.",
-      image: `${process.env.PUBLIC_URL}/images/Acadimic-center2.png`,
-      link: "https://omartantawy360.github.io/Acadimic-center2/",
-      tags: ["React", "tailwind"]
-    },
-    {
-      id: 4,
-      title: "Food Lover Portal",
-      description: "An interactive culinary review and recipe platform featuring rich, dynamic JavaScript DOM interactions and hover transitions.",
-      image: `${process.env.PUBLIC_URL}/images/foodlover.png`,
-      link: "https://omartantawy360.github.io/food-lover/",
-      tags: ["JavaScript", "HTML", "CSS"]
-    },
-    {
-      id: 5,
-      title: "EduComp",
-      description: "premium, full-featured web ecosystem designed to orchestrate academic competitions with professional-grade precision..",
-      image: `${process.env.PUBLIC_URL}/images/edu-por-3.png`,
-      link: "https://omartantawy360.github.io/edu-por-3/",
-      tags: ["react", "tailwind"]
-    },
-    {
-      id: 6,
-      title: "Tailwind Landing Platform",
-      description: "A state-of-the-art modern Landing Page featuring complex dark mode states, absolute glassmorphism cards, and Tailwind layers.",
-      image: `${process.env.PUBLIC_URL}/images/tailwind.png`,
-      link: "https://omartantawy360.github.io/tailwind-project/",
-      tags: ["Tailwind", "React", "Dark Mode"]
-    }
-  ];
-
-  const filters = ["All", "React", "JavaScript", "Bootstrap", "HTML/CSS"];
+  const filters = ["All", "Next.js", "React", "JavaScript", "Bootstrap", "HTML/CSS"];
   const [activeFilter, setActiveFilter] = useState("All");
 
   const filteredProjects = activeFilter === "All"
