@@ -1,5 +1,5 @@
 import React, { useRef, Suspense, useState, useEffect } from 'react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { Canvas, useFrame } from '@react-three/fiber';
 import { Stars, useGLTF, CameraControls, Html, Center } from '@react-three/drei';
 import * as THREE from 'three';
 import { profile, socialLinks, skills, projects, certificates, stats } from '../data/portfolioData';

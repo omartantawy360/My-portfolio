@@ -4,7 +4,7 @@ import ModeSelector from './pages/ModeSelector';
 import DashboardPage from './pages/DashboardPage';
 import ThreeDWorldPage from './pages/ThreeDWorldPage';
 import ClassicPage from './pages/ClassicPage';
-import AudioPlayer from './components/AudioPlayer';
+import EditorialPortfolioPage from './pages/EditorialPortfolioPage';
 import './index.css';
 
 const App: React.FC = () => {
@@ -13,13 +13,11 @@ const App: React.FC = () => {
       {/* Route content */}
       <Routes>
         <Route path="/" element={<ModeSelector />} />
+        <Route path="/editorial" element={<EditorialPortfolioPage />} />
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/3d-world" element={<ThreeDWorldPage />} />
         <Route path="/classic" element={<ClassicPage />} />
       </Routes>
-
-      {/* Global Audio Player — persists across all routes */}
-      <AudioPlayer />
     </HashRouter>
   );
 };

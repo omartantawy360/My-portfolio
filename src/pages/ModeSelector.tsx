@@ -55,6 +55,21 @@ const ModeSelector: React.FC = () => {
 
   const modes: ModeCard[] = [
     {
+      id: 'editorial',
+      title: 'Swiss Kinetic Edition',
+      subtitle: 'LIGHT & SCROLL-DRIVEN V4',
+      description: 'An experimental light editorial portfolio featuring Swiss design discipline, kinetic typography, and GSAP scroll-pinned timelines.',
+      route: '/editorial',
+      accentFrom: 'from-amber-400',
+      accentTo: 'to-rose-500',
+      glowColor: 'orange',
+      icon: (
+        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+      ),
+    },
+    {
       id: 'dashboard',
       title: 'Cyberpunk Dashboard',
       subtitle: 'DATA COMMAND CENTER',
@@ -140,7 +155,7 @@ const ModeSelector: React.FC = () => {
       <div className="absolute top-[60%] right-[8%] w-6 h-6 bg-fuchsia-500/10 rounded-full animate-float-shape pointer-events-none" style={{ animationDelay: '4s' }} />
 
       {/* ─── Content ─── */}
-      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 py-16 pb-24">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 py-16 pb-24">
         {/* Header section */}
         <div className="text-center mb-16 space-y-6">
           {/* Badge */}
@@ -155,7 +170,7 @@ const ModeSelector: React.FC = () => {
           {/* Title */}
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
             Choose Your{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 via-pink-500 to-violet-500">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-pink-500 to-violet-500">
               Experience
             </span>
           </h1>
@@ -168,23 +183,27 @@ const ModeSelector: React.FC = () => {
         </div>
 
         {/* Mode Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {modes.map((mode, index) => (
             <button
               key={mode.id}
               onClick={() => handleCardClick(mode)}
               onMouseEnter={() => setHoveredCard(mode.id)}
               onMouseLeave={() => setHoveredCard(null)}
-              className={`mode-card group relative text-left rounded-2xl p-6 lg:p-8 border transition-all duration-500 animate-fade-in-up ${
+              className={`mode-card group relative text-left rounded-2xl p-6 lg:p-7 border transition-all duration-500 animate-fade-in-up flex flex-col justify-between ${
                 hoveredCard === mode.id
-                  ? 'border-fuchsia-500/40 bg-slate-900/70 -translate-y-2 shadow-2xl'
+                  ? mode.glowColor === 'orange'
+                    ? 'border-orange-500/40 bg-slate-900/70 -translate-y-2 shadow-2xl'
+                    : 'border-fuchsia-500/40 bg-slate-900/70 -translate-y-2 shadow-2xl'
                   : 'border-white/5 bg-slate-950/50 hover:border-white/10'
               }`}
               style={{
-                animationDelay: `${0.3 + index * 0.15}s`,
+                animationDelay: `${0.2 + index * 0.12}s`,
                 backdropFilter: 'blur(20px)',
                 boxShadow: hoveredCard === mode.id
-                  ? mode.glowColor === 'fuchsia'
+                  ? mode.glowColor === 'orange'
+                    ? '0 20px 60px rgba(249, 115, 22, 0.18), 0 0 0 1px rgba(249, 115, 22, 0.1)'
+                    : mode.glowColor === 'fuchsia'
                     ? '0 20px 60px rgba(217, 70, 239, 0.15), 0 0 0 1px rgba(217, 70, 239, 0.1)'
                     : mode.glowColor === 'cyan'
                     ? '0 20px 60px rgba(34, 211, 238, 0.12), 0 0 0 1px rgba(34, 211, 238, 0.1)'
@@ -196,35 +215,45 @@ const ModeSelector: React.FC = () => {
               <div className={`absolute top-0 left-6 right-6 h-px bg-gradient-to-r ${mode.accentFrom} ${mode.accentTo} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
 
               {/* Icon container */}
-              <div className={`w-14 h-14 rounded-xl flex items-center justify-center mb-6 border transition-all duration-500 ${
-                hoveredCard === mode.id
-                  ? `bg-gradient-to-br ${mode.accentFrom} ${mode.accentTo} border-transparent text-white shadow-lg`
-                  : 'border-white/10 bg-white/5 text-slate-400 group-hover:text-white group-hover:border-white/20'
-              }`}>
-                {mode.icon}
+              <div>
+                <div className={`w-14 h-14 rounded-xl flex items-center justify-center mb-6 border transition-all duration-500 ${
+                  hoveredCard === mode.id
+                    ? `bg-gradient-to-br ${mode.accentFrom} ${mode.accentTo} border-transparent text-white shadow-lg`
+                    : 'border-white/10 bg-white/5 text-slate-400 group-hover:text-white group-hover:border-white/20'
+                }`}>
+                  {mode.icon}
+                </div>
+
+                {/* Subtitle / label */}
+                <p className={`text-[10px] font-bold tracking-[0.2em] mb-2 transition-colors duration-300 ${
+                  hoveredCard === mode.id
+                    ? mode.glowColor === 'orange'
+                      ? 'text-orange-400'
+                      : 'text-fuchsia-400'
+                    : 'text-slate-600'
+                }`}>
+                  {mode.subtitle}
+                </p>
+
+                {/* Title */}
+                <h2 className="text-xl font-bold text-white mb-3 group-hover:text-white transition-colors">
+                  {mode.title}
+                </h2>
+
+                {/* Description */}
+                <p className="text-sm text-slate-500 leading-relaxed mb-6 group-hover:text-slate-400 transition-colors">
+                  {mode.description}
+                </p>
               </div>
 
-              {/* Subtitle / label */}
-              <p className={`text-[10px] font-bold tracking-[0.2em] mb-2 transition-colors duration-300 ${
-                hoveredCard === mode.id ? 'text-fuchsia-400' : 'text-slate-600'
-              }`}>
-                {mode.subtitle}
-              </p>
-
-              {/* Title */}
-              <h2 className="text-xl lg:text-2xl font-bold text-white mb-3 group-hover:text-white transition-colors">
-                {mode.title}
-              </h2>
-
-              {/* Description */}
-              <p className="text-sm text-slate-500 leading-relaxed mb-6 group-hover:text-slate-400 transition-colors">
-                {mode.description}
-              </p>
-
               {/* Footer: action + badge */}
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between pt-4 border-t border-white/5 w-full">
                 <span className={`text-xs font-semibold tracking-wider uppercase transition-colors duration-300 ${
-                  hoveredCard === mode.id ? 'text-fuchsia-400' : 'text-slate-600'
+                  hoveredCard === mode.id
+                    ? mode.glowColor === 'orange'
+                      ? 'text-orange-400'
+                      : 'text-fuchsia-400'
+                    : 'text-slate-600'
                 }`}>
                   Enter →
                 </span>
@@ -254,7 +283,9 @@ const ModeSelector: React.FC = () => {
                 className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
                 style={{
                   background: `radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), ${
-                    mode.glowColor === 'fuchsia'
+                    mode.glowColor === 'orange'
+                      ? 'rgba(249, 115, 22, 0.05)'
+                      : mode.glowColor === 'fuchsia'
                       ? 'rgba(217, 70, 239, 0.04)'
                       : mode.glowColor === 'cyan'
                       ? 'rgba(34, 211, 238, 0.04)'

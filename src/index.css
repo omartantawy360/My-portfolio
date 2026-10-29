@@ -195,26 +195,6 @@
   animation: float-shape 6s ease-in-out infinite;
 }
 
-/* ─── Audio Player: Waveform bar animation ─── */
-@keyframes waveform {
-  0%, 100% {
-    height: 4px;
-  }
-  25% {
-    height: 16px;
-  }
-  50% {
-    height: 8px;
-  }
-  75% {
-    height: 20px;
-  }
-}
-
-.animate-waveform {
-  animation: waveform 1.2s ease-in-out infinite;
-}
-
 /* ─── Glow pulse (used on hover states) ─── */
 @keyframes glow-pulse {
   0%, 100% {
@@ -239,32 +219,6 @@
   }
 }
 
-/* ─── Audio Volume Slider Custom Styling ─── */
-.audio-volume-slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: #d946ef;
-  cursor: pointer;
-  border: 2px solid rgba(217, 70, 239, 0.5);
-  transition: all 0.2s ease;
-}
-
-.audio-volume-slider::-webkit-slider-thumb:hover {
-  transform: scale(1.2);
-  box-shadow: 0 0 10px rgba(217, 70, 239, 0.4);
-}
-
-.audio-volume-slider::-moz-range-thumb {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: #d946ef;
-  cursor: pointer;
-  border: 2px solid rgba(217, 70, 239, 0.5);
-}
 
 /* ─── Page transition ─── */
 @keyframes page-enter {
@@ -299,3 +253,25 @@
 .tab-underline-active {
   @apply absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-primary to-indigo-400 transition-all duration-300;
 }
+
+/* ─── Editorial Marquee Keyframes ─── */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: inline-flex;
+  width: max-content;
+  animation: marquee 30s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
