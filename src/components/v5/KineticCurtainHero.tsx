@@ -87,7 +87,7 @@ const KineticCurtainHero: React.FC<KineticCurtainHeroProps> = () => {
     <section
       ref={containerRef}
       id="hero"
-      className="relative w-full h-screen bg-[#0A0A09] text-[#F2EFE9] overflow-hidden select-none z-30"
+      className="relative w-full max-w-full h-screen bg-[#0A0A09] text-[#F2EFE9] overflow-hidden select-none z-30"
     >
       {/* ─── 1PX ARCHITECTURAL HAIRLINE GRID OVERLAY ─── */}
       <div className="absolute inset-0 pointer-events-none">
@@ -130,13 +130,13 @@ const KineticCurtainHero: React.FC<KineticCurtainHeroProps> = () => {
       {/* ─── SPLIT GATE: TOP HALF (ROW 1 - IDENTITY) ─── */}
       <div
         ref={topGateRef}
-        className="absolute top-0 left-0 right-0 h-1/2 flex flex-col justify-end px-4 sm:px-12 md:px-20 pb-3 sm:pb-6 z-20 will-change-transform"
+        className="absolute top-0 left-0 right-0 h-1/2 flex flex-col justify-end px-2.5 sm:px-12 md:px-20 pb-2 sm:pb-6 z-20 will-change-transform max-w-full overflow-hidden"
       >
         {/* Top Header Label */}
         <div className="flex items-center justify-between border-b border-[rgba(242,239,233,0.15)] pb-2 mb-2 sm:mb-4">
           <div className="flex items-center gap-2.5">
             <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 bg-[#FF3E00] inline-block" />
-            <span className="font-mono-tech text-[10px] sm:text-xs font-bold tracking-widest text-[#F2EFE9] uppercase">
+            <span className="font-mono-tech text-[9px] sm:text-xs font-bold tracking-wider sm:tracking-widest text-[#F2EFE9] uppercase truncate">
               PORTFOLIO EDITION // V5.0
             </span>
           </div>
@@ -148,7 +148,7 @@ const KineticCurtainHero: React.FC<KineticCurtainHeroProps> = () => {
         {/* Monumental Display Name (Responsive Clamped Type) */}
         <h1
           className="font-syne font-extrabold uppercase text-[#F2EFE9] tracking-[-0.04em] leading-[0.88] text-left select-none break-words"
-          style={{ fontSize: 'clamp(2.4rem, 9.5vw, 10rem)' }}
+          style={{ fontSize: 'clamp(1.75rem, 8.5vw, 9rem)' }}
         >
           {profile.name}
         </h1>
@@ -157,9 +157,9 @@ const KineticCurtainHero: React.FC<KineticCurtainHeroProps> = () => {
       {/* ─── CENTRAL TELEMETRY STRIP (BETWEEN ROWS) ─── */}
       <div
         ref={telemetryRef}
-        className="absolute top-1/2 -translate-y-1/2 left-0 right-0 z-30 px-4 sm:px-12 md:px-20 pointer-events-none will-change-transform"
+        className="absolute top-1/2 -translate-y-1/2 left-0 right-0 z-30 px-2.5 sm:px-12 md:px-20 pointer-events-none will-change-transform max-w-full overflow-hidden"
       >
-        <div className="border-y border-[rgba(242,239,233,0.18)] bg-[#0A0A09]/95 py-2 sm:py-2.5 flex items-center justify-between gap-2 text-[10px] sm:text-xs font-mono-tech text-[#78756E]">
+        <div className="border-y border-[rgba(242,239,233,0.18)] bg-[#0A0A09]/95 py-1.5 sm:py-2.5 flex items-center justify-between gap-1.5 sm:gap-2 text-[9px] sm:text-xs font-mono-tech text-[#78756E]">
           <div className="flex items-center gap-2 sm:gap-4 overflow-hidden text-ellipsis whitespace-nowrap">
             <span className="text-[#FF3E00] font-bold">[{projects.length} PROJECTS]</span>
             <span className="text-[rgba(242,239,233,0.2)]">/</span>
@@ -183,12 +183,12 @@ const KineticCurtainHero: React.FC<KineticCurtainHeroProps> = () => {
       {/* ─── SPLIT GATE: BOTTOM HALF (ROW 2 - ROLE & CORE CRAFT) ─── */}
       <div
         ref={bottomGateRef}
-        className="absolute bottom-0 left-0 right-0 h-1/2 flex flex-col justify-start px-4 sm:px-12 md:px-20 pt-3 sm:pt-6 z-20 will-change-transform"
+        className="absolute bottom-0 left-0 right-0 h-1/2 flex flex-col justify-start px-2.5 sm:px-12 md:px-20 pt-2 sm:pt-6 z-20 will-change-transform max-w-full overflow-hidden"
       >
         {/* Monumental Role & Craft (Responsive Clamped Type) */}
         <h2
           className="font-syne font-extrabold uppercase text-[#78756E] tracking-[-0.04em] leading-[0.88] text-left select-none hover:text-[#F2EFE9] transition-colors break-words"
-          style={{ fontSize: 'clamp(1.75rem, 7.5vw, 8rem)' }}
+          style={{ fontSize: 'clamp(1.2rem, 5.8vw, 7rem)' }}
         >
           FRONTEND ARCHITECT
         </h2>
@@ -201,8 +201,8 @@ const KineticCurtainHero: React.FC<KineticCurtainHeroProps> = () => {
 
           <div className="flex items-center gap-2 font-mono-tech text-[10px] sm:text-xs text-[#FF3E00] font-bold shrink-0">
             <span className="w-1.5 h-1.5 rounded-full bg-[#FF3E00] animate-ping" />
-            <span className="tracking-widest uppercase">
-              SCROLL TO ENGAGE SPLIT GATE [↓]
+            <span className="tracking-wider sm:tracking-widest uppercase">
+              ENGAGE SPLIT GATE [↓]
             </span>
           </div>
         </div>

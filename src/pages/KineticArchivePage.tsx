@@ -80,7 +80,7 @@ const KineticArchivePage: React.FC = () => {
 
   return (
     <div
-      className={`min-h-screen bg-[#0A0A09] text-[#F2EFE9] selection:bg-[#FF3E00] selection:text-[#0A0A09] relative transition-opacity duration-700 ${
+      className={`min-h-screen w-full max-w-full overflow-x-hidden bg-[#0A0A09] text-[#F2EFE9] selection:bg-[#FF3E00] selection:text-[#0A0A09] relative transition-opacity duration-700 ${
         isLoaded ? 'opacity-100' : 'opacity-0'
       }`}
     >
@@ -95,7 +95,7 @@ const KineticArchivePage: React.FC = () => {
       />
 
       {/* Main Kinetic Sequence (Zero Card Grids, Continuous Scroll-Scrubbed Mechanics) */}
-      <main className="relative">
+      <main className="relative w-full max-w-full overflow-x-hidden">
         {/* Section 01: Pinned Kinetic Curtain Hero with Horizontal Split Gate */}
         <KineticCurtainHero />
 

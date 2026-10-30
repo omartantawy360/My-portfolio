@@ -222,7 +222,7 @@ const KineticSkillsMatrix: React.FC = () => {
     <section
       ref={containerRef}
       id="skills"
-      className="relative w-full min-h-screen bg-[#F2EFE9] text-[#0A0A09] py-16 sm:py-28 md:py-32 overflow-hidden select-none z-10"
+      className="relative w-full max-w-full min-h-screen bg-[#F2EFE9] text-[#0A0A09] py-14 sm:py-28 md:py-32 overflow-hidden select-none z-10"
     >
       {/* ─── 1PX ARCHITECTURAL HAIRLINE GRID OVERLAY (LIGHT SURFACE) ─── */}
       <div className="absolute inset-0 pointer-events-none">
@@ -233,7 +233,7 @@ const KineticSkillsMatrix: React.FC = () => {
         </div>
       </div>
 
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-8 md:px-12 relative z-10 space-y-10 sm:space-y-16">
+      <div className="max-w-[1440px] w-full mx-auto px-3 sm:px-8 md:px-12 relative z-10 space-y-8 sm:space-y-16 overflow-hidden">
         
         {/* ─── SECTION HEADER ─── */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 border-b-2 border-[#0A0A09] pb-4 sm:pb-6">
@@ -255,7 +255,7 @@ const KineticSkillsMatrix: React.FC = () => {
         </div>
 
         {/* ─── GIANT HORIZONTAL VELOCITY-REACTIVE KINETIC TRACKS ─── */}
-        <div className="space-y-2 sm:space-y-4 py-3 sm:py-4 overflow-hidden border-y border-[rgba(10,10,9,0.12)] bg-[rgba(10,10,9,0.02)]">
+        <div className="space-y-2 sm:space-y-4 py-3 sm:py-4 overflow-hidden w-full max-w-full border-y border-[rgba(10,10,9,0.12)] bg-[rgba(10,10,9,0.02)]">
           
           {/* Track 1 (Leftward) */}
           <div

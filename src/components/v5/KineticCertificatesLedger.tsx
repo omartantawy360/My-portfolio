@@ -85,7 +85,7 @@ const KineticCertificatesLedger: React.FC = () => {
       ref={containerRef}
       id="certificates"
       onMouseMove={handleMouseMove}
-      className="relative w-full min-h-screen bg-[#0A0A09] text-[#F2EFE9] py-16 sm:py-28 md:py-32 overflow-hidden select-none z-20 border-t border-[rgba(242,239,233,0.12)]"
+      className="relative w-full max-w-full min-h-screen bg-[#0A0A09] text-[#F2EFE9] py-14 sm:py-28 md:py-32 overflow-hidden select-none z-20 border-t border-[rgba(242,239,233,0.12)]"
     >
       {/* ─── 1PX ARCHITECTURAL HAIRLINE GRID ─── */}
       <div className="absolute inset-0 pointer-events-none">
@@ -96,7 +96,7 @@ const KineticCertificatesLedger: React.FC = () => {
         </div>
       </div>
 
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-8 md:px-12 relative z-10 space-y-10 sm:space-y-16">
+      <div className="max-w-[1440px] w-full mx-auto px-3 sm:px-8 md:px-12 relative z-10 space-y-8 sm:space-y-16 overflow-hidden">
         
         {/* ─── SECTION HEADER ─── */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 border-b border-[rgba(242,239,233,0.18)] pb-4 sm:pb-6">

@@ -61,7 +61,7 @@ const KineticChrome: React.FC<KineticChromeProps> = ({
   return (
     <>
       {/* ─── 1PX STRUCTURAL ARCHITECTURAL FRAME (RESPONSIVE INSET) ─── */}
-      <div className="pointer-events-none fixed inset-0 z-40 p-1.5 sm:p-4 select-none">
+      <div className="pointer-events-none fixed inset-0 z-40 p-1 sm:p-4 select-none max-w-full overflow-hidden">
         <div className="relative w-full h-full border border-[rgba(242,239,233,0.12)] sm:border-[rgba(242,239,233,0.14)] pointer-events-none">
           
           {/* Corner Crosshairs */}
@@ -71,15 +71,15 @@ const KineticChrome: React.FC<KineticChromeProps> = ({
           <div className="absolute -bottom-1 -right-1 w-2 sm:w-2.5 h-2 sm:h-2.5 border-b-2 border-r-2 border-[#FF3E00]" />
 
           {/* ─── TOP-LEFT TELEMETRY: IDENTITY & VERSION INDICATOR ─── */}
-          <div className="pointer-events-auto absolute top-0 left-0 -translate-y-1/2 ml-2 sm:ml-4 px-2 sm:px-3 py-0.5 bg-[#0A0A09] border border-[rgba(242,239,233,0.18)] flex items-center gap-1.5 sm:gap-2.5 shadow-lg">
+          <div className="pointer-events-auto absolute top-0 left-0 -translate-y-1/2 ml-1 sm:ml-4 px-1.5 sm:px-3 py-0.5 bg-[#0A0A09] border border-[rgba(242,239,233,0.18)] flex items-center gap-1 sm:gap-2.5 shadow-lg">
             <span className="w-1.5 h-1.5 rounded-full bg-[#FF3E00] animate-pulse" />
             <span className="font-mono-tech text-[9px] sm:text-[10px] tracking-widest uppercase text-[#F2EFE9] font-bold">
-              SYS.V5 <span className="text-[#78756E]">{'//'}</span> KINETIC
+              SYS.V5 <span className="hidden xs:inline text-[#78756E]">{'//'}</span> <span className="hidden xs:inline">KINETIC</span>
             </span>
           </div>
 
           {/* ─── TOP-RIGHT TELEMETRY: SECTION INDEX INDICATOR ─── */}
-          <div className="pointer-events-auto absolute top-0 right-0 -translate-y-1/2 mr-2 sm:mr-4 px-2 sm:px-3 py-0.5 bg-[#0A0A09] border border-[rgba(242,239,233,0.18)] flex items-center gap-1.5 sm:gap-2 shadow-lg">
+          <div className="pointer-events-auto absolute top-0 right-0 -translate-y-1/2 mr-1 sm:mr-4 px-1.5 sm:px-3 py-0.5 bg-[#0A0A09] border border-[rgba(242,239,233,0.18)] flex items-center gap-1 sm:gap-2 shadow-lg">
             <span className="font-mono-tech text-[9px] sm:text-[10px] tracking-widest uppercase text-[#78756E]">
               SEC —
             </span>
@@ -92,7 +92,7 @@ const KineticChrome: React.FC<KineticChromeProps> = ({
           </div>
 
           {/* ─── BOTTOM-LEFT TELEMETRY: PROGRESS & VELOCITY METER ─── */}
-          <div className="pointer-events-auto absolute bottom-0 left-0 translate-y-1/2 ml-2 sm:ml-4 px-2 sm:px-3 py-0.5 bg-[#0A0A09] border border-[rgba(242,239,233,0.18)] flex items-center gap-2 sm:gap-3 shadow-lg">
+          <div className="pointer-events-auto absolute bottom-0 left-0 translate-y-1/2 ml-1 sm:ml-4 px-1.5 sm:px-3 py-0.5 bg-[#0A0A09] border border-[rgba(242,239,233,0.18)] flex items-center gap-1.5 sm:gap-3 shadow-lg">
             <div className="flex items-center gap-1 font-mono-tech text-[9px] sm:text-[10px] text-[#F2EFE9]">
               <span className="text-[#78756E]">SCR:</span>
               <span className="font-bold text-[#FF3E00]">{formattedProgress}%</span>
@@ -105,7 +105,7 @@ const KineticChrome: React.FC<KineticChromeProps> = ({
           </div>
 
           {/* ─── BOTTOM-RIGHT TELEMETRY: CAIRO TIME & NAVIGATION TRIGGER ─── */}
-          <div className="pointer-events-auto absolute bottom-0 right-0 translate-y-1/2 mr-2 sm:mr-4 flex items-center gap-1.5 sm:gap-2">
+          <div className="pointer-events-auto absolute bottom-0 right-0 translate-y-1/2 mr-1 sm:mr-4 flex items-center gap-1 sm:gap-2">
             <div className="hidden md:flex items-center gap-2 px-3 py-0.5 bg-[#0A0A09] border border-[rgba(242,239,233,0.18)] text-[10px] font-mono-tech text-[#F2EFE9]/80 shadow-lg">
               <span className="text-[#78756E]">LOC:</span>
               <span>CAI {cairoTime} [GMT+2]</span>

@@ -87,13 +87,13 @@ const KineticProjectsExhibition: React.FC<KineticProjectsExhibitionProps> = () =
     <section
       ref={containerRef}
       id="projects"
-      className="relative w-full h-screen bg-[#0A0A09] text-[#F2EFE9] overflow-hidden select-none z-20"
+      className="relative w-full max-w-full h-screen bg-[#0A0A09] text-[#F2EFE9] overflow-hidden select-none z-20"
     >
       {/* ─── SPLIT-STAGE THEATRE (RESPONSIVE: CANVAS TOP ON MOBILE, RIGHT ON DESKTOP) ─── */}
-      <div className="w-full h-full flex flex-col-reverse md:flex-row relative z-10 pt-10 sm:pt-14 pb-4 sm:pb-8 px-3 sm:px-8 md:px-12">
+      <div className="w-full max-w-full h-full flex flex-col-reverse md:flex-row relative z-10 pt-8 sm:pt-14 pb-3 sm:pb-8 px-2.5 sm:px-8 md:px-12 overflow-hidden">
         
         {/* ─── SPECS COLUMN: STICKY INFORMATION ARCHITECTURE ─── */}
-        <div className="w-full md:w-[42%] h-[56%] md:h-full flex flex-col justify-between pr-0 md:pr-10 border-t md:border-t-0 md:border-r border-[rgba(242,239,233,0.12)] pt-2 md:pt-0 pb-1 md:pb-0">
+        <div className="w-full md:w-[42%] h-[56%] md:h-full flex flex-col justify-between pr-0 md:pr-10 border-t md:border-t-0 md:border-r border-[rgba(242,239,233,0.12)] pt-1.5 md:pt-0 pb-1 md:pb-0 overflow-hidden min-w-0">
           
           {/* Top Section Breadcrumb */}
           <div className="flex items-center justify-between border-b border-[rgba(242,239,233,0.12)] pb-1.5 sm:pb-2.5">
@@ -200,7 +200,7 @@ const KineticProjectsExhibition: React.FC<KineticProjectsExhibitionProps> = () =
         </div>
 
         {/* ─── CANVAS COLUMN: FULL-BLEED MASK-WIPE CANVAS ─── */}
-        <div className="w-full md:w-[58%] h-[44%] md:h-full relative pl-0 md:pl-8 pb-2 md:pb-0">
+        <div className="w-full md:w-[58%] h-[44%] md:h-full relative pl-0 md:pl-8 pb-1.5 md:pb-0 overflow-hidden min-w-0">
           <div className="relative w-full h-full border border-[rgba(242,239,233,0.14)] bg-[#0A0A09] overflow-hidden">
             
             {/* Project Canvas Layers (Stacked with scrubbed clip-path) */}

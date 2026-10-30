@@ -26,7 +26,7 @@ const KineticFinaleTerminal: React.FC = () => {
   return (
     <footer
       id="finale"
-      className="relative w-full min-h-screen bg-[#0A0A09] text-[#F2EFE9] flex flex-col justify-between p-6 sm:p-12 md:p-16 select-none z-10 border-t-2 border-[#FF3E00]"
+      className="relative w-full max-w-full min-h-screen bg-[#0A0A09] text-[#F2EFE9] flex flex-col justify-between p-4 sm:p-12 md:p-16 select-none z-10 border-t-2 border-[#FF3E00] overflow-hidden"
     >
       {/* ─── 1PX ARCHITECTURAL GRID OVERLAY ─── */}
       <div className="absolute inset-0 pointer-events-none">
@@ -76,7 +76,7 @@ const KineticFinaleTerminal: React.FC = () => {
         {/* Monumental Signoff Heading */}
         <h2
           className="font-syne font-extrabold uppercase text-[#F2EFE9] tracking-[-0.04em] leading-[0.85] text-left select-none"
-          style={{ fontSize: 'clamp(3rem, 9.5vw, 9rem)' }}
+          style={{ fontSize: 'clamp(1.75rem, 8vw, 8.5rem)' }}
         >
           LET&apos;S BUILD <br />
           <span className="text-[#FF3E00] hover:text-[#F2EFE9] transition-colors">
@@ -89,9 +89,9 @@ const KineticFinaleTerminal: React.FC = () => {
           <button
             onClick={handleCopyEmail}
             data-cursor="COPY"
-            className="flex-1 max-w-xl py-4 px-6 bg-[#141412] hover:bg-[#FF3E00] text-[#F2EFE9] hover:text-[#0A0A09] border border-[rgba(242,239,233,0.2)] hover:border-[#FF3E00] transition-all flex items-center justify-between group shadow-lg"
+            className="flex-1 max-w-xl py-3 sm:py-4 px-3 sm:px-6 bg-[#141412] hover:bg-[#FF3E00] text-[#F2EFE9] hover:text-[#0A0A09] border border-[rgba(242,239,233,0.2)] hover:border-[#FF3E00] transition-all flex items-center justify-between gap-2 group shadow-lg min-w-0"
           >
-            <span className="font-mono-tech text-sm sm:text-base font-bold tracking-wider">
+            <span className="font-mono-tech text-xs sm:text-base font-bold tracking-wider truncate min-w-0">
               {profile.email}
             </span>
             <span className="font-mono-tech text-xs px-2.5 py-1 bg-[rgba(242,239,233,0.1)] group-hover:bg-[#0A0A09] group-hover:text-[#F2EFE9] uppercase tracking-widest font-bold">
