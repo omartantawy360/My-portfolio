@@ -55,6 +55,21 @@ const ModeSelector: React.FC = () => {
 
   const modes: ModeCard[] = [
     {
+      id: 'kinetic',
+      title: 'Kinetic Archive (V5)',
+      subtitle: 'OBSIDIAN & SCROLL-DRIVEN V5',
+      description: 'The ultra-refined, high-craft Kinetic Swiss Archival portfolio. Featuring Lenis smooth scroll, split-gate hero, odometer split-stage exhibition, and velocity skew.',
+      route: '/v5',
+      accentFrom: 'from-orange-500',
+      accentTo: 'to-amber-500',
+      glowColor: 'vermilion',
+      icon: (
+        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
+        </svg>
+      ),
+    },
+    {
       id: 'editorial',
       title: 'Swiss Kinetic Edition',
       subtitle: 'LIGHT & SCROLL-DRIVEN V4',
@@ -182,17 +197,19 @@ const ModeSelector: React.FC = () => {
           </p>
         </div>
 
-        {/* Mode Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* Mode Cards Grid (5 Editions) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
           {modes.map((mode, index) => (
             <button
               key={mode.id}
               onClick={() => handleCardClick(mode)}
               onMouseEnter={() => setHoveredCard(mode.id)}
               onMouseLeave={() => setHoveredCard(null)}
-              className={`mode-card group relative text-left rounded-2xl p-6 lg:p-7 border transition-all duration-500 animate-fade-in-up flex flex-col justify-between ${
+              className={`mode-card group relative text-left rounded-2xl p-5 lg:p-6 border transition-all duration-500 animate-fade-in-up flex flex-col justify-between ${
                 hoveredCard === mode.id
-                  ? mode.glowColor === 'orange'
+                  ? mode.glowColor === 'vermilion'
+                    ? 'border-[#FF3E00]/60 bg-slate-900/85 -translate-y-2 shadow-2xl'
+                    : mode.glowColor === 'orange'
                     ? 'border-orange-500/40 bg-slate-900/70 -translate-y-2 shadow-2xl'
                     : 'border-fuchsia-500/40 bg-slate-900/70 -translate-y-2 shadow-2xl'
                   : 'border-white/5 bg-slate-950/50 hover:border-white/10'
@@ -201,7 +218,9 @@ const ModeSelector: React.FC = () => {
                 animationDelay: `${0.2 + index * 0.12}s`,
                 backdropFilter: 'blur(20px)',
                 boxShadow: hoveredCard === mode.id
-                  ? mode.glowColor === 'orange'
+                  ? mode.glowColor === 'vermilion'
+                    ? '0 20px 60px rgba(255, 62, 0, 0.25), 0 0 0 1px rgba(255, 62, 0, 0.2)'
+                    : mode.glowColor === 'orange'
                     ? '0 20px 60px rgba(249, 115, 22, 0.18), 0 0 0 1px rgba(249, 115, 22, 0.1)'
                     : mode.glowColor === 'fuchsia'
                     ? '0 20px 60px rgba(217, 70, 239, 0.15), 0 0 0 1px rgba(217, 70, 239, 0.1)'

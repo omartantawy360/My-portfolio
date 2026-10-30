@@ -7,6 +7,7 @@ const editions = [
   { id: '3d-world', label: '3D World Experience', route: '/3d-world', tag: 'IMMERSIVE' },
   { id: 'dashboard', label: 'Cyberpunk Command', route: '/dashboard', tag: 'CYBERPUNK' },
   { id: 'editorial', label: 'Swiss Kinetic Edition', route: '/editorial', tag: 'ED. 04', current: true },
+  { id: 'kinetic', label: 'Kinetic Archive (V5)', route: '/v5', tag: 'ED. 05' },
 ];
 
 const SwissFooter: React.FC = () => {
