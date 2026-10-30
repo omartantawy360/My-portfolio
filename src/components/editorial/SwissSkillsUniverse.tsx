@@ -411,6 +411,8 @@ const SwissSkillsUniverse: React.FC = () => {
           {/* SVG Interconnected Vector Lines Layer */}
           <svg
             ref={svgRef}
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
             className="absolute inset-0 w-full h-full pointer-events-none z-0"
           >
             {connections.map((conn, idx) => {
@@ -425,7 +427,8 @@ const SwissSkillsUniverse: React.FC = () => {
               return (
                 <path
                   key={idx}
-                  d={`M ${fromNode.coords.x}% ${fromNode.coords.y}% Q ${(fromNode.coords.x + toNode.coords.x) / 2}% ${(fromNode.coords.y + toNode.coords.y) / 2 - 4}%, ${toNode.coords.x}% ${toNode.coords.y}%`}
+                  d={`M ${fromNode.coords.x} ${fromNode.coords.y} Q ${(fromNode.coords.x + toNode.coords.x) / 2} ${(fromNode.coords.y + toNode.coords.y) / 2 - 4}, ${toNode.coords.x} ${toNode.coords.y}`}
+                  vectorEffect="non-scaling-stroke"
                   fill="none"
                   stroke={isHighlighted ? '#FF4B35' : '#20201E'}
                   strokeWidth={isHighlighted ? '3' : '1.5'}
