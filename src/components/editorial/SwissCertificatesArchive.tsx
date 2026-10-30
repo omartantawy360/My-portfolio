@@ -83,8 +83,10 @@ const SwissCertificatesArchive: React.FC = () => {
   const activeMeta = credentialMeta[activeCert.id] || credentialMeta[1];
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Scroll-driven entrance animation for the dossier
+    const mm = gsap.matchMedia();
+
+    // ─── DESKTOP ENTRANCE (>= 1024px) ───
+    mm.add('(min-width: 1024px)', () => {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
@@ -108,7 +110,6 @@ const SwissCertificatesArchive: React.FC = () => {
         0
       );
 
-      // Stamp slam effect
       if (stampRef.current) {
         gsap.fromTo(
           stampRef.current,
@@ -126,9 +127,32 @@ const SwissCertificatesArchive: React.FC = () => {
           }
         );
       }
-    }, containerRef);
+    });
 
-    return () => ctx.revert();
+    // ─── MOBILE ENTRANCE (< 1024px) ───
+    mm.add('(max-width: 1023px)', () => {
+      const items = containerRef.current?.querySelectorAll('.ledger-item');
+      if (items && items.length > 0) {
+        gsap.fromTo(
+          items,
+          { opacity: 0.4, y: 20 },
+          {
+            opacity: 1,
+            y: 0,
+            stagger: 0.06,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: 'top 85%',
+              end: 'top 35%',
+              scrub: 0.6,
+            },
+          }
+        );
+      }
+    });
+
+    return () => mm.revert();
   }, []);
 
   // Modal keyboard handling (Escape to close)
@@ -154,7 +178,7 @@ const SwissCertificatesArchive: React.FC = () => {
     <section
       ref={containerRef}
       id="credentials"
-      className="relative bg-[#F7F3E8] border-b-4 border-[#20201E] py-20 px-4 sm:px-6 lg:px-12 scroll-mt-16 overflow-hidden"
+      className="relative bg-[#F7F3E8] border-b-4 border-[#20201E] py-16 sm:py-20 px-4 sm:px-6 lg:px-12 scroll-mt-16 overflow-hidden"
     >
       {/* Background Archival Grid Marks */}
       <div
@@ -168,13 +192,13 @@ const SwissCertificatesArchive: React.FC = () => {
 
       <div className="max-w-[1440px] mx-auto relative z-10">
         {/* ─── ARCHIVAL MASTHEAD ─── */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b-4 border-[#20201E] pb-6 mb-12">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b-4 border-[#20201E] pb-6 mb-8 sm:mb-12">
           <div>
             <div className="flex items-center gap-2 mb-2 font-mono text-xs font-black tracking-widest text-[#FF4B35] uppercase">
               <span className="w-2.5 h-2.5 bg-[#FF4B35] border border-[#20201E] inline-block" />
               <span>{'//'} SECTION 06 · AUTHENTICATED RECORDS</span>
             </div>
-            <h2 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tighter text-[#20201E] uppercase leading-none">
+            <h2 className="text-3xl sm:text-6xl lg:text-7xl font-black tracking-tighter text-[#20201E] uppercase leading-none">
               Credential <br className="hidden sm:inline" />
               <span className="text-[#304FFE] underline decoration-4 underline-offset-8">
                 Archive
@@ -182,47 +206,45 @@ const SwissCertificatesArchive: React.FC = () => {
             </h2>
           </div>
 
-          <div className="flex flex-col sm:flex-row sm:items-center gap-4 font-mono text-xs">
-            <div className="bg-white border-2 border-[#20201E] p-3 shadow-[3px_3px_0px_#20201E]">
-              <span className="block text-[#20201E]/50 font-bold uppercase">LEDGER AUDIT</span>
-              <span className="text-sm font-black text-[#20201E]">06 / 06 VERIFIED PASS</span>
+          <div className="flex flex-wrap items-center gap-3 sm:gap-4 font-mono text-xs">
+            <div className="bg-white border-2 border-[#20201E] p-2.5 sm:p-3 shadow-[3px_3px_0px_#20201E]">
+              <span className="block text-[#20201E]/50 font-bold uppercase text-[10px]">LEDGER AUDIT</span>
+              <span className="text-xs sm:text-sm font-black text-[#20201E]">06 / 06 VERIFIED PASS</span>
             </div>
-            <div className="bg-[#D7FF45] border-2 border-[#20201E] p-3 shadow-[3px_3px_0px_#20201E]">
-              <span className="block text-[#20201E]/60 font-bold uppercase">REGISTRY STATUS</span>
-              <span className="text-sm font-black text-[#20201E]">100% PUBLIC VERIFIABLE</span>
+            <div className="bg-[#D7FF45] border-2 border-[#20201E] p-2.5 sm:p-3 shadow-[3px_3px_0px_#20201E]">
+              <span className="block text-[#20201E]/60 font-bold uppercase text-[10px]">REGISTRY STATUS</span>
+              <span className="text-xs sm:text-sm font-black text-[#20201E]">100% PUBLIC VERIFIABLE</span>
             </div>
           </div>
         </div>
 
-        {/* ─── ARCHIVE DOSSIER WORKBENCH (DESKTOP & TABLET) ─── */}
+        {/* ─── ARCHIVE DOSSIER WORKBENCH ─── */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
-          {/* LEFT COLUMN: Interactive Credential Ledger Index (4 Cols) */}
+          {/* LEFT COLUMN: Interactive Credential Ledger Index (5 Cols) */}
           <div className="lg:col-span-5 flex flex-col gap-3">
             <div className="flex items-center justify-between border-b-2 border-[#20201E] pb-2 mb-1">
               <span className="font-mono text-xs font-bold text-[#20201E] uppercase tracking-wider">
                 DOCUMENT INDEX [REF: OT-SEC-06]
               </span>
               <span className="font-mono text-[10px] font-bold text-[#FF4B35] bg-white border border-[#20201E] px-2 py-0.5">
-                CLICK TO INSPECT
+                TAP TO INSPECT
               </span>
             </div>
 
             {/* List of 6 Dossier Index Records */}
-            <div className="flex flex-col gap-2.5">
+            <div className="flex flex-col gap-3">
               {certificates.map((cert) => {
                 const isSelected = cert.id === activeCertId;
                 const meta = credentialMeta[cert.id];
 
                 return (
-                  <button
+                  <div
                     key={cert.id}
-                    onClick={() => setActiveCertId(cert.id)}
-                    data-cursor="INSPECT"
-                    className={`ledger-item text-left p-4 border-2 border-[#20201E] transition-all relative overflow-hidden group ${
+                    className={`ledger-item border-2 border-[#20201E] transition-all relative overflow-hidden ${
                       isSelected
-                        ? 'bg-white shadow-[5px_5px_0px_#20201E] translate-x-1.5'
-                        : 'bg-[#FAF8F5] hover:bg-white hover:shadow-[3px_3px_0px_#20201E] opacity-80 hover:opacity-100'
+                        ? 'bg-white shadow-[5px_5px_0px_#20201E] translate-x-1 sm:translate-x-1.5'
+                        : 'bg-[#FAF8F5] hover:bg-white hover:shadow-[3px_3px_0px_#20201E] opacity-85 hover:opacity-100'
                     }`}
                   >
                     {/* Left Accent Stripe */}
@@ -233,7 +255,13 @@ const SwissCertificatesArchive: React.FC = () => {
                       }}
                     />
 
-                    <div className="flex items-start justify-between gap-3 pl-2">
+                    {/* Clickable Header Row */}
+                    <button
+                      type="button"
+                      onClick={() => setActiveCertId(cert.id)}
+                      data-cursor="INSPECT"
+                      className="w-full text-left p-3.5 sm:p-4 pl-4 sm:pl-5 flex items-start justify-between gap-3 group"
+                    >
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
                           <span className="font-mono text-[10px] font-black text-[#20201E]/50">
@@ -249,7 +277,7 @@ const SwissCertificatesArchive: React.FC = () => {
                             {meta.category}
                           </span>
                         </div>
-                        <h4 className="font-black text-base text-[#20201E] truncate group-hover:text-[#304FFE] transition-colors">
+                        <h4 className="font-black text-sm sm:text-base text-[#20201E] truncate group-hover:text-[#304FFE] transition-colors">
                           {cert.title}
                         </h4>
                         <p className="font-mono text-xs text-[#20201E]/70 truncate mt-0.5">
@@ -267,12 +295,73 @@ const SwissCertificatesArchive: React.FC = () => {
                         >
                           {isSelected ? 'ACTIVE SCAN' : 'STORED'}
                         </span>
-                        <span className="text-xs opacity-0 group-hover:opacity-100 transition-opacity">
-                          →
+                        <span className="text-xs transition-transform duration-200">
+                          {isSelected ? '▼' : '→'}
                         </span>
                       </div>
-                    </div>
-                  </button>
+                    </button>
+
+                    {/* Mobile Inline Inspection View (visible on small screens < 1024px when selected) */}
+                    {isSelected && (
+                      <div className="lg:hidden p-4 pt-1 border-t-2 border-[#20201E]/20 bg-[#FAF8F5] space-y-3">
+                        <div
+                          onClick={() => setModalCert(cert)}
+                          className="bg-white border-2 border-[#20201E] p-2 cursor-pointer relative group flex items-center justify-center min-h-[160px]"
+                        >
+                          <img
+                            src={cert.image}
+                            alt={cert.title}
+                            className="w-full max-h-[200px] object-contain"
+                            onError={(e) => {
+                              (e.currentTarget as HTMLImageElement).src = `${process.env.PUBLIC_URL}/images/c++.png`;
+                            }}
+                          />
+                          <div className="absolute inset-0 bg-[#20201E]/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <span className="bg-white text-[#20201E] font-mono text-[10px] font-black px-3 py-1.5 border border-[#20201E]">
+                              TAP TO EXPAND 🔍
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Competencies Badges */}
+                        <div>
+                          <span className="font-mono text-[9px] font-black text-[#20201E]/50 uppercase tracking-widest block mb-1.5">
+                            COMPETENCIES ASSESSED:
+                          </span>
+                          <div className="flex flex-wrap gap-1.5">
+                            {meta.skillsValidated.map((skill, idx) => (
+                              <span
+                                key={idx}
+                                className="font-mono text-[10px] font-bold px-2 py-0.5 bg-white border border-[#20201E] text-[#20201E]"
+                              >
+                                ✓ {skill}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Mobile Action Buttons */}
+                        <div className="flex items-center gap-2 pt-2">
+                          <a
+                            href={cert.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex-1 py-2.5 text-center bg-[#20201E] text-white font-mono text-xs font-black uppercase border border-[#20201E] shadow-[2px_2px_0px_#FF4B35] flex items-center justify-center gap-1.5"
+                          >
+                            <span>VERIFY GATEWAY</span>
+                            <span>↗</span>
+                          </a>
+                          <button
+                            type="button"
+                            onClick={() => setModalCert(cert)}
+                            className="py-2.5 px-3 bg-white text-[#20201E] font-mono text-xs font-black uppercase border border-[#20201E] shadow-[2px_2px_0px_#20201E]"
+                          >
+                            <span>ZOOM 🔍</span>
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 );
               })}
             </div>
@@ -283,8 +372,8 @@ const SwissCertificatesArchive: React.FC = () => {
             </div>
           </div>
 
-          {/* RIGHT COLUMN: Active Document Dossier Inspection Stage (7 Cols) */}
-          <div className="lg:col-span-7">
+          {/* RIGHT COLUMN: Active Document Dossier Inspection Stage (Desktop/Tablet, 7 Cols) */}
+          <div className="hidden lg:block lg:col-span-7">
             <div
               ref={dossierStageRef}
               className="bg-white border-4 border-[#20201E] shadow-[8px_8px_0px_#20201E] p-6 sm:p-8 relative transition-all duration-300"
@@ -515,4 +604,3 @@ const SwissCertificatesArchive: React.FC = () => {
 };
 
 export default SwissCertificatesArchive;
-

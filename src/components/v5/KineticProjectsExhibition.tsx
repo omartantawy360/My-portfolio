@@ -18,19 +18,18 @@ const KineticProjectsExhibition: React.FC<KineticProjectsExhibitionProps> = () =
     const ctx = gsap.context(() => {
       const totalProjects = projects.length;
 
-      // Pinned Master Stage Timeline
+      // Pinned Master Stage Timeline across both mobile & desktop
       const tl = gsap.timeline({
         scrollTrigger: {
           id: 'projects-theatre',
           trigger: containerRef.current,
           start: 'top top',
-          end: `+=${totalProjects * 100}%`,
+          end: `+=${totalProjects * 90}%`,
           pin: true,
-          scrub: 0.8,
+          scrub: 0.7,
           anticipatePin: 1,
           onUpdate: (self) => {
             const progress = self.progress;
-            // Calculate active project index from scroll progress (0 to totalProjects - 1)
             const idx = Math.min(
               Math.floor(progress * totalProjects),
               totalProjects - 1
@@ -40,13 +39,12 @@ const KineticProjectsExhibition: React.FC<KineticProjectsExhibitionProps> = () =
         },
       });
 
-      // For each project layer (from index 1 to totalProjects - 1), scrub the mask wipe over the previous one
+      // Scrubbed mask wipe for each project canvas layer
       for (let i = 1; i < totalProjects; i++) {
         const layer = document.getElementById(`project-canvas-layer-${i}`);
         const img = layer?.querySelector('.canvas-img');
 
         if (layer) {
-          // Bottom-up scrubbed clip-path wipe
           tl.fromTo(
             layer,
             { clipPath: 'inset(100% 0% 0% 0%)' },
@@ -56,17 +54,16 @@ const KineticProjectsExhibition: React.FC<KineticProjectsExhibitionProps> = () =
         }
 
         if (img) {
-          // Parallax scale down
           tl.fromTo(
             img,
-            { scale: 1.18 },
+            { scale: 1.15 },
             { scale: 1.0, ease: 'none', duration: 1 },
             (i - 1) * 1
           );
         }
       }
 
-      // Shutter wipe transition into Section 03 at the very end of scroll progression
+      // Shutter wipe transition into Section 03
       if (shutterRef.current) {
         tl.to(
           shutterRef.current,
@@ -92,31 +89,31 @@ const KineticProjectsExhibition: React.FC<KineticProjectsExhibitionProps> = () =
       id="projects"
       className="relative w-full h-screen bg-[#0A0A09] text-[#F2EFE9] overflow-hidden select-none z-20"
     >
-      {/* ─── DESKTOP & TABLET SPLIT-STAGE THEATRE (HIDDEN ON VERY SMALL MOBILE) ─── */}
-      <div className="w-full h-full flex flex-col md:flex-row relative z-10 pt-12 sm:pt-14 pb-8 sm:pb-10 px-4 sm:px-8 md:px-12">
+      {/* ─── SPLIT-STAGE THEATRE (RESPONSIVE: CANVAS TOP ON MOBILE, RIGHT ON DESKTOP) ─── */}
+      <div className="w-full h-full flex flex-col-reverse md:flex-row relative z-10 pt-10 sm:pt-14 pb-4 sm:pb-8 px-3 sm:px-8 md:px-12">
         
-        {/* ─── LEFT COLUMN: STICKY INFORMATION ARCHITECTURE (42% WIDTH) ─── */}
-        <div className="w-full md:w-[42%] h-[50%] md:h-full flex flex-col justify-between pr-0 md:pr-10 border-b md:border-b-0 md:border-r border-[rgba(242,239,233,0.12)] pb-4 md:pb-0">
+        {/* ─── SPECS COLUMN: STICKY INFORMATION ARCHITECTURE ─── */}
+        <div className="w-full md:w-[42%] h-[56%] md:h-full flex flex-col justify-between pr-0 md:pr-10 border-t md:border-t-0 md:border-r border-[rgba(242,239,233,0.12)] pt-2 md:pt-0 pb-1 md:pb-0">
           
           {/* Top Section Breadcrumb */}
-          <div className="flex items-center justify-between border-b border-[rgba(242,239,233,0.12)] pb-2.5">
+          <div className="flex items-center justify-between border-b border-[rgba(242,239,233,0.12)] pb-1.5 sm:pb-2.5">
             <div className="flex items-center gap-2">
-              <span className="w-2 h-2 bg-[#FF3E00]" />
-              <span className="font-mono-tech text-[11px] font-bold tracking-widest text-[#F2EFE9] uppercase">
+              <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-[#FF3E00]" />
+              <span className="font-mono-tech text-[10px] sm:text-[11px] font-bold tracking-widest text-[#F2EFE9] uppercase">
                 EXHIBITION REEL // 02
               </span>
             </div>
-            <span className="font-mono-tech text-[10px] text-[#78756E] uppercase">
+            <span className="font-mono-tech text-[9px] sm:text-[10px] text-[#78756E] uppercase">
               PINNED THEATRE
             </span>
           </div>
 
           {/* Center Info Block: Odometer + Active Title & Description */}
-          <div className="my-auto py-2 sm:py-4 space-y-3 sm:space-y-4">
+          <div className="my-auto py-1 sm:py-4 space-y-1.5 sm:space-y-3.5">
             
             {/* Odometer Rolling Counter */}
-            <div className="flex items-center gap-3 select-none">
-              <div className="relative h-12 sm:h-16 md:h-20 w-16 sm:w-24 md:w-32 overflow-hidden font-mono-tech font-black text-3xl sm:text-5xl md:text-7xl text-[#FF3E00] leading-none">
+            <div className="flex items-center gap-2.5 sm:gap-3 select-none">
+              <div className="relative h-9 sm:h-16 md:h-20 w-14 sm:w-24 md:w-32 overflow-hidden font-mono-tech font-black text-2xl sm:text-5xl md:text-7xl text-[#FF3E00] leading-none">
                 <div
                   className="transition-transform duration-500 ease-out flex flex-col w-full"
                   style={{
@@ -126,7 +123,7 @@ const KineticProjectsExhibition: React.FC<KineticProjectsExhibitionProps> = () =
                   {projects.map((p) => (
                     <span
                       key={p.id}
-                      className="h-12 sm:h-16 md:h-20 flex items-center justify-start shrink-0 leading-none"
+                      className="h-9 sm:h-16 md:h-20 flex items-center justify-start shrink-0 leading-none"
                     >
                       0{p.id}
                     </span>
@@ -134,27 +131,27 @@ const KineticProjectsExhibition: React.FC<KineticProjectsExhibitionProps> = () =
                 </div>
               </div>
 
-              <span className="font-mono-tech text-base sm:text-2xl text-[#78756E] font-medium leading-none">
+              <span className="font-mono-tech text-xs sm:text-2xl text-[#78756E] font-medium leading-none">
                 / 0{projects.length}
               </span>
 
-              <span className="ml-auto font-mono-tech text-[10px] sm:text-xs text-[#78756E] uppercase tracking-widest">
+              <span className="ml-auto font-mono-tech text-[9px] sm:text-xs text-[#78756E] uppercase tracking-widest">
                 [INDEX REGISTER]
               </span>
             </div>
 
             {/* Project Title */}
-            <h3 className="font-syne text-2xl sm:text-3xl md:text-5xl font-extrabold text-[#F2EFE9] tracking-tight uppercase leading-[0.95]">
+            <h3 className="font-syne text-lg sm:text-2xl md:text-5xl font-extrabold text-[#F2EFE9] tracking-tight uppercase leading-[0.95] line-clamp-1 sm:line-clamp-none">
               {currentProject.title}
             </h3>
 
             {/* Description */}
-            <p className="font-mono-tech text-xs sm:text-sm text-[#78756E] leading-relaxed max-w-lg line-clamp-3 md:line-clamp-none">
+            <p className="font-mono-tech text-[11px] sm:text-sm text-[#78756E] leading-relaxed max-w-lg line-clamp-2 md:line-clamp-none">
               {currentProject.description}
             </p>
 
             {/* Blueprint Metadata Matrix */}
-            <div className="pt-2 sm:pt-4 border-t border-[rgba(242,239,233,0.12)] space-y-2 font-mono-tech text-[11px]">
+            <div className="pt-1 sm:pt-3 border-t border-[rgba(242,239,233,0.12)] space-y-1.5 font-mono-tech text-[10px] sm:text-[11px]">
               <div className="flex items-center justify-between text-[#78756E]">
                 <span>RELEASE ID:</span>
                 <span className="text-[#F2EFE9] font-bold">
@@ -162,12 +159,12 @@ const KineticProjectsExhibition: React.FC<KineticProjectsExhibitionProps> = () =
                 </span>
               </div>
               
-              <div className="flex flex-wrap items-center gap-1.5 pt-1">
-                <span className="text-[#78756E] mr-2">STACK:</span>
+              <div className="flex flex-wrap items-center gap-1 pt-0.5">
+                <span className="text-[#78756E] mr-1.5">STACK:</span>
                 {currentProject.tags.map((tag, tIdx) => (
                   <span
                     key={tIdx}
-                    className="px-2 py-0.5 border border-[rgba(242,239,233,0.18)] bg-[#0A0A09] text-[10px] text-[#F2EFE9] uppercase tracking-wider font-bold"
+                    className="px-1.5 py-0.2 sm:px-2 sm:py-0.5 border border-[rgba(242,239,233,0.18)] bg-[#0A0A09] text-[9px] sm:text-[10px] text-[#F2EFE9] uppercase tracking-wider font-bold"
                   >
                     {tag}
                   </span>
@@ -177,13 +174,13 @@ const KineticProjectsExhibition: React.FC<KineticProjectsExhibitionProps> = () =
           </div>
 
           {/* Bottom Actions: Brutalist Architectural Launch Buttons */}
-          <div className="pt-2 sm:pt-4 border-t border-[rgba(242,239,233,0.12)] flex items-center gap-3">
+          <div className="pt-1.5 sm:pt-4 border-t border-[rgba(242,239,233,0.12)] flex items-center gap-2 sm:gap-3">
             <a
               href={currentProject.link}
               target="_blank"
               rel="noopener noreferrer"
               data-cursor="LAUNCH"
-              className="flex-1 py-2.5 sm:py-3 px-4 bg-[#FF3E00] text-[#0A0A09] font-mono-tech text-xs font-bold tracking-widest uppercase text-center border border-[#FF3E00] hover:bg-[#F2EFE9] hover:border-[#F2EFE9] transition-all shadow-md flex items-center justify-center gap-2"
+              className="flex-1 py-2 sm:py-3 px-3 sm:px-4 bg-[#FF3E00] text-[#0A0A09] font-mono-tech text-[11px] sm:text-xs font-bold tracking-widest uppercase text-center border border-[#FF3E00] hover:bg-[#F2EFE9] hover:border-[#F2EFE9] transition-all shadow-md flex items-center justify-center gap-1.5"
             >
               <span>LAUNCH LIVE DEMO</span>
               <span className="text-sm">↗</span>
@@ -194,7 +191,7 @@ const KineticProjectsExhibition: React.FC<KineticProjectsExhibitionProps> = () =
               target="_blank"
               rel="noopener noreferrer"
               data-cursor="GITHUB"
-              className="py-2.5 sm:py-3 px-4 bg-transparent text-[#F2EFE9] font-mono-tech text-xs font-bold tracking-widest uppercase border border-[rgba(242,239,233,0.2)] hover:border-[#FF3E00] hover:text-[#FF3E00] transition-all flex items-center justify-center gap-1.5"
+              className="py-2 sm:py-3 px-3 sm:px-4 bg-transparent text-[#F2EFE9] font-mono-tech text-[11px] sm:text-xs font-bold tracking-widest uppercase border border-[rgba(242,239,233,0.2)] hover:border-[#FF3E00] hover:text-[#FF3E00] transition-all flex items-center justify-center gap-1"
             >
               <span>CODE</span>
               <span>↗</span>
@@ -202,8 +199,8 @@ const KineticProjectsExhibition: React.FC<KineticProjectsExhibitionProps> = () =
           </div>
         </div>
 
-        {/* ─── RIGHT COLUMN: FULL-BLEED MASK-WIPE CANVAS (58% WIDTH) ─── */}
-        <div className="w-full md:w-[58%] h-[50%] md:h-full relative pl-0 md:pl-8 pt-4 md:pt-0">
+        {/* ─── CANVAS COLUMN: FULL-BLEED MASK-WIPE CANVAS ─── */}
+        <div className="w-full md:w-[58%] h-[44%] md:h-full relative pl-0 md:pl-8 pb-2 md:pb-0">
           <div className="relative w-full h-full border border-[rgba(242,239,233,0.14)] bg-[#0A0A09] overflow-hidden">
             
             {/* Project Canvas Layers (Stacked with scrubbed clip-path) */}
@@ -231,22 +228,22 @@ const KineticProjectsExhibition: React.FC<KineticProjectsExhibitionProps> = () =
                       }}
                     />
 
-                    {/* Dark gradient overlay at bottom for telemetry legibility */}
-                    <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#0A0A09] via-[#0A0A09]/60 to-transparent pointer-events-none" />
+                    {/* Dark gradient overlay for telemetry legibility */}
+                    <div className="absolute inset-x-0 bottom-0 h-20 sm:h-32 bg-gradient-to-t from-[#0A0A09] via-[#0A0A09]/60 to-transparent pointer-events-none" />
 
                     {/* Blueprint Coordinates Corner Stamp */}
-                    <div className="absolute top-4 right-4 px-2.5 py-1 bg-[#0A0A09]/90 border border-[rgba(242,239,233,0.18)] font-mono-tech text-[10px] text-[#F2EFE9] tracking-wider uppercase backdrop-blur-sm">
+                    <div className="absolute top-2.5 right-2.5 sm:top-4 sm:right-4 px-2 py-0.5 sm:px-2.5 sm:py-1 bg-[#0A0A09]/90 border border-[rgba(242,239,233,0.18)] font-mono-tech text-[9px] sm:text-[10px] text-[#F2EFE9] tracking-wider uppercase backdrop-blur-sm">
                       FRAME // 0{proj.id}
                     </div>
 
                     {/* Live Bottom Caption Overlay */}
-                    <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between font-mono-tech text-[11px] text-[#F2EFE9] pointer-events-none">
-                      <div className="flex items-center gap-2 bg-[#0A0A09]/85 px-2.5 py-1 border border-[rgba(242,239,233,0.15)]">
+                    <div className="absolute bottom-2.5 left-2.5 right-2.5 sm:bottom-4 sm:left-4 sm:right-4 flex items-center justify-between font-mono-tech text-[9px] sm:text-[11px] text-[#F2EFE9] pointer-events-none">
+                      <div className="flex items-center gap-1.5 sm:gap-2 bg-[#0A0A09]/85 px-2 py-0.5 sm:px-2.5 sm:py-1 border border-[rgba(242,239,233,0.15)]">
                         <span className="w-1.5 h-1.5 rounded-full bg-[#FF3E00]" />
-                        <span className="font-bold">{proj.title}</span>
+                        <span className="font-bold truncate max-w-[140px] sm:max-w-none">{proj.title}</span>
                       </div>
                       <span className="hidden sm:inline bg-[#0A0A09]/85 px-2.5 py-1 border border-[rgba(242,239,233,0.15)] text-[#78756E]">
-                        SYSTEM RESOLUTION: 1920x1080 HIGH-DPI
+                        HIGH-DPI VISUAL
                       </span>
                     </div>
                   </div>
@@ -254,7 +251,7 @@ const KineticProjectsExhibition: React.FC<KineticProjectsExhibitionProps> = () =
               );
             })}
 
-            {/* 1px Crosshair Grid overlay over image */}
+            {/* 1px Crosshair Grid overlay */}
             <div className="absolute inset-0 pointer-events-none z-20">
               <div className="absolute top-1/2 left-0 right-0 h-px bg-[rgba(242,239,233,0.06)]" />
               <div className="absolute top-0 bottom-0 left-1/2 w-px bg-[rgba(242,239,233,0.06)]" />
@@ -266,14 +263,14 @@ const KineticProjectsExhibition: React.FC<KineticProjectsExhibitionProps> = () =
       {/* ─── SECTION 03 COLOR INVERSION SHUTTER (OBSIDIAN TO RAW LINEN) ─── */}
       <div
         ref={shutterRef}
-        className="absolute inset-0 bg-[#F2EFE9] z-30 pointer-events-none will-change-[clip-path] flex items-center justify-center"
+        className="absolute inset-0 bg-[#F2EFE9] z-30 pointer-events-none will-change-[clip-path] flex items-center justify-center p-4"
         style={{ clipPath: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)' }}
       >
         <div className="text-center text-[#0A0A09] space-y-2">
-          <span className="font-mono-tech text-xs tracking-widest uppercase font-bold text-[#FF3E00]">
+          <span className="font-mono-tech text-[10px] sm:text-xs tracking-widest uppercase font-bold text-[#FF3E00]">
             [SURFACE INVERSION INITIATED]
           </span>
-          <h2 className="font-syne text-5xl sm:text-7xl font-extrabold uppercase tracking-tight">
+          <h2 className="font-syne text-3xl sm:text-5xl md:text-7xl font-extrabold uppercase tracking-tight">
             ENTERING ARCHIVAL MATRIX
           </h2>
         </div>

@@ -142,19 +142,19 @@ const domains = [
   {
     code: 'DOM-01',
     title: 'FRONTEND ARCHITECTURE',
-    desc: 'Component models, reactive state loops, responsive design tokens & DOM rendering',
+    desc: 'Component models, reactive state loops & responsive UX',
     skills: ['React', 'TypeScript', 'Tailwind CSS', 'Bootstrap 5', 'HTML5 / CSS3'],
   },
   {
     code: 'DOM-02',
     title: 'LANGUAGE SYSTEMS',
-    desc: 'Algorithmic complexity, asynchronous execution, memory management & scripting',
+    desc: 'Algorithmic logic, asynchronous execution & scripting',
     skills: ['JavaScript (ES6+)', 'C++ Programming', 'Python'],
   },
   {
     code: 'DOM-03',
     title: 'WORKFLOW & TOOLCHAINS',
-    desc: 'Distributed version control, client-side transactional APIs & modern bundlers',
+    desc: 'Version control, client messaging & tooling pipelines',
     skills: ['Git & GitHub', 'EmailJS', 'VS Code', 'npm & Node'],
   },
 ];
@@ -182,8 +182,8 @@ const KineticSkillsMatrix: React.FC = () => {
           scrub: 0.6,
           onUpdate: (self) => {
             // Velocity-reactive skew
-            const vel = self.getVelocity() / 300;
-            const clampedSkew = Math.max(-14, Math.min(14, vel));
+            const vel = self.getVelocity() / 320;
+            const clampedSkew = Math.max(-12, Math.min(12, vel));
 
             if (track1Ref.current) gsap.set(track1Ref.current, { skewX: -clampedSkew });
             if (track2Ref.current) gsap.set(track2Ref.current, { skewX: clampedSkew });
@@ -192,11 +192,11 @@ const KineticSkillsMatrix: React.FC = () => {
         },
       });
 
-      tl.to(track1Ref.current, { xPercent: -25, ease: 'none' }, 0);
-      tl.to(track2Ref.current, { xPercent: 20, ease: 'none' }, 0);
-      tl.to(track3Ref.current, { xPercent: -20, ease: 'none' }, 0);
+      tl.to(track1Ref.current, { xPercent: -30, ease: 'none' }, 0);
+      tl.to(track2Ref.current, { xPercent: 25, ease: 'none' }, 0);
+      tl.to(track3Ref.current, { xPercent: -25, ease: 'none' }, 0);
 
-      // 2. Horizontal Curtain Compression transitioning to Section 04 (restoring Obsidian #0A0A09)
+      // 2. Horizontal Curtain Compression transitioning to Section 04
       if (compressionCurtainRef.current) {
         gsap.fromTo(
           compressionCurtainRef.current,
@@ -222,7 +222,7 @@ const KineticSkillsMatrix: React.FC = () => {
     <section
       ref={containerRef}
       id="skills"
-      className="relative w-full min-h-screen bg-[#F2EFE9] text-[#0A0A09] py-24 sm:py-32 overflow-hidden select-none z-10"
+      className="relative w-full min-h-screen bg-[#F2EFE9] text-[#0A0A09] py-16 sm:py-28 md:py-32 overflow-hidden select-none z-10"
     >
       {/* ─── 1PX ARCHITECTURAL HAIRLINE GRID OVERLAY (LIGHT SURFACE) ─── */}
       <div className="absolute inset-0 pointer-events-none">
@@ -233,34 +233,34 @@ const KineticSkillsMatrix: React.FC = () => {
         </div>
       </div>
 
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-8 md:px-12 relative z-10 space-y-16 sm:space-y-20">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-8 md:px-12 relative z-10 space-y-10 sm:space-y-16">
         
         {/* ─── SECTION HEADER ─── */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b-2 border-[#0A0A09] pb-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 border-b-2 border-[#0A0A09] pb-4 sm:pb-6">
           <div>
-            <div className="flex items-center gap-2 mb-2 font-mono-tech text-xs font-bold tracking-widest text-[#FF3E00] uppercase">
-              <span className="w-2.5 h-2.5 bg-[#FF3E00] inline-block" />
+            <div className="flex items-center gap-2 mb-1.5 sm:mb-2 font-mono-tech text-[10px] sm:text-xs font-bold tracking-widest text-[#FF3E00] uppercase">
+              <span className="w-2 sm:w-2.5 h-2 sm:h-2.5 bg-[#FF3E00] inline-block" />
               <span>{'//'} SECTION 03 · KINETIC BLUEPRINT MATRIX</span>
             </div>
-            <h2 className="font-syne text-4xl sm:text-6xl md:text-8xl font-black text-[#0A0A09] tracking-tight uppercase leading-none">
+            <h2 className="font-syne text-3xl sm:text-6xl md:text-8xl font-black text-[#0A0A09] tracking-tight uppercase leading-none">
               Skills &amp; Craft
             </h2>
           </div>
 
-          <div className="font-mono-tech text-xs space-y-1 text-right text-[#78756E]">
+          <div className="font-mono-tech text-[10px] sm:text-xs space-y-0.5 sm:space-y-1 text-left md:text-right text-[#78756E]">
             <p className="font-bold text-[#0A0A09]">TOTAL TECHNICAL NODES: {skills.length}</p>
             <p>VELOCITY-SKEWED SCROLL TOPOLOGY</p>
-            <p className="text-[#FF3E00] font-bold">HOVER NODES TO CROSS-REFERENCE PROJECTS</p>
+            <p className="text-[#FF3E00] font-bold">TAP/HOVER NODES TO CROSS-REFERENCE PROJECTS</p>
           </div>
         </div>
 
         {/* ─── GIANT HORIZONTAL VELOCITY-REACTIVE KINETIC TRACKS ─── */}
-        <div className="space-y-4 py-4 overflow-hidden border-y border-[rgba(10,10,9,0.12)] bg-[rgba(10,10,9,0.02)]">
+        <div className="space-y-2 sm:space-y-4 py-3 sm:py-4 overflow-hidden border-y border-[rgba(10,10,9,0.12)] bg-[rgba(10,10,9,0.02)]">
           
           {/* Track 1 (Leftward) */}
           <div
             ref={track1Ref}
-            className="whitespace-nowrap font-syne font-black text-5xl sm:text-7xl md:text-8xl tracking-tight text-[#0A0A09] will-change-transform flex gap-8 items-center"
+            className="whitespace-nowrap font-syne font-black text-3xl sm:text-6xl md:text-8xl tracking-tight text-[#0A0A09] will-change-transform flex gap-4 sm:gap-8 items-center"
           >
             <span>REACT 19</span>
             <span className="text-[#FF3E00]">—</span>
@@ -273,14 +273,12 @@ const KineticSkillsMatrix: React.FC = () => {
             <span>BOOTSTRAP 5</span>
             <span className="text-[#FF3E00]">—</span>
             <span>REACT 19</span>
-            <span className="text-[#FF3E00]">—</span>
-            <span>TYPESCRIPT</span>
           </div>
 
           {/* Track 2 (Rightward) */}
           <div
             ref={track2Ref}
-            className="whitespace-nowrap font-syne font-black text-4xl sm:text-6xl md:text-7xl tracking-tight text-[#78756E] will-change-transform flex gap-8 items-center"
+            className="whitespace-nowrap font-syne font-black text-2xl sm:text-5xl md:text-7xl tracking-tight text-[#78756E] will-change-transform flex gap-4 sm:gap-8 items-center"
           >
             <span>JAVASCRIPT (ES6+)</span>
             <span className="text-[#FF3E00]">—</span>
@@ -289,14 +287,12 @@ const KineticSkillsMatrix: React.FC = () => {
             <span>PYTHON AUTOMATION</span>
             <span className="text-[#FF3E00]">—</span>
             <span>JAVASCRIPT (ES6+)</span>
-            <span className="text-[#FF3E00]">—</span>
-            <span className="text-[#0A0A09]">C++ ALGORITHMS</span>
           </div>
 
           {/* Track 3 (Leftward) */}
           <div
             ref={track3Ref}
-            className="whitespace-nowrap font-syne font-black text-4xl sm:text-6xl md:text-7xl tracking-tight text-[#0A0A09] will-change-transform flex gap-8 items-center"
+            className="whitespace-nowrap font-syne font-black text-2xl sm:text-5xl md:text-7xl tracking-tight text-[#0A0A09] will-change-transform flex gap-4 sm:gap-8 items-center"
           >
             <span>GIT &amp; GITHUB</span>
             <span className="text-[#FF3E00]">—</span>
@@ -305,36 +301,34 @@ const KineticSkillsMatrix: React.FC = () => {
             <span>VS CODE DEV SUITE</span>
             <span className="text-[#FF3E00]">—</span>
             <span>NPM &amp; NODE TOOLING</span>
-            <span className="text-[#FF3E00]">—</span>
-            <span>GIT &amp; GITHUB</span>
           </div>
         </div>
 
         {/* ─── INTERACTIVE BLUEPRINT MATRIX WITH CROSS-REFERENCE VIEWER ─── */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start pt-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start pt-2 sm:pt-6">
           
           {/* LEFT: 3 DOMAIN ROWS (8 COLS) */}
           <div className="lg:col-span-8 divide-y-2 divide-[#0A0A09] border-y-2 border-[#0A0A09]">
             {domains.map((dom) => (
-              <div key={dom.code} className="py-6 sm:py-8 space-y-4">
+              <div key={dom.code} className="py-4 sm:py-8 space-y-3 sm:space-y-4">
                 
                 {/* Domain Header */}
-                <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
-                  <div className="flex items-center gap-3">
-                    <span className="font-mono-tech text-xs font-bold text-[#FF3E00] bg-[#0A0A09] text-white px-2 py-0.5">
+                <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 sm:gap-2">
+                  <div className="flex items-center gap-2.5 sm:gap-3">
+                    <span className="font-mono-tech text-[10px] sm:text-xs font-bold text-[#FF3E00] bg-[#0A0A09] text-white px-2 py-0.5">
                       {dom.code}
                     </span>
-                    <h3 className="font-syne text-xl sm:text-2xl font-black text-[#0A0A09] tracking-tight uppercase">
+                    <h3 className="font-syne text-lg sm:text-2xl font-black text-[#0A0A09] tracking-tight uppercase">
                       {dom.title}
                     </h3>
                   </div>
-                  <span className="font-mono-tech text-[11px] text-[#78756E]">
+                  <span className="font-mono-tech text-[10px] sm:text-[11px] text-[#78756E]">
                     {dom.desc}
                   </span>
                 </div>
 
-                {/* Inline Monospace Skill Pills */}
-                <div className="flex flex-wrap gap-2 pt-2">
+                {/* Inline Monospace Skill Pills (Touch-Friendly) */}
+                <div className="flex flex-wrap gap-1.5 sm:gap-2 pt-1 sm:pt-2">
                   {dom.skills.map((skillName) => {
                     const refData = skillCrossReferences[skillName];
                     const isSelected = activeSkillHover?.name === (refData?.name || skillName);
@@ -345,7 +339,7 @@ const KineticSkillsMatrix: React.FC = () => {
                         onClick={() => refData && setActiveSkillHover(refData)}
                         onMouseEnter={() => refData && setActiveSkillHover(refData)}
                         data-cursor="INSPECT"
-                        className={`font-mono-tech text-xs sm:text-sm font-bold uppercase px-3 py-1.5 border transition-all ${
+                        className={`font-mono-tech text-[11px] sm:text-sm font-bold uppercase px-2.5 py-1.5 sm:px-3 sm:py-1.5 border transition-all ${
                           isSelected
                             ? 'bg-[#FF3E00] text-[#0A0A09] border-[#FF3E00] shadow-[2px_2px_0px_#0A0A09] -translate-y-0.5'
                             : 'bg-white text-[#0A0A09] border-[#0A0A09] hover:bg-[#0A0A09] hover:text-white'
@@ -353,7 +347,7 @@ const KineticSkillsMatrix: React.FC = () => {
                       >
                         [{skillName}]
                         {refData && (
-                          <span className="ml-1.5 text-[10px] opacity-70">
+                          <span className="ml-1 text-[9px] sm:text-[10px] opacity-75">
                             {refData.projectCount}/9
                           </span>
                         )}
@@ -366,50 +360,50 @@ const KineticSkillsMatrix: React.FC = () => {
           </div>
 
           {/* RIGHT: DYNAMIC CROSS-REFERENCE BLUEPRINT HUD (4 COLS) */}
-          <div className="lg:col-span-4 sticky top-24">
-            <div className="bg-[#0A0A09] text-[#F2EFE9] border-2 border-[#0A0A09] p-6 shadow-[8px_8px_0px_#FF3E00] space-y-4">
+          <div className="lg:col-span-4 sticky top-16 sm:top-24">
+            <div className="bg-[#0A0A09] text-[#F2EFE9] border-2 border-[#0A0A09] p-4 sm:p-6 shadow-[6px_6px_0px_#FF3E00] sm:shadow-[8px_8px_0px_#FF3E00] space-y-3 sm:space-y-4">
               
               {/* HUD Header */}
-              <div className="flex items-center justify-between border-b border-[rgba(242,239,233,0.18)] pb-3">
+              <div className="flex items-center justify-between border-b border-[rgba(242,239,233,0.18)] pb-2.5 sm:pb-3">
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-[#FF3E00] animate-pulse" />
-                  <span className="font-mono-tech text-[10px] tracking-widest text-[#F2EFE9] uppercase font-bold">
+                  <span className="font-mono-tech text-[9px] sm:text-[10px] tracking-widest text-[#F2EFE9] uppercase font-bold">
                     ACTIVE NODE AUDIT
                   </span>
                 </div>
-                <span className="font-mono-tech text-[10px] text-[#78756E]">
+                <span className="font-mono-tech text-[9px] sm:text-[10px] text-[#78756E]">
                   {activeSkillHover?.code || 'SYS-REF'}
                 </span>
               </div>
 
               {/* Active Skill Title */}
               <div>
-                <span className="font-mono-tech text-[10px] text-[#78756E] uppercase block mb-1">
+                <span className="font-mono-tech text-[9px] sm:text-[10px] text-[#78756E] uppercase block mb-0.5">
                   SELECTED CRAFT DOMAIN
                 </span>
-                <h4 className="font-syne text-3xl font-black text-[#F2EFE9] uppercase tracking-tight">
+                <h4 className="font-syne text-2xl sm:text-3xl font-black text-[#F2EFE9] uppercase tracking-tight">
                   {activeSkillHover?.name || 'SELECT A SKILL'}
                 </h4>
               </div>
 
               {/* Utilization Metrics */}
-              <div className="bg-[rgba(242,239,233,0.06)] p-3 border border-[rgba(242,239,233,0.12)] flex items-center justify-between font-mono-tech text-xs">
-                <span className="text-[#78756E]">PORTFOLIO DEPLOYMENT:</span>
+              <div className="bg-[rgba(242,239,233,0.06)] p-2.5 sm:p-3 border border-[rgba(242,239,233,0.12)] flex items-center justify-between font-mono-tech text-[10px] sm:text-xs">
+                <span className="text-[#78756E]">DEPLOYMENT:</span>
                 <span className="font-bold text-[#FF3E00]">
-                  {activeSkillHover?.projectCount || 0} OF 09 PRODUCTION RELEASES
+                  {activeSkillHover?.projectCount || 0} OF 09 RELEASES
                 </span>
               </div>
 
               {/* Linked Projects Breakdown */}
-              <div className="space-y-2 pt-2 border-t border-[rgba(242,239,233,0.12)]">
-                <span className="font-mono-tech text-[10px] text-[#78756E] uppercase block">
+              <div className="space-y-1.5 sm:space-y-2 pt-1 sm:pt-2 border-t border-[rgba(242,239,233,0.12)]">
+                <span className="font-mono-tech text-[9px] sm:text-[10px] text-[#78756E] uppercase block">
                   VERIFIED IMPLEMENTATION IN:
                 </span>
-                <div className="space-y-1.5 font-mono-tech text-xs">
+                <div className="space-y-1 sm:space-y-1.5 font-mono-tech text-[10px] sm:text-xs max-h-40 overflow-y-auto pr-1">
                   {activeSkillHover?.projectNames.map((proj, pIdx) => (
                     <div
                       key={pIdx}
-                      className="flex items-center gap-2 text-[#F2EFE9]/90 bg-[rgba(242,239,233,0.04)] px-2.5 py-1 border border-[rgba(242,239,233,0.08)]"
+                      className="flex items-center gap-1.5 sm:gap-2 text-[#F2EFE9]/90 bg-[rgba(242,239,233,0.04)] px-2 py-0.5 sm:px-2.5 sm:py-1 border border-[rgba(242,239,233,0.08)]"
                     >
                       <span className="text-[#FF3E00]">↳</span>
                       <span className="truncate">{proj}</span>
@@ -418,7 +412,7 @@ const KineticSkillsMatrix: React.FC = () => {
                 </div>
               </div>
 
-              <div className="pt-2 text-[10px] font-mono-tech text-[#78756E] flex items-center justify-between border-t border-[rgba(242,239,233,0.12)]">
+              <div className="pt-2 text-[9px] sm:text-[10px] font-mono-tech text-[#78756E] flex items-center justify-between border-t border-[rgba(242,239,233,0.12)]">
                 <span>STATUS: HIGH CONCURRENCY</span>
                 <span>ZERO DRIFT</span>
               </div>
@@ -430,11 +424,10 @@ const KineticSkillsMatrix: React.FC = () => {
       {/* ─── TRANSITION TO SECTION 04: HORIZONTAL CURTAIN COMPRESSION (OBSIDIAN) ─── */}
       <div
         ref={compressionCurtainRef}
-        className="absolute inset-x-0 bottom-0 h-24 bg-[#0A0A09] pointer-events-none z-20"
+        className="absolute inset-x-0 bottom-0 h-16 sm:h-24 bg-[#0A0A09] pointer-events-none z-20"
       />
     </section>
   );
 };
 
 export default KineticSkillsMatrix;
-

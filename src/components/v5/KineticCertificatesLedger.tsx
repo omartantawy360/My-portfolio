@@ -34,8 +34,8 @@ const KineticCertificatesLedger: React.FC = () => {
       rows?.forEach((row, idx) => {
         ScrollTrigger.create({
           trigger: row,
-          start: 'top 65%',
-          end: 'bottom 35%',
+          start: 'top 70%',
+          end: 'bottom 30%',
           onEnter: () => setActiveCert(certificates[idx]),
           onEnterBack: () => setActiveCert(certificates[idx]),
         });
@@ -45,7 +45,7 @@ const KineticCertificatesLedger: React.FC = () => {
     return () => ctx.revert();
   }, []);
 
-  // Track mouse coordinates for subtle spring tilt on floating preview box
+  // Track mouse coordinates for subtle spring tilt on desktop
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
@@ -85,7 +85,7 @@ const KineticCertificatesLedger: React.FC = () => {
       ref={containerRef}
       id="certificates"
       onMouseMove={handleMouseMove}
-      className="relative w-full min-h-screen bg-[#0A0A09] text-[#F2EFE9] py-24 sm:py-32 overflow-hidden select-none z-20 border-t border-[rgba(242,239,233,0.12)]"
+      className="relative w-full min-h-screen bg-[#0A0A09] text-[#F2EFE9] py-16 sm:py-28 md:py-32 overflow-hidden select-none z-20 border-t border-[rgba(242,239,233,0.12)]"
     >
       {/* ─── 1PX ARCHITECTURAL HAIRLINE GRID ─── */}
       <div className="absolute inset-0 pointer-events-none">
@@ -96,29 +96,29 @@ const KineticCertificatesLedger: React.FC = () => {
         </div>
       </div>
 
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-8 md:px-12 relative z-10 space-y-16">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-8 md:px-12 relative z-10 space-y-10 sm:space-y-16">
         
         {/* ─── SECTION HEADER ─── */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[rgba(242,239,233,0.18)] pb-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 border-b border-[rgba(242,239,233,0.18)] pb-4 sm:pb-6">
           <div>
-            <div className="flex items-center gap-2 mb-2 font-mono-tech text-xs font-bold tracking-widest text-[#FF3E00] uppercase">
-              <span className="w-2.5 h-2.5 bg-[#FF3E00] inline-block" />
+            <div className="flex items-center gap-2 mb-1.5 sm:mb-2 font-mono-tech text-[10px] sm:text-xs font-bold tracking-widest text-[#FF3E00] uppercase">
+              <span className="w-2 sm:w-2.5 h-2 sm:h-2.5 bg-[#FF3E00] inline-block" />
               <span>{'//'} SECTION 04 · ARCHIVAL INDEX LEDGER</span>
             </div>
-            <h2 className="font-syne text-4xl sm:text-6xl md:text-8xl font-black text-[#F2EFE9] tracking-tight uppercase leading-none">
+            <h2 className="font-syne text-3xl sm:text-6xl md:text-8xl font-black text-[#F2EFE9] tracking-tight uppercase leading-none">
               Verified Dossier
             </h2>
           </div>
 
-          <div className="font-mono-tech text-xs space-y-1 text-right text-[#78756E]">
-            <p className="font-bold text-[#F2EFE9]">ACADEMIC &amp; INDUSTRY CREDENTIALS</p>
-            <p>06 RECORDS AUTHENTICATED VIA CRYPTOGRAPHIC LEDGERS</p>
-            <p className="text-[#FF3E00] font-bold">CLICK ROW FOR HIGH-FIDELITY SCAN</p>
+          <div className="font-mono-tech text-[10px] sm:text-xs space-y-0.5 sm:space-y-1 text-left md:text-right text-[#78756E]">
+            <p className="font-bold text-[#F2EFE9]">06 CRYPTOGRAPHIC RECORDS</p>
+            <p>CISCO · HARVARD CS50 · FREECODECAMP · YANFAA</p>
+            <p className="text-[#FF3E00] font-bold">CLICK OR TAP ROW FOR SCAN &amp; REGISTRY</p>
           </div>
         </div>
 
         {/* ─── MAIN LEDGER & FLOATING PREVIEW LAYOUT ─── */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start pt-4">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-start pt-2 sm:pt-4">
           
           {/* LEFT: FULL-WIDTH HORIZONTAL ROWS (7 COLS) */}
           <div className="lg:col-span-7 flex flex-col divide-y divide-[rgba(242,239,233,0.12)] border-y border-[rgba(242,239,233,0.18)]">
@@ -133,16 +133,15 @@ const KineticCertificatesLedger: React.FC = () => {
               return (
                 <div
                   key={cert.id}
-                  onClick={() => setModalCert(cert)}
-                  onMouseEnter={() => setActiveCert(cert)}
+                  onClick={() => setActiveCert(cert)}
                   data-cursor="INSPECT"
-                  className={`ledger-row group relative cursor-pointer py-6 sm:py-8 px-4 transition-all duration-300 overflow-hidden ${
-                    isCurrent ? 'translate-x-2' : ''
+                  className={`ledger-row group relative cursor-pointer py-4 sm:py-8 px-3 sm:px-4 transition-all duration-300 overflow-hidden ${
+                    isCurrent ? 'bg-[rgba(255,62,0,0.06)] sm:bg-transparent sm:translate-x-2' : ''
                   }`}
                 >
-                  {/* Vermilion Sweep Background Fill */}
+                  {/* Vermilion Sweep Background Fill (Desktop) */}
                   <div
-                    className={`absolute inset-0 bg-[#FF3E00] transition-transform duration-500 origin-left ease-out pointer-events-none ${
+                    className={`hidden sm:block absolute inset-0 bg-[#FF3E00] transition-transform duration-500 origin-left ease-out pointer-events-none ${
                       isCurrent
                         ? 'scale-x-100'
                         : 'scale-x-0 group-hover:scale-x-100'
@@ -150,14 +149,14 @@ const KineticCertificatesLedger: React.FC = () => {
                   />
 
                   {/* Row Content */}
-                  <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
                     
                     {/* Index + Title */}
-                    <div className="flex items-start sm:items-center gap-4 sm:gap-6 flex-1 min-w-0">
+                    <div className="flex items-start sm:items-center gap-3 sm:gap-6 flex-1 min-w-0">
                       <span
-                        className={`font-mono-tech text-sm sm:text-base font-bold transition-colors duration-300 ${
+                        className={`font-mono-tech text-xs sm:text-base font-bold transition-colors duration-300 ${
                           isCurrent
-                            ? 'text-[#0A0A09]'
+                            ? 'text-[#FF3E00] sm:text-[#0A0A09]'
                             : 'text-[#FF3E00] group-hover:text-[#0A0A09]'
                         }`}
                       >
@@ -166,9 +165,9 @@ const KineticCertificatesLedger: React.FC = () => {
 
                       <div className="min-w-0">
                         <h3
-                          className={`font-syne text-xl sm:text-2xl md:text-3xl font-extrabold uppercase tracking-tight transition-all duration-300 truncate ${
+                          className={`font-syne text-lg sm:text-2xl md:text-3xl font-extrabold uppercase tracking-tight transition-all duration-300 truncate ${
                             isCurrent
-                              ? 'text-[#0A0A09] translate-x-2'
+                              ? 'text-[#F2EFE9] sm:text-[#0A0A09] sm:translate-x-2'
                               : 'text-[#F2EFE9] group-hover:text-[#0A0A09] group-hover:translate-x-2'
                           }`}
                         >
@@ -176,9 +175,9 @@ const KineticCertificatesLedger: React.FC = () => {
                         </h3>
 
                         <p
-                          className={`font-mono-tech text-xs mt-1 transition-colors duration-300 truncate ${
+                          className={`font-mono-tech text-[10px] sm:text-xs mt-0.5 sm:mt-1 transition-colors duration-300 truncate ${
                             isCurrent
-                              ? 'text-[#0A0A09]/80'
+                              ? 'text-[#78756E] sm:text-[#0A0A09]/80'
                               : 'text-[#78756E] group-hover:text-[#0A0A09]/80'
                           }`}
                         >
@@ -188,34 +187,91 @@ const KineticCertificatesLedger: React.FC = () => {
                     </div>
 
                     {/* Meta Code & Arrow Action */}
-                    <div className="flex items-center gap-4 shrink-0 font-mono-tech text-xs">
+                    <div className="flex items-center justify-between sm:justify-end gap-3 shrink-0 font-mono-tech text-xs pt-1 sm:pt-0 border-t sm:border-t-0 border-[rgba(242,239,233,0.06)]">
                       <span
-                        className={`hidden sm:inline transition-colors duration-300 ${
+                        className={`text-[10px] sm:text-xs transition-colors duration-300 ${
                           isCurrent
-                            ? 'text-[#0A0A09] font-bold'
+                            ? 'text-[#FF3E00] sm:text-[#0A0A09] font-bold'
                             : 'text-[#78756E] group-hover:text-[#0A0A09]'
                         }`}
                       >
                         {meta.code}
                       </span>
 
-                      <span
-                        className={`w-8 h-8 rounded-full border flex items-center justify-center transition-all duration-300 ${
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setModalCert(cert);
+                        }}
+                        className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full border flex items-center justify-center transition-all duration-300 ${
                           isCurrent
-                            ? 'bg-[#0A0A09] text-[#F2EFE9] border-[#0A0A09] scale-110'
+                            ? 'bg-[#FF3E00] text-[#0A0A09] border-[#FF3E00] sm:bg-[#0A0A09] sm:text-[#F2EFE9] sm:border-[#0A0A09] scale-105'
                             : 'border-[rgba(242,239,233,0.2)] text-[#F2EFE9] group-hover:bg-[#0A0A09] group-hover:text-[#F2EFE9] group-hover:border-[#0A0A09]'
                         }`}
+                        aria-label="Inspect certificate"
                       >
                         ↗
-                      </span>
+                      </button>
                     </div>
                   </div>
+
+                  {/* ─── MOBILE INLINE ACTIVE PREVIEW ACCORDION (SM & XS ONLY) ─── */}
+                  {isCurrent && (
+                    <div className="sm:hidden mt-3 pt-3 border-t border-[rgba(242,239,233,0.12)] space-y-2 animate-fadeIn">
+                      <div
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setModalCert(cert);
+                        }}
+                        className="bg-[#141412] border border-[rgba(242,239,233,0.15)] p-2.5 flex items-center justify-center max-h-48 overflow-hidden relative cursor-pointer"
+                      >
+                        <img
+                          src={cert.image}
+                          alt={cert.title}
+                          className="w-full h-auto max-h-40 object-contain"
+                          onError={(e) => {
+                            (e.currentTarget as HTMLImageElement).src = `${process.env.PUBLIC_URL}/images/c++.png`;
+                          }}
+                        />
+                        <div className="absolute inset-0 bg-[#0A0A09]/60 flex items-center justify-center opacity-0 active:opacity-100 transition-opacity">
+                          <span className="font-mono-tech text-[10px] bg-[#FF3E00] text-[#0A0A09] font-bold px-2 py-1">
+                            TAP TO ZOOM
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-2">
+                        <a
+                          href={cert.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          className="flex-1 py-1.5 px-3 bg-[#FF3E00] text-[#0A0A09] font-mono-tech text-[10px] font-bold tracking-wider uppercase text-center flex items-center justify-center gap-1"
+                        >
+                          <span>VERIFY GATEWAY</span>
+                          <span>↗</span>
+                        </a>
+
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setModalCert(cert);
+                          }}
+                          className="py-1.5 px-3 bg-[#141412] text-[#F2EFE9] font-mono-tech text-[10px] border border-[rgba(242,239,233,0.2)] font-bold uppercase"
+                        >
+                          FULL SCAN
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </div>
               );
             })}
           </div>
 
-          {/* RIGHT: FLOATING SPRING-PHYSICS PREVIEW VIEWPORT (5 COLS) */}
+          {/* RIGHT: FLOATING SPRING-PHYSICS PREVIEW VIEWPORT (DESKTOP 5 COLS) */}
           <div className="lg:col-span-5 sticky top-24 hidden lg:block">
             <div
               ref={previewBoxRef}
@@ -295,38 +351,38 @@ const KineticCertificatesLedger: React.FC = () => {
         <div
           role="dialog"
           aria-modal="true"
-          className="fixed inset-0 z-50 bg-[#0A0A09]/90 backdrop-blur-md flex items-center justify-center p-4 sm:p-8"
+          className="fixed inset-0 z-50 bg-[#0A0A09]/90 backdrop-blur-md flex items-center justify-center p-3 sm:p-8"
           onClick={() => setModalCert(null)}
         >
           <div
-            className="bg-[#0A0A09] border-2 border-[rgba(242,239,233,0.25)] shadow-[20px_20px_0px_#FF3E00] max-w-4xl w-full p-6 sm:p-8 relative select-none animate-fadeIn"
+            className="bg-[#0A0A09] border-2 border-[rgba(242,239,233,0.25)] shadow-[12px_12px_0px_#FF3E00] sm:shadow-[20px_20px_0px_#FF3E00] max-w-4xl w-full p-4 sm:p-8 relative select-none animate-fadeIn max-h-[92vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Header */}
-            <div className="flex items-center justify-between border-b border-[rgba(242,239,233,0.18)] pb-4 mb-6">
+            <div className="flex items-center justify-between border-b border-[rgba(242,239,233,0.18)] pb-3 sm:pb-4 mb-4 sm:mb-6">
               <div>
-                <span className="font-mono-tech text-xs text-[#FF3E00] uppercase font-bold tracking-widest block">
+                <span className="font-mono-tech text-[10px] sm:text-xs text-[#FF3E00] uppercase font-bold tracking-widest block">
                   ARCHIVAL RECORD INSPECTOR // V5.0
                 </span>
-                <h3 className="font-syne text-2xl sm:text-3xl font-black text-[#F2EFE9] uppercase mt-1">
+                <h3 className="font-syne text-xl sm:text-3xl font-black text-[#F2EFE9] uppercase mt-1 leading-tight">
                   {modalCert.title}
                 </h3>
               </div>
               <button
                 onClick={() => setModalCert(null)}
                 data-cursor="CLOSE"
-                className="w-10 h-10 border border-[rgba(242,239,233,0.2)] bg-[#141412] text-[#F2EFE9] hover:bg-[#FF3E00] hover:text-[#0A0A09] transition-colors font-mono-tech text-sm font-bold flex items-center justify-center"
+                className="w-8 h-8 sm:w-10 sm:h-10 border border-[rgba(242,239,233,0.2)] bg-[#141412] text-[#F2EFE9] hover:bg-[#FF3E00] hover:text-[#0A0A09] transition-colors font-mono-tech text-xs sm:text-sm font-bold flex items-center justify-center shrink-0"
               >
                 ✕
               </button>
             </div>
 
             {/* Modal Image Scan */}
-            <div className="bg-[#141412] border border-[rgba(242,239,233,0.12)] p-4 mb-6 flex items-center justify-center max-h-[60vh] overflow-hidden">
+            <div className="bg-[#141412] border border-[rgba(242,239,233,0.12)] p-2.5 sm:p-4 mb-4 sm:mb-6 flex items-center justify-center max-h-[50vh] overflow-hidden">
               <img
                 src={modalCert.image}
                 alt={modalCert.title}
-                className="w-full h-auto max-h-[50vh] object-contain"
+                className="w-full h-auto max-h-[46vh] object-contain"
                 onError={(e) => {
                   (e.currentTarget as HTMLImageElement).src = `${process.env.PUBLIC_URL}/images/c++.png`;
                 }}
@@ -334,24 +390,24 @@ const KineticCertificatesLedger: React.FC = () => {
             </div>
 
             {/* Modal Footer Links */}
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 font-mono-tech text-xs">
-              <span className="text-[#78756E]">
-                ISSUING INSTITUTION: <strong className="text-[#F2EFE9]">{modalCert.issuer}</strong>
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 font-mono-tech text-[11px] sm:text-xs">
+              <span className="text-[#78756E] text-center sm:text-left">
+                ISSUING AUTHORITY: <strong className="text-[#F2EFE9]">{modalCert.issuer}</strong>
               </span>
 
-              <div className="flex items-center gap-3 w-full sm:w-auto">
+              <div className="flex items-center gap-2 sm:gap-3">
                 <a
                   href={modalCert.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 sm:flex-none py-2.5 px-6 bg-[#FF3E00] text-[#0A0A09] font-bold uppercase tracking-widest hover:bg-[#F2EFE9] transition-all flex items-center justify-center gap-2"
+                  className="flex-1 sm:flex-none py-2 px-4 sm:py-2.5 sm:px-6 bg-[#FF3E00] text-[#0A0A09] font-bold uppercase tracking-widest hover:bg-[#F2EFE9] transition-all flex items-center justify-center gap-1.5"
                 >
                   <span>OFFICIAL VERIFICATION GATEWAY</span>
                   <span>↗</span>
                 </a>
                 <button
                   onClick={() => setModalCert(null)}
-                  className="py-2.5 px-4 border border-[rgba(242,239,233,0.2)] text-[#F2EFE9] hover:border-[#FF3E00] transition-colors"
+                  className="py-2 px-3 sm:py-2.5 sm:px-4 border border-[rgba(242,239,233,0.2)] text-[#F2EFE9] hover:border-[#FF3E00] transition-colors"
                 >
                   CLOSE
                 </button>

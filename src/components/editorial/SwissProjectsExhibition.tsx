@@ -88,12 +88,12 @@ const SwissProjectsExhibition: React.FC = () => {
   useEffect(() => {
     const mm = gsap.matchMedia();
 
+    // ─── DESKTOP PINNED TIMELINE (>= 1024px) ───
     mm.add('(min-width: 1024px)', () => {
       if (!containerRef.current || !exhibitionStageRef.current) return;
 
       const totalProjects = projects.length;
 
-      // Pinned Multi-Scene Exhibition Timeline
       const tl = gsap.timeline({
         scrollTrigger: {
           id: 'projects-exhibition',
@@ -113,10 +113,45 @@ const SwissProjectsExhibition: React.FC = () => {
         },
       });
 
-      // Visual transformation across scroll progression
       tl.to(exhibitionStageRef.current, {
         scale: 1,
         ease: 'none',
+      });
+    });
+
+    // ─── MOBILE SCROLL-DRIVEN TIMELINE (< 1024px) ───
+    mm.add('(max-width: 1023px)', () => {
+      const cards = containerRef.current?.querySelectorAll('.mobile-project-card');
+
+      cards?.forEach((card, idx) => {
+        const img = card.querySelector('.mobile-project-img');
+
+        // ScrollTrigger per card for responsive parallax & theme switching
+        ScrollTrigger.create({
+          trigger: card,
+          start: 'top 65%',
+          end: 'bottom 35%',
+          onEnter: () => setActiveIndex(idx),
+          onEnterBack: () => setActiveIndex(idx),
+        });
+
+        if (img) {
+          gsap.fromTo(
+            img,
+            { scale: 1.15, yPercent: 6 },
+            {
+              scale: 1.0,
+              yPercent: 0,
+              ease: 'power2.out',
+              scrollTrigger: {
+                trigger: card,
+                start: 'top 85%',
+                end: 'bottom 40%',
+                scrub: 0.6,
+              },
+            }
+          );
+        }
       });
     });
 
@@ -128,13 +163,19 @@ const SwissProjectsExhibition: React.FC = () => {
 
   const handleIndexClick = (idx: number) => {
     setActiveIndex(idx);
-    if (containerRef.current) {
+    const mm = window.innerWidth >= 1024;
+    if (mm && containerRef.current) {
       const scrollTriggerInstance = ScrollTrigger.getById('projects-exhibition');
       if (scrollTriggerInstance) {
         const targetScroll =
           scrollTriggerInstance.start +
           (idx / projects.length) * (scrollTriggerInstance.end - scrollTriggerInstance.start);
         window.scrollTo({ top: targetScroll, behavior: 'smooth' });
+      }
+    } else {
+      const card = document.getElementById(`mobile-project-${idx}`);
+      if (card) {
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
     }
   };
@@ -143,7 +184,7 @@ const SwissProjectsExhibition: React.FC = () => {
     <section
       ref={containerRef}
       id="works"
-      className="relative bg-[#F7F3E8] border-b-4 border-[#20201E] min-h-screen py-16 lg:py-0 overflow-hidden select-none scroll-mt-16"
+      className="relative bg-[#F7F3E8] border-b-4 border-[#20201E] min-h-screen py-10 lg:py-0 overflow-hidden select-none scroll-mt-16"
       style={{ backgroundColor: currentTheme.bg, transition: 'background-color 0.5s ease' }}
     >
       {/* ─── DESKTOP PINNED EXHIBITION EXPERIENCE (>= 1024px) ─── */}
@@ -173,7 +214,7 @@ const SwissProjectsExhibition: React.FC = () => {
           </div>
         </div>
 
-        {/* Dynamic Project Index Bar: 9 interactive exhibition ledger tabs */}
+        {/* Dynamic Project Index Bar */}
         <div className="flex items-center gap-1.5 overflow-x-auto py-2 shrink-0 border-b border-[#20201E]/20 scrollbar-none">
           {projects.map((proj, idx) => {
             const isActive = idx === activeIndex;
@@ -200,38 +241,29 @@ const SwissProjectsExhibition: React.FC = () => {
           ref={exhibitionStageRef}
           className="grid grid-cols-12 gap-8 items-center my-auto flex-1 py-4"
         >
-          {/* Left Side: Dramatic Editorial Typography, Number, Spec Sheet, Links */}
-          <div className="col-span-5 flex flex-col justify-between h-full max-h-[460px] space-y-4">
-            
-            {/* Top: Huge Display Number & Tags */}
-            <div className="space-y-2">
-              <div className="flex items-center justify-between border-b-2 border-[#20201E] pb-2">
-                <span className="text-6xl xl:text-7xl font-black font-mono text-[#20201E] tracking-tighter leading-none">
-                  0{currentProject.id}
-                </span>
-                <div className="flex flex-wrap gap-1.5">
-                  {currentProject.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="px-2 py-0.5 border border-[#20201E] font-mono text-[10px] font-bold uppercase shadow-[1px_1px_0px_#20201E]"
-                      style={{
-                        backgroundColor: currentTheme.tagBg,
-                        color: currentTheme.tagText,
-                      }}
-                    >
-                      #{tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              {/* Oversized Title */}
-              <h3 className="text-3xl xl:text-4xl font-black text-[#20201E] tracking-tight leading-tight transition-all duration-300">
+          {/* Left Column: Curated Project Information (5 Cols) */}
+          <div className="col-span-5 space-y-4">
+            <div className="space-y-1">
+              <span className="font-mono text-xs font-bold text-[#20201E]/60 uppercase tracking-widest">
+                FEATURED RECORD
+              </span>
+              <h3 className="text-4xl xl:text-5xl font-black text-[#20201E] tracking-tight leading-none">
                 {currentProject.title}
               </h3>
             </div>
 
-            {/* Middle: Curated Narrative Description */}
+            <div className="flex flex-wrap gap-1.5 pt-1">
+              {currentProject.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="px-2.5 py-0.5 border border-[#20201E] text-xs font-mono font-bold uppercase shadow-[1.5px_1.5px_0px_#20201E]"
+                  style={{ backgroundColor: currentTheme.tagBg, color: currentTheme.tagText }}
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+
             <p className="text-sm font-mono text-[#20201E]/85 leading-relaxed bg-white/90 p-4 border-2 border-[#20201E] shadow-[4px_4px_0px_#20201E]">
               {currentProject.description}
             </p>
@@ -249,41 +281,37 @@ const SwissProjectsExhibition: React.FC = () => {
                 data-cursor="LAUNCH"
                 className="inline-flex items-center gap-2 px-6 py-2.5 bg-[#20201E] hover:bg-[#FF4B35] text-white border-2 border-[#20201E] font-mono font-black text-xs uppercase shadow-[3px_3px_0px_#20201E] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[5px_5px_0px_#20201E] transition-all"
               >
-                <span>Launch Live Product</span>
-                <span>↗</span>
+                <span>VISIT DEPLOYMENT</span>
+                <span className="text-sm">↗</span>
               </a>
             </div>
           </div>
 
-          {/* Right Side: Massive Panoramic Visual Canvas with Exhibition Frame */}
-          <div className="col-span-7 flex flex-col justify-center">
-            <div className="relative bg-white border-4 border-[#20201E] shadow-[10px_10px_0px_#20201E] overflow-hidden group">
-              
-              {/* Museum Header Bar */}
-              <div className="bg-[#20201E] text-white px-4 py-2 flex items-center justify-between font-mono text-xs font-bold">
+          {/* Right Column: Full-Scale Panoramic Canvas (7 Cols) */}
+          <div className="col-span-7">
+            <div className="relative border-4 border-[#20201E] bg-[#20201E] shadow-[10px_10px_0px_#20201E] p-2">
+              <div className="bg-[#FAF8F5] border-2 border-[#20201E] px-4 py-1.5 flex items-center justify-between font-mono text-xs font-bold">
                 <div className="flex items-center gap-2">
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#FF4B35]" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#D7FF45]" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#304FFE]" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#FF4B35] border border-[#20201E]" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#D7FF45] border border-[#20201E]" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#304FFE] border border-[#20201E]" />
+                  <span className="ml-2 text-[#20201E]/70 truncate max-w-[280px]">
+                    {currentProject.link}
+                  </span>
                 </div>
-                <span className="truncate max-w-[340px] opacity-80">{currentProject.link}</span>
-                <span
-                  className="px-2 py-0.5 text-[10px] font-black uppercase text-[#20201E]"
-                  style={{ backgroundColor: currentTheme.tagBg }}
-                >
-                  EXHIBIT 0{currentProject.id}
+                <span className="text-xs font-black uppercase text-[#20201E] bg-[#D7FF45] px-2 py-0.5 border border-[#20201E]">
+                  DEPLOYED
                 </span>
               </div>
 
-              {/* Large Image Showcase Frame */}
-              <div className="relative h-[340px] xl:h-[390px] w-full bg-[#FAF8F5] overflow-hidden flex items-center justify-center">
+              {/* Large Image Frame */}
+              <div className="relative overflow-hidden bg-white aspect-[16/10] border-2 border-[#20201E] border-t-0 flex items-center justify-center">
                 <img
-                  key={currentProject.id}
                   src={currentProject.image}
                   alt={currentProject.title}
-                  className="w-full h-full object-cover object-top filter contrast-[1.05] transition-all duration-700 group-hover:scale-105"
+                  className="w-full h-full object-cover object-top transition-transform duration-700 ease-out"
                   onError={(e) => {
-                    e.currentTarget.style.display = 'none';
+                    (e.currentTarget as HTMLImageElement).src = `${process.env.PUBLIC_URL}/images/avatar.png`;
                   }}
                 />
 
@@ -305,8 +333,39 @@ const SwissProjectsExhibition: React.FC = () => {
         </div>
       </div>
 
-      {/* ─── MOBILE RESPONSIVE EXHIBITION FEED (< 1024px) ─── */}
-      <div className="lg:hidden px-4 sm:px-6 space-y-12 max-w-2xl mx-auto pt-6 pb-12">
+      {/* ─── MOBILE RESPONSIVE SCROLL-DRIVEN EXHIBITION FEED (< 1024px) ─── */}
+      <div className="lg:hidden px-3 sm:px-6 space-y-8 max-w-2xl mx-auto pt-4 pb-12">
+        
+        {/* Sticky Mobile Progression Ledger */}
+        <div className="sticky top-14 sm:top-16 z-30 bg-[#F7F3E8]/95 backdrop-blur-md border-2 border-[#20201E] shadow-[3px_3px_0px_#20201E] p-2.5 flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <span className="w-2.5 h-2.5 bg-[#FF4B35] inline-block border border-[#20201E]" />
+            <span className="font-mono text-xs font-black text-[#20201E]">
+              0{currentProject.id} / 09
+            </span>
+            <span className="font-black text-xs text-[#20201E] truncate max-w-[130px] sm:max-w-none">
+              {currentProject.title}
+            </span>
+          </div>
+
+          <div className="flex items-center gap-1 overflow-x-auto scrollbar-none">
+            {projects.map((p, idx) => (
+              <button
+                key={p.id}
+                onClick={() => handleIndexClick(idx)}
+                className={`w-5 h-5 rounded-none font-mono text-[9px] font-black border flex items-center justify-center transition-colors ${
+                  idx === activeIndex
+                    ? 'bg-[#FF4B35] text-white border-[#20201E]'
+                    : 'bg-white text-[#20201E] border-[#20201E]/30'
+                }`}
+              >
+                {p.id}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Section Title */}
         <div className="border-b-2 border-[#20201E] pb-3">
           <div className="flex items-center gap-2 font-mono text-xs font-black text-[#FF4B35] uppercase mb-1">
             <span>[04]</span>
@@ -315,13 +374,15 @@ const SwissProjectsExhibition: React.FC = () => {
           <h2 className="text-3xl font-black text-[#20201E]">Digital Project Archive</h2>
         </div>
 
+        {/* 9 Scroll-Triggered Dynamic Project Articles */}
         {projects.map((proj, idx) => {
           const theme = exhibitionThemes[idx % exhibitionThemes.length];
 
           return (
             <article
               key={proj.id}
-              className="bg-white border-2 border-[#20201E] shadow-[5px_5px_0px_#20201E] p-5 space-y-4"
+              id={`mobile-project-${idx}`}
+              className="mobile-project-card bg-white border-2 border-[#20201E] shadow-[5px_5px_0px_#20201E] p-4 sm:p-5 space-y-3.5 transition-all duration-300 scroll-mt-24"
             >
               <div className="flex items-center justify-between border-b border-[#20201E]/20 pb-2">
                 <span className="text-3xl font-black font-mono text-[#20201E]">
@@ -335,19 +396,20 @@ const SwissProjectsExhibition: React.FC = () => {
                 </span>
               </div>
 
-              <h3 className="text-xl font-black text-[#20201E]">{proj.title}</h3>
+              <h3 className="text-xl sm:text-2xl font-black text-[#20201E]">{proj.title}</h3>
 
+              {/* Scroll-Parallax Preview Frame */}
               <div className="border border-[#20201E] overflow-hidden bg-slate-100">
                 <div className="bg-[#20201E] text-white px-2.5 py-1 text-[10px] font-mono flex items-center justify-between">
                   <span>PREVIEW</span>
-                  <span className="text-[#D7FF45]">LIVE</span>
+                  <span className="text-[#D7FF45]">LIVE ACTIVE</span>
                 </div>
-                <div className="aspect-[16/10] overflow-hidden">
+                <div className="aspect-[16/10] overflow-hidden relative">
                   <img
                     src={proj.image}
                     alt={proj.title}
                     loading="lazy"
-                    className="w-full h-full object-cover object-top"
+                    className="mobile-project-img w-full h-full object-cover object-top will-change-transform"
                   />
                 </div>
               </div>
@@ -356,11 +418,11 @@ const SwissProjectsExhibition: React.FC = () => {
                 {proj.description}
               </p>
 
-              <div className="pt-2 flex flex-wrap gap-1">
+              <div className="pt-1 flex flex-wrap gap-1">
                 {proj.tags.map((t) => (
                   <span
                     key={t}
-                    className="text-[9px] font-mono px-1.5 py-0.5 bg-[#FAF8F5] border border-[#20201E]"
+                    className="text-[9px] font-mono px-2 py-0.5 bg-[#FAF8F5] border border-[#20201E]"
                   >
                     #{t}
                   </span>
@@ -371,7 +433,7 @@ const SwissProjectsExhibition: React.FC = () => {
                 href={proj.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full py-2.5 bg-[#20201E] text-white font-mono font-black text-xs uppercase flex items-center justify-center gap-2 border-2 border-[#20201E] shadow-[2px_2px_0px_#FF4B35]"
+                className="w-full py-2.5 bg-[#20201E] text-white font-mono font-black text-xs uppercase flex items-center justify-center gap-2 border-2 border-[#20201E] shadow-[2px_2px_0px_#FF4B35] hover:bg-[#FF4B35] transition-colors"
               >
                 <span>Launch Live Product</span>
                 <span>↗</span>

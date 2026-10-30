@@ -157,16 +157,47 @@ const connections = [
   { from: 'react', to: 'emailjs' },
 ];
 
+const clusters = [
+  {
+    id: 'frontend',
+    number: '01',
+    title: 'FRONTEND ARCHITECTURE',
+    badge: '5 NODES',
+    badgeBg: 'bg-[#D7FF45] text-[#20201E]',
+    description: 'Concurrent rendering, component design systems, and responsive layouts.',
+  },
+  {
+    id: 'languages',
+    number: '02',
+    title: 'SYSTEM LANGUAGES',
+    badge: '3 NODES',
+    badgeBg: 'bg-[#FF4B35] text-white',
+    description: 'Modern asynchronous JavaScript, computational C++, and Python scripting.',
+  },
+  {
+    id: 'tools',
+    number: '03',
+    title: 'TOOLCHAIN & RUNTIME',
+    badge: '4 NODES',
+    badgeBg: 'bg-[#304FFE] text-white',
+    description: 'Distributed git workflows, dependency management, and developer tooling.',
+  },
+];
+
 const SwissSkillsUniverse: React.FC = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const canvasRef = useRef<HTMLDivElement>(null);
+  const mobileRef = useRef<HTMLDivElement>(null);
   const [hoveredNode, setHoveredNode] = useState<SkillNode | null>(null);
+  const [selectedMobileNode, setSelectedMobileNode] = useState<SkillNode>(skillUniverse[0]);
   const [filterCategory, setFilterCategory] = useState<string>('all');
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Required Scroll-Driven Kinetic Path & Spatial Transformation
+    const mm = gsap.matchMedia();
+
+    // ─── DESKTOP CONSTELLATION TIMELINE (>= 1024px) ───
+    mm.add('(min-width: 1024px)', () => {
       const paths = svgRef.current?.querySelectorAll('path');
       const nodes = canvasRef.current?.querySelectorAll('.skill-node');
 
@@ -179,7 +210,6 @@ const SwissSkillsUniverse: React.FC = () => {
         },
       });
 
-      // Animate SVG connection lines drawing out on scroll
       if (paths && paths.length > 0) {
         paths.forEach((p) => {
           const length = (p as SVGPathElement).getTotalLength?.() || 300;
@@ -188,7 +218,6 @@ const SwissSkillsUniverse: React.FC = () => {
         });
       }
 
-      // Staggered spatial positioning & scale transformation of skill words
       if (nodes && nodes.length > 0) {
         tl.fromTo(
           nodes,
@@ -197,23 +226,58 @@ const SwissSkillsUniverse: React.FC = () => {
           0
         );
       }
-    }, sectionRef);
+    });
 
-    return () => ctx.revert();
+    // ─── MOBILE SCROLL-DRIVEN SCRUB TIMELINE (< 1024px) ───
+    mm.add('(max-width: 1023px)', () => {
+      const mobileCards = mobileRef.current?.querySelectorAll('.mobile-cluster-card');
+      if (mobileCards && mobileCards.length > 0) {
+        mobileCards.forEach((card) => {
+          const pills = card.querySelectorAll('.mobile-skill-pill');
+          gsap.fromTo(
+            pills,
+            { opacity: 0.35, y: 16, scale: 0.95 },
+            {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              stagger: 0.05,
+              ease: 'power2.out',
+              scrollTrigger: {
+                trigger: card,
+                start: 'top 85%',
+                end: 'top 45%',
+                scrub: 0.6,
+              },
+            }
+          );
+        });
+      }
+    });
+
+    return () => mm.revert();
   }, []);
+
+  // Connected nodes lookup helper
+  const getConnectedNodes = (nodeId: string) => {
+    const connectedIds = connections
+      .filter((c) => c.from === nodeId || c.to === nodeId)
+      .map((c) => (c.from === nodeId ? c.to : c.from));
+    return skillUniverse.filter((s) => connectedIds.includes(s.id));
+  };
 
   return (
     <section
       ref={sectionRef}
       id="skills"
-      className="relative py-28 bg-[#FAF8F5] text-[#20201E] border-b-4 border-[#20201E] overflow-hidden select-none scroll-mt-16"
+      className="relative py-20 sm:py-28 bg-[#FAF8F5] text-[#20201E] border-b-4 border-[#20201E] overflow-hidden select-none scroll-mt-16"
     >
       {/* Background Graphic Blueprint Watermark */}
-      <div className="absolute left-6 top-8 font-mono text-[16vw] font-black text-[#20201E]/[0.03] pointer-events-none select-none leading-none">
+      <div className="absolute left-4 sm:left-6 top-8 font-mono text-[18vw] font-black text-[#20201E]/[0.03] pointer-events-none select-none leading-none">
         UNIVERSE
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10 space-y-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 space-y-8 sm:space-y-12">
         
         {/* Section Header */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 border-b-2 border-[#20201E] pb-4">
@@ -222,25 +286,25 @@ const SwissSkillsUniverse: React.FC = () => {
               <span className="w-2.5 h-2.5 bg-[#FF4B35]" />
               <span>[05] // INTERCONNECTED SKILL SYSTEM</span>
             </div>
-            <h2 className="text-4xl sm:text-6xl font-black tracking-tight text-[#20201E]">
+            <h2 className="text-3xl sm:text-6xl font-black tracking-tight text-[#20201E]">
               Typographic Universe
             </h2>
           </div>
 
           {/* Interactive Cluster Highlighter */}
           <div className="flex flex-wrap items-center gap-2 font-mono text-xs font-bold">
-            <span className="text-[#20201E]/60 uppercase mr-1">FILTER CLUSTER:</span>
+            <span className="text-[#20201E]/60 uppercase mr-1 text-[11px]">FILTER:</span>
             {[
-              { id: 'all', label: 'ALL NODES [12]', bg: 'bg-[#20201E] text-white' },
+              { id: 'all', label: 'ALL [12]', bg: 'bg-[#20201E] text-white' },
               { id: 'frontend', label: 'FRONTEND [05]', bg: 'bg-[#D7FF45] text-[#20201E]' },
               { id: 'languages', label: 'LANGUAGES [03]', bg: 'bg-[#FF4B35] text-white' },
-              { id: 'tools', label: 'TOOLCHAIN [04]', bg: 'bg-[#304FFE] text-white' },
+              { id: 'tools', label: 'TOOLS [04]', bg: 'bg-[#304FFE] text-white' },
             ].map((cat) => (
               <button
                 key={cat.id}
                 onClick={() => setFilterCategory(cat.id)}
                 data-cursor="FILTER"
-                className={`px-3 py-1 border-2 border-[#20201E] uppercase transition-all ${
+                className={`px-2.5 sm:px-3 py-1 border-2 border-[#20201E] uppercase text-[11px] sm:text-xs transition-all ${
                   filterCategory === cat.id
                     ? `${cat.bg} shadow-[2px_2px_0px_#20201E]`
                     : 'bg-white text-[#20201E] hover:bg-[#F7F3E8] shadow-[1px_1px_0px_#20201E]'
@@ -252,10 +316,97 @@ const SwissSkillsUniverse: React.FC = () => {
           </div>
         </div>
 
-        {/* ─── MAIN TYPOGRAPHIC CONSTELLATION POSTER STAGE ─── */}
+        {/* ─── MOBILE & TABLET RESPONSIVE KINETIC MATRIX (< 1024px) ─── */}
+        <div ref={mobileRef} className="block lg:hidden space-y-6">
+          {/* Active Skill Telemetry HUD on Mobile */}
+          <div className="bg-[#20201E] text-white border-3 border-[#20201E] p-4 shadow-[5px_5px_0px_#FF4B35] transition-all">
+            <div className="flex items-center justify-between border-b border-white/20 pb-2 mb-2">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-[#D7FF45] animate-ping" />
+                <span className="font-mono text-xs font-black text-[#D7FF45] uppercase">
+                  ACTIVE SPEC: {selectedMobileNode.name}
+                </span>
+              </div>
+              <span className="font-mono text-[9px] uppercase bg-white/20 px-2 py-0.5 font-bold">
+                {selectedMobileNode.category}
+              </span>
+            </div>
+            <p className="text-xs text-white/90 leading-relaxed font-mono mb-3">
+              {selectedMobileNode.role}
+            </p>
+            <div className="flex flex-wrap items-center gap-1.5 pt-2 border-t border-white/10 font-mono text-[10px]">
+              <span className="text-white/50 uppercase">INTERCONNECTED:</span>
+              {getConnectedNodes(selectedMobileNode.id).map((c) => (
+                <button
+                  key={c.id}
+                  onClick={() => setSelectedMobileNode(c)}
+                  className="px-1.5 py-0.5 bg-white/10 hover:bg-[#D7FF45] hover:text-[#20201E] border border-white/20 text-[#D7FF45] transition-colors"
+                >
+                  {c.name}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* 3 Clusters with Staggered ScrollTrigger Scrub */}
+          {clusters.map((cluster) => {
+            const clusterNodes = skillUniverse.filter((s) => s.category === cluster.id);
+            const isCategoryMatch = filterCategory === 'all' || filterCategory === cluster.id;
+
+            if (!isCategoryMatch) return null;
+
+            return (
+              <div
+                key={cluster.id}
+                className="mobile-cluster-card bg-white border-3 border-[#20201E] p-4 sm:p-6 shadow-[5px_5px_0px_#20201E]"
+              >
+                <div className="flex items-center justify-between border-b-2 border-[#20201E] pb-2 mb-3">
+                  <div className="flex items-center gap-2 font-mono text-xs font-black text-[#20201E]">
+                    <span className="text-[#FF4B35] font-black">{cluster.number}.</span>
+                    <span>{cluster.title}</span>
+                  </div>
+                  <span className={`font-mono text-[10px] font-bold px-2 py-0.5 border border-[#20201E] ${cluster.badgeBg}`}>
+                    {cluster.badge}
+                  </span>
+                </div>
+                <p className="font-mono text-[11px] text-[#20201E]/70 mb-3 leading-relaxed">
+                  {cluster.description}
+                </p>
+
+                {/* Skill Pills in Cluster */}
+                <div className="flex flex-wrap gap-2 pt-1">
+                  {clusterNodes.map((node) => {
+                    const isSelected = selectedMobileNode.id === node.id;
+                    return (
+                      <button
+                        key={node.id}
+                        type="button"
+                        onClick={() => setSelectedMobileNode(node)}
+                        className={`mobile-skill-pill text-left px-3 py-1.5 border-2 border-[#20201E] font-black tracking-tight text-xs sm:text-sm uppercase transition-all duration-200 ${
+                          isSelected
+                            ? 'bg-[#FF4B35] text-white shadow-[3px_3px_0px_#20201E] scale-105 -rotate-1 z-10'
+                            : 'bg-[#FAF8F5] text-[#20201E] shadow-[2px_2px_0px_#20201E] active:scale-95'
+                        }`}
+                        style={{
+                          backgroundColor: isSelected ? '#FF4B35' : node.bg,
+                          color: isSelected ? '#FFFFFF' : node.color,
+                        }}
+                      >
+                        <span>{node.name}</span>
+                        {isSelected && <span className="ml-1 text-[10px]">●</span>}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* ─── DESKTOP TYPOGRAPHIC CONSTELLATION POSTER STAGE (>= 1024px) ─── */}
         <div
           ref={canvasRef}
-          className="relative min-h-[580px] lg:min-h-[700px] bg-white border-4 border-[#20201E] p-6 sm:p-12 shadow-[8px_8px_0px_#20201E] overflow-hidden"
+          className="hidden lg:block relative min-h-[640px] xl:min-h-[700px] bg-white border-4 border-[#20201E] p-8 lg:p-12 shadow-[8px_8px_0px_#20201E] overflow-hidden"
         >
           {/* SVG Interconnected Vector Lines Layer */}
           <svg
@@ -295,7 +446,7 @@ const SwissSkillsUniverse: React.FC = () => {
           </svg>
 
           {/* Dynamic Typography Nodes Arranged Across Composition */}
-          <div className="relative z-10 w-full h-full min-h-[520px] lg:min-h-[640px]">
+          <div className="relative z-10 w-full h-full min-h-[580px] xl:min-h-[640px]">
             {skillUniverse.map((node) => {
               const isMatch = filterCategory === 'all' || node.category === filterCategory;
               const isHovered = hoveredNode?.id === node.id;
@@ -315,7 +466,7 @@ const SwissSkillsUniverse: React.FC = () => {
                   data-cursor="NODE"
                 >
                   <div
-                    className={`inline-block px-3 py-1 sm:px-4 sm:py-1.5 border-2 border-[#20201E] tracking-tight leading-none uppercase transition-all duration-300 ${
+                    className={`inline-block px-3 py-1 lg:px-4 lg:py-1.5 border-2 border-[#20201E] tracking-tight leading-none uppercase transition-all duration-300 ${
                       node.scale
                     } ${
                       isHovered
@@ -357,8 +508,8 @@ const SwissSkillsUniverse: React.FC = () => {
           )}
         </div>
 
-        {/* ─── CLUSTER LEDGER SUMMARY BAR ─── */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2 font-mono text-xs">
+        {/* ─── CLUSTER LEDGER SUMMARY BAR (DESKTOP) ─── */}
+        <div className="hidden lg:grid grid-cols-3 gap-4 pt-2 font-mono text-xs">
           <div className="p-4 bg-white border-2 border-[#20201E] shadow-[3px_3px_0px_#20201E]">
             <div className="flex items-center justify-between mb-1.5 font-bold">
               <span className="text-[#20201E]">01. FRONTEND CORE</span>
@@ -396,4 +547,3 @@ const SwissSkillsUniverse: React.FC = () => {
 };
 
 export default SwissSkillsUniverse;
-
