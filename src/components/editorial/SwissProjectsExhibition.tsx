@@ -84,99 +84,48 @@ const SwissProjectsExhibition: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const exhibitionStageRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
-    const mm = gsap.matchMedia();
+    if (!containerRef.current) return;
+    const totalProjects = projects.length;
 
-    // ─── DESKTOP PINNED TIMELINE (>= 1024px) ───
-    mm.add('(min-width: 1024px)', () => {
-      if (!containerRef.current || !exhibitionStageRef.current) return;
-
-      const totalProjects = projects.length;
-
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          id: 'projects-exhibition',
-          trigger: containerRef.current,
-          pin: true,
-          scrub: 0.6,
-          start: 'top top',
-          end: `+=${totalProjects * 500}`,
-          onUpdate: (self) => {
-            const progress = self.progress;
-            const newIndex = Math.min(
-              Math.floor(progress * totalProjects),
-              totalProjects - 1
-            );
-            setActiveIndex(newIndex);
-          },
-        },
-      });
-
-      tl.to(exhibitionStageRef.current, {
-        scale: 1,
-        ease: 'none',
-      });
+    // Unified Scroll-Driven Pinning across Desktop, Tablet & Mobile
+    const st = ScrollTrigger.create({
+      id: 'projects-exhibition',
+      trigger: containerRef.current,
+      pin: true,
+      scrub: 0.6,
+      start: 'top top',
+      end: `+=${totalProjects * 450}`,
+      anticipatePin: 1,
+      onUpdate: (self) => {
+        const progress = self.progress;
+        setScrollProgress(progress);
+        const newIndex = Math.min(
+          Math.floor(progress * totalProjects),
+          totalProjects - 1
+        );
+        setActiveIndex(newIndex);
+      },
     });
 
-    // ─── MOBILE SCROLL-DRIVEN TIMELINE (< 1024px) ───
-    mm.add('(max-width: 1023px)', () => {
-      const cards = containerRef.current?.querySelectorAll('.mobile-project-card');
-
-      cards?.forEach((card, idx) => {
-        const img = card.querySelector('.mobile-project-img');
-
-        // ScrollTrigger per card for responsive parallax & theme switching
-        ScrollTrigger.create({
-          trigger: card,
-          start: 'top 65%',
-          end: 'bottom 35%',
-          onEnter: () => setActiveIndex(idx),
-          onEnterBack: () => setActiveIndex(idx),
-        });
-
-        if (img) {
-          gsap.fromTo(
-            img,
-            { scale: 1.15, yPercent: 6 },
-            {
-              scale: 1.0,
-              yPercent: 0,
-              ease: 'power2.out',
-              scrollTrigger: {
-                trigger: card,
-                start: 'top 85%',
-                end: 'bottom 40%',
-                scrub: 0.6,
-              },
-            }
-          );
-        }
-      });
-    });
-
-    return () => mm.revert();
+    return () => {
+      st.kill();
+    };
   }, []);
 
+  const currentTheme = exhibitionThemes[activeIndex % exhibitionThemes.length];
   const currentProject = projects[activeIndex] || projects[0];
-  const currentTheme = exhibitionThemes[activeIndex] || exhibitionThemes[0];
 
   const handleIndexClick = (idx: number) => {
     setActiveIndex(idx);
-    const mm = window.innerWidth >= 1024;
-    if (mm && containerRef.current) {
-      const scrollTriggerInstance = ScrollTrigger.getById('projects-exhibition');
-      if (scrollTriggerInstance) {
-        const targetScroll =
-          scrollTriggerInstance.start +
-          (idx / projects.length) * (scrollTriggerInstance.end - scrollTriggerInstance.start);
-        window.scrollTo({ top: targetScroll, behavior: 'smooth' });
-      }
-    } else {
-      const card = document.getElementById(`mobile-project-${idx}`);
-      if (card) {
-        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
+    const scrollTriggerInstance = ScrollTrigger.getById('projects-exhibition');
+    if (scrollTriggerInstance) {
+      const targetScroll =
+        scrollTriggerInstance.start +
+        (idx / projects.length) * (scrollTriggerInstance.end - scrollTriggerInstance.start);
+      window.scrollTo({ top: targetScroll, behavior: 'smooth' });
     }
   };
 
@@ -184,11 +133,11 @@ const SwissProjectsExhibition: React.FC = () => {
     <section
       ref={containerRef}
       id="works"
-      className="relative bg-[#F7F3E8] border-b-4 border-[#20201E] min-h-screen py-10 lg:py-0 overflow-hidden select-none scroll-mt-16"
-      style={{ backgroundColor: currentTheme.bg, transition: 'background-color 0.5s ease' }}
+      className="relative bg-[#F7F3E8] border-b-4 border-[#20201E] h-screen w-full max-w-full overflow-hidden select-none scroll-mt-16 z-20"
+      style={{ backgroundColor: currentTheme.bg, transition: 'background-color 0.4s ease' }}
     >
       {/* ─── DESKTOP PINNED EXHIBITION EXPERIENCE (>= 1024px) ─── */}
-      <div className="hidden lg:flex flex-col justify-between h-screen min-h-[680px] max-h-[920px] px-8 pt-20 pb-8 max-w-[1500px] mx-auto w-full">
+      <div className="hidden lg:flex flex-col justify-between h-full min-h-[680px] max-h-[920px] px-8 pt-20 pb-8 max-w-[1500px] mx-auto w-full">
         
         {/* Exhibition Master Header */}
         <div className="flex items-center justify-between border-b-2 border-[#20201E] pb-3 shrink-0">
@@ -304,12 +253,13 @@ const SwissProjectsExhibition: React.FC = () => {
                 </span>
               </div>
 
-              {/* Large Image Frame */}
+              {/* Large Image Frame with Smooth Scroll Swap */}
               <div className="relative overflow-hidden bg-white aspect-[16/10] border-2 border-[#20201E] border-t-0 flex items-center justify-center">
                 <img
+                  key={currentProject.id}
                   src={currentProject.image}
                   alt={currentProject.title}
-                  className="w-full h-full object-cover object-top transition-transform duration-700 ease-out"
+                  className="w-full h-full object-cover object-top transition-transform duration-700 ease-out animate-fade-in"
                   onError={(e) => {
                     (e.currentTarget as HTMLImageElement).src = `${process.env.PUBLIC_URL}/images/avatar.png`;
                   }}
@@ -333,31 +283,36 @@ const SwissProjectsExhibition: React.FC = () => {
         </div>
       </div>
 
-      {/* ─── MOBILE RESPONSIVE SCROLL-DRIVEN EXHIBITION FEED (< 1024px) ─── */}
-      <div className="lg:hidden px-3 sm:px-6 space-y-8 max-w-2xl mx-auto pt-4 pb-12">
+      {/* ─── MOBILE PINNED SCROLL-DRIVEN EXHIBITION THEATRE (< 1024px) ─── */}
+      <div className="flex lg:hidden flex-col justify-between h-full w-full px-3.5 sm:px-6 pt-16 sm:pt-20 pb-3 max-w-lg mx-auto">
         
-        {/* Sticky Mobile Progression Ledger */}
-        <div className="sticky top-14 sm:top-16 z-30 bg-[#F7F3E8]/95 backdrop-blur-md border-2 border-[#20201E] shadow-[3px_3px_0px_#20201E] p-2.5 flex items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 bg-[#FF4B35] inline-block border border-[#20201E]" />
-            <span className="font-mono text-xs font-black text-[#20201E]">
+        {/* Top Sticky Progression Ledger Bar */}
+        <div className="shrink-0 bg-white/95 border-2 border-[#20201E] shadow-[3px_3px_0px_#20201E] p-2 flex items-center justify-between gap-2">
+          <div className="flex items-center gap-1.5 min-w-0">
+            <span
+              className="w-2.5 h-2.5 border border-[#20201E] inline-block shrink-0 transition-colors"
+              style={{ backgroundColor: currentTheme.accent }}
+            />
+            <span className="font-mono text-xs font-black text-[#20201E] shrink-0">
               0{currentProject.id} / 09
             </span>
-            <span className="font-black text-xs text-[#20201E] truncate max-w-[130px] sm:max-w-none">
+            <span className="font-black text-xs text-[#20201E] truncate ml-1">
               {currentProject.title}
             </span>
           </div>
 
-          <div className="flex items-center gap-1 overflow-x-auto scrollbar-none">
+          {/* Quick-Jump scene dots */}
+          <div className="flex items-center gap-1 shrink-0 overflow-x-auto scrollbar-none">
             {projects.map((p, idx) => (
               <button
                 key={p.id}
                 onClick={() => handleIndexClick(idx)}
-                className={`w-5 h-5 rounded-none font-mono text-[9px] font-black border flex items-center justify-center transition-colors ${
+                className={`w-5 h-5 font-mono text-[9px] font-black border flex items-center justify-center transition-all ${
                   idx === activeIndex
-                    ? 'bg-[#FF4B35] text-white border-[#20201E]'
-                    : 'bg-white text-[#20201E] border-[#20201E]/30'
+                    ? 'bg-[#FF4B35] text-white border-[#20201E] shadow-[1px_1px_0px_#20201E] scale-110'
+                    : 'bg-[#FAF8F5] text-[#20201E]/60 border-[#20201E]/40'
                 }`}
+                aria-label={`Jump to project 0${p.id}`}
               >
                 {p.id}
               </button>
@@ -365,82 +320,114 @@ const SwissProjectsExhibition: React.FC = () => {
           </div>
         </div>
 
-        {/* Section Title */}
-        <div className="border-b-2 border-[#20201E] pb-3">
-          <div className="flex items-center gap-2 font-mono text-xs font-black text-[#FF4B35] uppercase mb-1">
-            <span>[04]</span>
-            <span>{'//'} SELECTED EXHIBITION</span>
+        {/* Center Canvas: Neobrutalist Viewport Frame */}
+        <div className="my-auto py-2 flex flex-col gap-2.5">
+          <div className="border-3 border-[#20201E] bg-[#20201E] shadow-[5px_5px_0px_#20201E] p-1.5">
+            {/* Browser chrome header */}
+            <div className="bg-[#FAF8F5] border border-[#20201E] px-2.5 py-1 flex items-center justify-between font-mono text-[10px] font-bold">
+              <div className="flex items-center gap-1.5 min-w-0">
+                <span className="w-2 h-2 rounded-full bg-[#FF4B35]" />
+                <span className="w-2 h-2 rounded-full bg-[#D7FF45]" />
+                <span className="w-2 h-2 rounded-full bg-[#304FFE]" />
+                <span className="ml-1 text-[#20201E]/70 truncate max-w-[150px]">
+                  {currentProject.link}
+                </span>
+              </div>
+              <span className="text-[9px] font-black uppercase text-[#20201E] bg-[#D7FF45] px-1.5 py-0.2 border border-[#20201E] shrink-0">
+                LIVE ACTIVE
+              </span>
+            </div>
+
+            {/* Kinetic Screenshot Image with smooth scroll-driven transition */}
+            <div className="relative overflow-hidden bg-white aspect-[16/10] border border-[#20201E] border-t-0 flex items-center justify-center">
+              <img
+                key={currentProject.id}
+                src={currentProject.image}
+                alt={currentProject.title}
+                className="w-full h-full object-cover object-top transition-transform duration-500 ease-out"
+                onError={(e) => {
+                  (e.currentTarget as HTMLImageElement).src = `${process.env.PUBLIC_URL}/images/avatar.png`;
+                }}
+              />
+
+              <div className="absolute top-2 left-2 font-mono text-[9px] text-[#20201E]/40 pointer-events-none">+</div>
+              <div className="absolute top-2 right-2 font-mono text-[9px] text-[#20201E]/40 pointer-events-none">+</div>
+              <div className="absolute bottom-2 left-2 font-mono text-[9px] text-[#20201E]/40 pointer-events-none">+</div>
+              <div className="absolute bottom-2 right-2 font-mono text-[9px] text-[#20201E]/40 pointer-events-none">+</div>
+            </div>
           </div>
-          <h2 className="text-3xl font-black text-[#20201E]">Digital Project Archive</h2>
-        </div>
 
-        {/* 9 Scroll-Triggered Dynamic Project Articles */}
-        {projects.map((proj, idx) => {
-          const theme = exhibitionThemes[idx % exhibitionThemes.length];
+          {/* Project Details Stage */}
+          <div className="space-y-1.5 bg-white/90 border-2 border-[#20201E] p-3 sm:p-4 shadow-[4px_4px_0px_#20201E]">
+            <div className="flex items-baseline justify-between gap-2">
+              <h3 className="text-lg sm:text-xl font-black text-[#20201E] truncate">
+                {currentProject.title}
+              </h3>
+              <span
+                className="px-2 py-0.5 border border-[#20201E] text-[9px] font-mono font-bold uppercase shrink-0"
+                style={{ backgroundColor: currentTheme.tagBg, color: currentTheme.tagText }}
+              >
+                {currentProject.tags[0]}
+              </span>
+            </div>
 
-          return (
-            <article
-              key={proj.id}
-              id={`mobile-project-${idx}`}
-              className="mobile-project-card bg-white border-2 border-[#20201E] shadow-[5px_5px_0px_#20201E] p-4 sm:p-5 space-y-3.5 transition-all duration-300 scroll-mt-24"
-            >
-              <div className="flex items-center justify-between border-b border-[#20201E]/20 pb-2">
-                <span className="text-3xl font-black font-mono text-[#20201E]">
-                  0{proj.id}
-                </span>
+            <p className="text-[11px] font-mono text-[#20201E]/80 leading-relaxed line-clamp-2">
+              {currentProject.description}
+            </p>
+
+            <div className="flex flex-wrap gap-1 pt-0.5">
+              {currentProject.tags.map((tag) => (
                 <span
-                  className="px-2 py-0.5 border border-[#20201E] text-[10px] font-mono font-bold uppercase"
-                  style={{ backgroundColor: theme.tagBg, color: theme.tagText }}
+                  key={tag}
+                  className="px-1.5 py-0.2 border border-[#20201E] text-[9px] font-mono font-bold uppercase bg-[#FAF8F5]"
                 >
-                  {proj.tags[0]}
+                  #{tag}
                 </span>
-              </div>
+              ))}
+            </div>
 
-              <h3 className="text-xl sm:text-2xl font-black text-[#20201E]">{proj.title}</h3>
-
-              {/* Scroll-Parallax Preview Frame */}
-              <div className="border border-[#20201E] overflow-hidden bg-slate-100">
-                <div className="bg-[#20201E] text-white px-2.5 py-1 text-[10px] font-mono flex items-center justify-between">
-                  <span>PREVIEW</span>
-                  <span className="text-[#D7FF45]">LIVE ACTIVE</span>
-                </div>
-                <div className="aspect-[16/10] overflow-hidden relative">
-                  <img
-                    src={proj.image}
-                    alt={proj.title}
-                    loading="lazy"
-                    className="mobile-project-img w-full h-full object-cover object-top will-change-transform"
-                  />
-                </div>
-              </div>
-
-              <p className="text-xs font-mono text-[#20201E]/80 leading-relaxed">
-                {proj.description}
-              </p>
-
-              <div className="pt-1 flex flex-wrap gap-1">
-                {proj.tags.map((t) => (
-                  <span
-                    key={t}
-                    className="text-[9px] font-mono px-2 py-0.5 bg-[#FAF8F5] border border-[#20201E]"
-                  >
-                    #{t}
-                  </span>
-                ))}
-              </div>
-
+            {/* Launch CTA */}
+            <div className="pt-2 flex items-center gap-2">
               <a
-                href={proj.link}
+                href={currentProject.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full py-2.5 bg-[#20201E] text-white font-mono font-black text-xs uppercase flex items-center justify-center gap-2 border-2 border-[#20201E] shadow-[2px_2px_0px_#FF4B35] hover:bg-[#FF4B35] transition-colors"
+                data-cursor="LAUNCH"
+                className="flex-1 py-2 text-center bg-[#20201E] hover:bg-[#FF4B35] text-white font-mono font-black text-xs uppercase border-2 border-[#20201E] shadow-[2px_2px_0px_#FF4B35] transition-all flex items-center justify-center gap-1.5"
               >
                 <span>Launch Live Product</span>
                 <span>↗</span>
               </a>
-            </article>
-          );
-        })}
+
+              <a
+                href="https://github.com/omartantawy360"
+                target="_blank"
+                rel="noopener noreferrer"
+                data-cursor="CODE"
+                className="py-2 px-3 bg-white hover:bg-[#D7FF45] text-[#20201E] font-mono font-bold text-xs uppercase border-2 border-[#20201E] shadow-[2px_2px_0px_#20201E] transition-all"
+              >
+                Code ⤶
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile Exhibition Scroll Telemetry Bar */}
+        <div className="shrink-0 flex items-center justify-between border-t border-[#20201E]/30 pt-1.5 font-mono text-[10px] text-[#20201E]/70 font-bold">
+          <span>✦ SCROLL TO SCRUB SCENES</span>
+          <span className="text-[#FF4B35]">
+            PROG: {Math.round(scrollProgress * 100)}%
+          </span>
+        </div>
+
+      </div>
+
+      {/* Persistent Bottom Progression Line Bar */}
+      <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#20201E]/10 z-30 pointer-events-none">
+        <div
+          className="h-full bg-[#FF4B35] transition-all duration-150"
+          style={{ width: `${Math.round(scrollProgress * 100)}%` }}
+        />
       </div>
     </section>
   );
